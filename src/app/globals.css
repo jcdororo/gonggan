@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+button {
+  background-color: #998373;
+  color: #fff;
+  font-size: 25px;
+  width: 540px;
+  height: 48px;
+  border-radius: 5px;
+}
+
+input {
+  background-color: #fff;
+  width: 540px;
+  height: 48px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
