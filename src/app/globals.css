@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  margin: 0px;
+}
+
 button {
   background-color: #998373;
   color: #fff;
