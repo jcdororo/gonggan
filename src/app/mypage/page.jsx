@@ -9,7 +9,7 @@ export default async function MyPage() {
 
   return(
     <div>
-      마이페이지입니다
+      마이페이지
     </div>
   )
 }
