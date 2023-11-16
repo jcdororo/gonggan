@@ -14,19 +14,50 @@ export default function Police() {
         <div className="font-bold">
           내용
         </div>
-        <div className="w-116 p-4 m-6 font-semibold border-2 border-sygnature-brown rounded-md">
+        <div className="w-116 p-4 mx-6 mt-6 mb-8 font-semibold border-2 border-sygnature-brown rounded-md">
           Lorem Ipsum is simply dummy text of the printing and 
           typesetting industry. 
           Lorem Ipsum is simply dummy text of the printing and 
           typesetting industry. 
         </div>
 
-        <div className="flex">
-          <input className="text-red-500" type="checkbox"/>
-          <div>
-            부정적인태도
+        <label className="flex flex-col py-3 px-4">
+          <div className="flex cursor-pointer">
+            <input type="checkbox" className="accent-sygnature-brown w-7 h-7" />
+            <span className="ml-2 text-lg font-semibold">부정적인 태도</span>
           </div>
-        </div>
+        </label>
+
+        <label className="flex flex-col py-3 px-4">
+          <div className="flex cursor-pointer">
+            <input type="checkbox" className="accent-sygnature-brown w-7 h-7" />
+            <span className="ml-2 text-lg font-semibold">욕설</span>
+          </div>
+        </label>
+
+        <label className="flex flex-col py-3 px-4">
+          <div className="flex cursor-pointer">
+            <input type="checkbox" className="accent-sygnature-brown w-7 h-7" />
+            <span className="ml-2 text-lg font-semibold">올바르지 않은 정보</span>
+          </div>
+        </label>
+
+        <label className="flex flex-col py-3 px-4">
+          <div className="flex cursor-pointer">
+            <input type="checkbox" className="accent-sygnature-brown w-7 h-7" />
+            <span className="ml-2 text-lg font-semibold">혐오 발언</span>
+          </div>
+        </label>
+
+        
+
+
+
+
+
+        
+
+        
 
         <div>
           신고하기
