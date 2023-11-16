@@ -22,7 +22,6 @@ const MyContents = () => {
   return (
     <div>
 
-
       {/* 좋아요, 리뷰 버튼 */}
       <div className='flex flex-row justify-center text-2xl pt-10 pb-3 text-center'>
         <div 
@@ -66,7 +65,7 @@ const MyContents = () => {
           <div className='flex flex-col relative border border-black rounded-md my-3 h-40'>
 
             <div className='flex flex-row h-9'>
-              <div className='font-extrabold my-3 mx-3 w-80 font-extrabold'>
+              <div className='font-extrabold my-3 mx-3 w-80'>
                 캐치카페 서울대점
               </div>
               <div className='flex flex-row pt-4 text-xs font-semibold'>
@@ -101,17 +100,13 @@ const MyContents = () => {
             
           </div>
         </div>
-
-
-
       }
 
       
       {/* 모달 */}
       {
-        modalOpen ? <Modal handleDelete={handleDelete} /> : ''
+        modalOpen ? <ModalDelete handleDelete={handleDelete} /> : ''
       }
-
       
     </div>
   )
@@ -120,34 +115,27 @@ const MyContents = () => {
 export default MyContents
 
 
-const Modal: React.FC<ModalProps> = ({handleDelete}) => {
+const ModalDelete: React.FC<ModalProps> = ({handleDelete}) => {
   return (
     <div>
       <div 
         className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       >
-
-
-          <div className="bg-white p-8 rounded-lg w-96">
-            <div className='text-center'>
+          <div className="bg-white p-8 rounded-lg w-96 h-40">
+            <div className='text-center my-2 text-sm font-semibold'>
               리뷰를 삭제 하시겠습니까?
             </div>
 
-            <div className='flex items-center justify-center'>
-              <div className='cursor-pointer' onClick={handleDelete}>
+            <div className='flex items-center justify-center mt-5 text-sm font-bold'>
+              <div className='cursor-pointer px-8 py-1 m-3 border-2 border-sygnature-brown text-sygnature-brown rounded-md ' onClick={handleDelete}>
                 취소하기
               </div>
-              <div>
+              <div className='cursor-pointer px-8 py-1 m-3 bg-sygnature-brown border border-sygnature-brown text-white rounded-md '>
                 삭제하기
               </div>
             </div>
-
           </div>
-
-
-        
       </div>
-
     </div>
   )
 }
