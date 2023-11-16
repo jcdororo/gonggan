@@ -1,5 +1,6 @@
-export default function Police() {
+import ModalPolice from "./ModalPolice";
 
+export default function Police() {
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -49,21 +50,25 @@ export default function Police() {
           </div>
         </label>
 
+        <label className="flex flex-col py-3 px-4">
+          <div className="flex cursor-pointer">
+            <input type="checkbox" className="accent-sygnature-brown w-7 h-7" />
+            <span className="ml-2 text-lg font-semibold">광고</span>
+          </div>
+        </label>
+
+        <label className="flex flex-col py-3 px-4">
+          <div className="flex cursor-pointer">
+            <input type="checkbox" className="accent-sygnature-brown w-7 h-7" />
+            <span className="ml-2 text-lg font-semibold">불쾌감을 주거나 부적절한 이름 사용</span>
+          </div>
+        </label>
+
+        
+        <ModalPolice />
         
 
-
-
-
-
-        
-
-        
-
-        <div>
-          신고하기
-        </div>
       </div>
-      
     </div>
   )
 }
