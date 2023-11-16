@@ -6,7 +6,6 @@ export default async function MyPage() {
   let result = await db.collection('user').find().toArray();
 
   
-
   return(
     <div>
       <div className='text-center font-extrabold text-2xl my-4'>마이페이지</div>
