@@ -1,5 +1,5 @@
 import {connectDB} from '@/util/database'
-import MyContents from '../components/MyContents';
+import MyContents from './MyContents';
 
 export default async function MyPage() {
   let db = (await connectDB).db('gonggan');

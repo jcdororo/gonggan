@@ -1,22 +1,29 @@
 'use client'
 
 import React, {useState} from 'react'
+import ModalDelete from './ModalDelete';
+import ModalUpdate from './ModalUpdate';
 
-interface ModalProps {
-  handleDelete?: React.MouseEventHandler<HTMLDivElement> | undefined;
-}
+
 
 const MyContents = () => {
   const [btnName, setBtnName] = useState('like')
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalDeleteOpen, setModalDeletelOpen] = useState(false)
+  const [modalUpdateOpen, setModalUpdateOpen] = useState(false)
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> | undefined = (event):void => {
     event.currentTarget.textContent == '좋아요' ? setBtnName('like') : setBtnName('review')
   }
 
   const handleDelete: React.MouseEventHandler<HTMLDivElement> | undefined = ():void => {
-    setModalOpen(!modalOpen);
+    setModalDeletelOpen(!modalDeleteOpen);
   }
+
+  const handleUpdate: React.MouseEventHandler<HTMLDivElement> | undefined = ():void => {
+    setModalUpdateOpen(!modalUpdateOpen);
+  }
+
+  
 
   
   return (
@@ -69,7 +76,7 @@ const MyContents = () => {
                 캐치카페 서울대점
               </div>
               <div className='flex flex-row pt-4 text-xs font-semibold'>
-                <div className='ml-6 mr-1 cursor-pointer'>
+                <div className='ml-6 mr-1 cursor-pointer' onClick={handleUpdate}>
                   수정
                 </div>
                 <div className='ml-1 mr-6 cursor-pointer' onClick={handleDelete}>
@@ -105,7 +112,10 @@ const MyContents = () => {
       
       {/* 모달 */}
       {
-        modalOpen ? <ModalDelete handleDelete={handleDelete} /> : ''
+        modalDeleteOpen ? <ModalDelete handleDelete={handleDelete} /> : ''
+      }
+      {
+        modalUpdateOpen ? <ModalUpdate handleUpdate={handleUpdate} /> : ''
       }
       
     </div>
@@ -115,27 +125,3 @@ const MyContents = () => {
 export default MyContents
 
 
-const ModalDelete: React.FC<ModalProps> = ({handleDelete}) => {
-  return (
-    <div>
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-      >
-          <div className="bg-white p-8 rounded-lg w-96 h-40">
-            <div className='text-center my-2 text-sm font-semibold'>
-              리뷰를 삭제 하시겠습니까?
-            </div>
-
-            <div className='flex items-center justify-center mt-5 text-sm font-bold'>
-              <div className='cursor-pointer px-8 py-1 m-3 border-2 border-sygnature-brown text-sygnature-brown rounded-md ' onClick={handleDelete}>
-                취소하기
-              </div>
-              <div className='cursor-pointer px-8 py-1 m-3 bg-sygnature-brown border border-sygnature-brown text-white rounded-md '>
-                삭제하기
-              </div>
-            </div>
-          </div>
-      </div>
-    </div>
-  )
-}
