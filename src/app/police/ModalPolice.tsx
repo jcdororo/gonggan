@@ -35,7 +35,7 @@ const ModalPolice: React.FC<ModalProps> = () => {
         >
         <div className="bg-white p-8 rounded-lg w-96 h-40">
           <div className='text-center my-2 text-sm font-semibold'>
-            리뷰를 삭제 하시겠습니까?
+            신고 내용을 등록하시겠습니까?
           </div>
 
           <div className='flex items-center justify-center mt-5 text-sm font-bold'>
@@ -43,7 +43,7 @@ const ModalPolice: React.FC<ModalProps> = () => {
               취소하기
             </div>
             <div className='cursor-pointer px-8 py-1 m-3 bg-sygnature-brown border border-sygnature-brown text-white rounded-md '>
-              삭제하기
+              등록하기
             </div>
           </div>
         </div>
