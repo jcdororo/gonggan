@@ -15,6 +15,16 @@ const config: Config = {
       },
       colors: {
         'sygnature-brown' : '#998373',
+      },
+      width: {
+        '100' : '26rem',
+        '104' : '28rem',
+        '108' : '30rem',
+        '112' : '32rem',
+        '116' : '34rem',
+        '120' : '36rem',
+        '124' : '38rem',
+        '128' : '40rem',
       }
     },
   },
