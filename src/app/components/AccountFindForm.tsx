@@ -15,8 +15,8 @@ export default function AccountFindForm() {
           </p>
         </div>
         <div className="form__block">
-          <label htmlFor="email">가입하신 이메일</label>
-          <input type="email" name="email" id="email" required />
+          <label className="lab" htmlFor="email">가입하신 이메일</label>
+          <input className="in" type="email" name="email" id="email" required />
         </div>
         <div className="form_block">
           <p className="mt-5">캡챠</p>
