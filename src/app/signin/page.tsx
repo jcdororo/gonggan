@@ -1,5 +1,4 @@
-import SignupForm from '../components/SignUpForm';
-import SignInForm from '../components/SignupInForm';
+import SignInForm from '../components/SignInForm';
 
 export default async function SignupPage() {
   return(

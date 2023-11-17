@@ -1,6 +1,6 @@
-import SignUpForm from '../components/SignUpForm';
+import SignUpForm from "../components/SignUpForm";
 
-export default async function SignupPage() {
+export default async function SignUpPage() {
   return(
     <div>
       <SignUpForm />

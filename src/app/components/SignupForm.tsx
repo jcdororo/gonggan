@@ -1,6 +1,4 @@
 'use client'
-import { Link } from 'react-router-dom';
-
 export default function SignUpForm() {
   return (
     <form action="/post" method="POST" className="m-auto m-0 max-w-680 p-10">
