@@ -2,8 +2,8 @@ import {connectDB} from '@/util/database'
 import MyContents from './MyContents';
 
 export default async function MyPage() {
-  let db = (await connectDB).db('gonggan');
-  let result = await db.collection('user').find().toArray();
+  // let db = (await connectDB).db('gonggan');
+  // let result = await db.collection('user').find().toArray();
 
   
   return(
