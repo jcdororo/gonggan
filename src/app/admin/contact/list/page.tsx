@@ -18,67 +18,69 @@ export default function ContactList() {
 
             <tbody className="">
 
-              <tr className="h-10 hover:underline">
-                <td className="py-2">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
-                <td className="py-2">example@example.com</td>
+              <tr className="h-10">
+                <td className="py-2 hover:underline cursor-pointer">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
+                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
                 <td className="py-2">2023-11-17</td>
                 <td className="py-2">진행 중</td>
               </tr>
 
-              <tr className="h-10 hover:underline">
-                <td className="py-2">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
-                <td className="py-2">example@example.com</td>
+              <tr className="h-10">
+                <td className="py-2 hover:underline cursor-pointer">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
+                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
                 <td className="py-2">2023-11-17</td>
                 <td className="py-2">진행 중</td>
               </tr>
 
-              <tr className="h-10 hover:underline">
-                <td className="py-2">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
-                <td className="py-2">example@example.com</td>
+              <tr className="h-10">
+                <td className="py-2 hover:underline cursor-pointer">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
+                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
                 <td className="py-2">2023-11-17</td>
                 <td className="py-2">진행 중</td>
               </tr>
 
-              <tr className="h-10 hover:underline">
-                <td className="py-2">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
-                <td className="py-2">example@example.com</td>
+              <tr className="h-10">
+                <td className="py-2 hover:underline cursor-pointer">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
+                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
                 <td className="py-2">2023-11-17</td>
                 <td className="py-2">진행 중</td>
               </tr>
 
-              <tr className="h-10 hover:underline">
-                <td className="py-2">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
-                <td className="py-2">example@example.com</td>
+              <tr className="h-10">
+                <td className="py-2 hover:underline cursor-pointer">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
+                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
                 <td className="py-2">2023-11-17</td>
                 <td className="py-2">진행 중</td>
               </tr>
 
-              <tr className="h-10 hover:underline">
-                <td className="py-2">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
-                <td className="py-2">example@example.com</td>
+              <tr className="h-10">
+                <td className="py-2 hover:underline cursor-pointer">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
+                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
                 <td className="py-2">2023-11-17</td>
                 <td className="py-2">진행 중</td>
               </tr>
 
-              <tr className="h-10 hover:underline">
-                <td className="py-2">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
-                <td className="py-2">example@example.com</td>
+              <tr className="h-10">
+                <td className="py-2 hover:underline cursor-pointer">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
+                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
                 <td className="py-2">2023-11-17</td>
                 <td className="py-2">진행 중</td>
               </tr>
 
-              <tr className="h-10 hover:underline">
-                <td className="py-2">Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text </td>
-                <td className="py-2">example@example.com</td>
-                <td className="py-2">2023-11-17</td>
-                <td className="py-2">진행 중</td>
-              </tr>
 
             </tbody>
           </table>
 
         </div>
-        <div className="my-12 font-semibold text-lg">1 2 3 4 5 6 7 ...</div>
+        <div className="my-12 text-lg">
+          <span className="mx-1 cursor-pointer hover:font-bold">1</span>
+          <span className="mx-1 cursor-pointer hover:font-bold">2</span>
+          <span className="mx-1 cursor-pointer hover:font-bold">3</span>
+          <span className="mx-1 cursor-pointer hover:font-bold">4</span>
+          <span className="mx-1 cursor-pointer hover:font-bold">5</span>
+          
+          
+        </div>
       </div>
     </div>
   )
