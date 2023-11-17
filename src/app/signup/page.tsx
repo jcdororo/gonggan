@@ -1,9 +1,9 @@
-import SignupForm from '../components/SignupForm';
+import SignUpForm from '../components/SignUpForm';
 
 export default async function SignupPage() {
   return(
     <div>
-      <SignupForm />
+      <SignUpForm />
     </div>
   )
 }

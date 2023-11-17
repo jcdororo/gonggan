@@ -1,7 +1,7 @@
 'use client'
 import { Link } from 'react-router-dom';
 
-export default function SignupForm() {
+export default function SignUpForm() {
   return (
     <form action="/post" method="POST" className="m-auto m-0 max-w-680 p-10">
       <h1 className='text-3xl font-bold text-center p-10'>회원가입</h1>
