@@ -5,15 +5,15 @@ export default function Propose() {
     <div>
       <div className='text-center font-extrabold text-2xl my-4'>장소 제안하기</div>
 
-      <form className="my-12">
+      <form className="mx-auto max-w-screen-sm p-5 mt-5">
         <div className="font-semibold">위치</div>
-        <input className="my-2" name="location" />
+        <input className="my-2 border-gray-300 w-full" name="location" />
 
         <div className="font-semibold mt-2">영업시간</div>
         <div className="flex flex-row mt-2 mb-4">
-          <input name="openhour" />
+          <input name="openhour" className="border-gray-300" />
           <span className="flex items-center mx-4"> ~ </span>
-          <input name="closehour" />
+          <input name="closehour" className="border-gray-300" />
         </div>
 
         <div className="font-semibold">영업일</div>
@@ -34,14 +34,14 @@ export default function Propose() {
           <span className="ml-2 mr-4 block">일</span>
         </div>
 
-        <div className="font-semibold mt-4 mb-2">전화번호</div>
-        <input name="phone" />
+        <div className="font-semibold mt-4 mb-2 w-full">전화번호</div>
+        <input name="phone" className="border-gray-300 w-full" />
 
         <div className="font-semibold my-2">이용방법</div>
-        <input name="howtouse" className="h-40" />
+        <input name="howtouse" className="h-40 border-gray-300 w-full" />
 
         <div className="font-semibold my-2">설명</div>
-        <input name="desc" className="h-40" />
+        <input name="desc" className="h-40 border-gray-300 w-full" />
         
 
 
