@@ -5,7 +5,7 @@ export default function SignInForm() {
   return (
     <div className="mx-auto max-w-2xl p-5">
       <form action="/post" method="POST" className="form__margin m-auto p-11">
-        <h1 className="text-3xl font-bold text-center p-10">로그인</h1>
+        <h1 className="text-3xl font-bold text-center">로그인</h1>
         <div className="form__block">
           <label className="lab" htmlFor="id">아이디</label>
           <input className="in" type="id" name="id" id="id" required />

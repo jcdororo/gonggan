@@ -27,8 +27,8 @@ form .form__block {
   @apply mt-5 w-full m-auto;
 }
 
- .lab {
-  @apply block font-normal text-sm mt-5;
+.lab {
+  @apply block font-normal text-sm mt-5 mb-[5px];
 }
 
 form .form__btn--submit {
@@ -40,3 +40,6 @@ form .form__btn--submit:focus {
   @apply bg-[#5f544d]
 }
 
+.ta {
+  @apply    border-solid border-gray-300 
+}
