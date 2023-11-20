@@ -2,6 +2,7 @@
 export default function ContactForm() {
   return (
     <div className="mx-auto max-w-2xl p-5">
+
       <form action="/post" method="POST" className="m-auto p-11">
         <h1 className="text-3xl font-bold text-center">문의하기</h1>
         <div className="form__block">
@@ -21,7 +22,7 @@ export default function ContactForm() {
             내용
           </label>
           <textarea
-            className="h-[250px] w-full text-sm p-4 rounded-md max-w-[680px] border-solid border-gray-300"
+            className="h-[250px] w-full text-sm p-4 rounded-md max-w-[680px] border border-solid border-gray-300"
             name="content"
             id="content"
           ></textarea>
@@ -30,6 +31,7 @@ export default function ContactForm() {
           <input type="submit" value="문의하기" className="form__btn--submit" />
         </div>
       </form>
+
     </div>
   );
 }
