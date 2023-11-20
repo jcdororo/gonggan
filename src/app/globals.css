@@ -39,7 +39,3 @@ form .form__btn--submit:hover,
 form .form__btn--submit:focus {
   @apply bg-[#5f544d]
 }
-
-.ta {
-  @apply    border-solid border-gray-300 
-}
