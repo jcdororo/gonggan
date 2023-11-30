@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import { useState } from "react";
 
 import DetailModal from "./detail/DetailModal";
+import LoginBtn from "./components/LoginBtn";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function Home() {
       <div className="" onClick={handleModal}>
         클릭
       </div>
+      <LoginBtn />
       {detail ? <DetailModal handleModal={handleModal} /> : ""}
     </div>
   );
