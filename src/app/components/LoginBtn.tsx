@@ -7,6 +7,7 @@ import { signIn } from "next-auth/react";
 const LoginBtn = () => {
   return (
     <div className='cursor-pointer' onClick={() => {signIn()}}>로그인</div>
+    
   )
 }
 

@@ -1,4 +1,6 @@
 "use client";
+import { signIn } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function SignInForm() {
@@ -33,13 +35,22 @@ export default function SignInForm() {
         <p className="mr-2">|</p>
         <Link href='/'><p className="">회원가입</p></Link>
       </div>
-      <div className="mt-5 w-full m-auto p-10">
-        <input
+      <div className="flex justify-center mt-5 w-full m-auto p-10 ">
+        {/* <input
           type="submit"
-          value="N  네이버로 시작하기"
-          className="bg-green-500 border-inherit text-white w-full"
+          value="K  카카오로 시작하기"
+          className="bg-[#F7E600] border-inherit text-[#3A1D1D] cursor-pointer"
+          onClick={() => signIn('kakao')}
+        /> */}
+        <Image 
+          className="cursor-pointer"
+          src={'/kakao_login_large_wide.png'}     
+          width={450} 
+          height={0}
+          alt="kakao"
+          onClick={() => signIn('kakao')}
         />
-      </div>
+      </div>      
     </div>
   );
 }
