@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import DetailModal from "./detail/DetailModal";
 import LoginBtn from "./components/LoginBtn";
+import LogOutBtn from "./components/LogOutBtn";
+import Link from "next/link";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -26,8 +28,8 @@ export default function Home() {
       <div className="" onClick={handleModal}>
         클릭
       </div>
-      <LoginBtn />
       {detail ? <DetailModal handleModal={handleModal} /> : ""}
+      <Link href={"/sessionTest"}>로그인 세션테스트</Link>
     </div>
   );
 }

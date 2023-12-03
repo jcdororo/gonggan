@@ -22,6 +22,14 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
       {_id : new ObjectId(temp._id)},
       {$set : update}
     )
+    if(result){
+      // response.status(200).json('카카오 로그인 성공')
+      // response.redirect(200, '/sessionTest')
+      response.redirect(200,'/')
+    } else {
+      response.status(500).json('카카오 로그인 실패')
+
+    }
     
   }
 }
