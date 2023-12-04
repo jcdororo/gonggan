@@ -1,8 +1,6 @@
 
 import { MongoClient } from 'mongodb'
-const url = `mongodb+srv://gonggan:${process.env.MONGODB_PASSWORD}@forum.llx7qqw.mongodb.net/?retryWrites=true&w=majority`
-
-
+const url = `mongodb+srv://gonggan:${process.env.MONGODB_PASSWORD}@forum.llx7qqw.mongodb.net/gonggan?retryWrites=true&w=majority`
 
 
 let connectDB
