@@ -10,9 +10,7 @@ export default async function SessionTest() {
   return (
     <div>
       세션테스트
-      {
-        session ? <LogOutBtn /> : <LoginBtn />
-      }
+      
       
     </div>
   )

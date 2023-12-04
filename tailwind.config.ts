@@ -15,6 +15,7 @@ const config: Config = {
       },
       colors: {
         'sygnature-brown' : '#998373',
+        'sygnature-beige' : '#F4F1EA'
       },
       width: {
         '100' : '26rem',
