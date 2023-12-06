@@ -1,3 +1,5 @@
+import { MongoClient } from "mongodb";
+
 export {};
 
 declare global {
