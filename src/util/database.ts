@@ -2,8 +2,12 @@
 import { MongoClient } from 'mongodb'
 const url = `mongodb+srv://gonggan:${process.env.MONGODB_PASSWORD}@forum.llx7qqw.mongodb.net/gonggan?retryWrites=true&w=majority`
 
+if (!url) {
+  throw new Error('The MONGODB_URL environment variable is not defined')
+}
 
-let connectDB
+let connectDB:Promise<MongoClient>
+
 
 if (process.env.NODE_ENV === 'development') {
   if (!global._mongo) {

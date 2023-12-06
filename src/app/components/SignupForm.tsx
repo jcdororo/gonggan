@@ -1,5 +1,28 @@
 "use client";
+import { connectDB } from "@/util/database";
+import { toast } from "react-toastify";
+import { useRouter } from 'next/navigation'
+
 export default function SignUpForm() {
+
+  const router = useRouter()
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const db = (await connectDB).db("gonggan");
+      await db.collection('users').insertOne({
+        
+      });
+
+      toast.success("회원가입에 성공했습니다.");
+      router.push("/");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.code);
+    }
+  }
+
   return (
     <div className="mx-auto max-w-2xl p-5">
       <form action="/post" method="POST" className="m-auto p-11">
