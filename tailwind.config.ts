@@ -18,6 +18,9 @@ const config: Config = {
         'sygnature-beige' : '#F4F1EA'
       },
       width: {
+        '88' : '20rem',
+        '90' : '21rem',
+        '92' : '22rem',
         '100' : '26rem',
         '104' : '28rem',
         '108' : '30rem',

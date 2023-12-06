@@ -3,23 +3,50 @@
 import React, {useState} from 'react'
 import ModalDelete from './ModalDelete';
 import ModalUpdate from './ModalUpdate';
+import { FaStar, FaThumbsUp } from 'react-icons/fa'
+
+export interface PlaceReview {
+  content: string;
+  date: Date;
+  placeid: string;
+  placename: string;
+  star: string;
+  writerid: string;
+  writernickname: string;
+  writerpic: string;
+  _id: string;
+}
+
+interface MyContentsProps {
+  likePlace: string[];
+  placeReview: PlaceReview[];
+}
+
+
+type MyMouseEventHandler = (e: React.MouseEvent<HTMLDivElement>, content: PlaceReview) => void;
 
 
 
-const MyContents = () => {
+const MyContents: React.FC<MyContentsProps> = ({ likePlace, placeReview }: MyContentsProps) => {
   const [btnName, setBtnName] = useState('like')
   const [modalDeleteOpen, setModalDeletelOpen] = useState(false)
   const [modalUpdateOpen, setModalUpdateOpen] = useState(false)
+  const [targetContent, setTargetContent] = useState<PlaceReview | undefined>(undefined);
+  
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> | undefined = (event):void => {
     event.currentTarget.textContent == '좋아요' ? setBtnName('like') : setBtnName('review')
   }
 
-  const handleDelete: React.MouseEventHandler<HTMLDivElement> | undefined = ():void => {
+  const handleDelete: MyMouseEventHandler = (e, content) => {
+    e.preventDefault();
+    setTargetContent(content);
     setModalDeletelOpen(!modalDeleteOpen);
   }
 
-  const handleUpdate: React.MouseEventHandler<HTMLDivElement> | undefined = ():void => {
+  const handleUpdate: MyMouseEventHandler = (e, content) => {
+    e.preventDefault();
+    setTargetContent(content);
     setModalUpdateOpen(!modalUpdateOpen);
   }
 
@@ -46,76 +73,90 @@ const MyContents = () => {
       {
         btnName == 'like'
         ?
+        
         <div className='flex flex-col place-items-center justify-center'>
 
-          <div className='flex flex-row relative border border-black rounded-md my-3'>
-            <div className='font-extrabold my-3 ml-3 mr-1 w-52'>
-              캐치카페 서울대점
+          {
+            likePlace.length 
+            ?
+            likePlace.map((x:string,i:number) => (
+              <div key={i} className='flex flex-row relative border border-black rounded-md my-3'>
+                <div className='font-extrabold my-3 ml-3 mr-1 w-52'>
+                  {x}
+                </div>
+                <div className='flex justify-end items-center font-bold w-56'>
+                  <div className='mx-5 text-3xl' style={{ color: '#998373' }}>♥</div>
+                </div>
+              </div>            
+            ))
+            :
+            <div className='relative my-8 font-bold'>
+              등록 된 좋아요가 없습니다
             </div>
-            <div className='flex justify-end items-center font-bold w-56'>
-              <div className='mx-5 text-3xl' style={{ color: '#998373' }}>♥</div>
-            </div>
-          </div>
+          }
 
-        <div className='flex flex-row relative border border-black rounded-md my-3'>
-          <div className='font-extrabold my-3 ml-3 mr-1 w-52'>
-            더 카페: 이네스트점
-          </div>
-          <div className='flex justify-end items-center font-bold w-56'>
-            <div className='mx-5 text-3xl' style={{ color: '#998373' }}>♥</div>
-          </div>
-        </div>
 
       </div>
         :
         <div className='flex flex-col place-items-center justify-center'>
-          <div className='flex flex-col relative border border-black rounded-md my-3 h-40'>
 
-            <div className='flex flex-row h-9'>
-              <div className='font-extrabold my-3 mx-3 w-80'>
-                캐치카페 서울대점
-              </div>
-              <div className='flex flex-row pt-4 text-xs font-semibold'>
-                <div className='ml-6 mr-1 cursor-pointer' onClick={handleUpdate}>
-                  수정
+{
+            placeReview.length
+            ?
+            placeReview.map((x,i) => (
+              <div key={i} className='flex flex-col relative border border-black rounded-md my-3 h-40'>
+              <div className='flex flex-row h-9'>
+                <div className='font-extrabold my-3 mx-3 w-80'>
+                  {x.placename}
                 </div>
-                <div className='ml-1 mr-6 cursor-pointer' onClick={handleDelete}>
-                  삭제
+                <div className='flex flex-row pt-4 text-xs font-semibold'>
+                  <div className='ml-6 mr-1 cursor-pointer' onClick={(e) => handleUpdate(e,x)}>
+                    수정
+                  </div>
+                  <div className='ml-1 mr-6 cursor-pointer' onClick={(e) => handleDelete(e,x)}>
+                    삭제
+                  </div>
+                </div>
+              </div>  
+                        
+              <div className='mx-3 my-1 text-xs font-bold flex flex-row align-middle'>
+                 <FaStar /> {x.star}점
+              </div>
+
+              <div className='mx-3 text-xs'>
+                {new Date(x.date).toLocaleDateString('ko-KR')} {/* 'yyyy.mm.dd' 형식으로 날짜를 표시 */}
+              </div>
+
+              <div className='mx-2 my-2 px-1 flex flex-row items-center text-sygnature-brown'>
+                <FaThumbsUp /> 
+                <div className='px-2 font-bold'>
+                  {placeReview.length}
                 </div>
               </div>
-            </div>  
-                      
-            <div className='mx-3 my-1 text-xs font-bold'>
-              ★★★★☆ 4.5
-            </div>
 
-            <div className='mx-3 text-xs'>
-              2023.11.08
-            </div>
-
-            <div className='mx-2 my-2'>
-              👍 15
-            </div>
-
-            <div className='flex flex-col overflow-hidden'>
-              <div className='w-96 mx-3 text-xs font-medium'>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+              <div className='flex flex-col overflow-hidden'>
+                <div className='w-96 mx-3 text-xs font-medium'>
+                  {x.content}
+                </div>
               </div>
+              
             </div>
-            
-          </div>
+            ))
+            : 
+            <div className='relative my-8 font-bold'>
+              등록 된 리뷰가 없습니다
+            </div>
+          }
         </div>
       }
 
       
       {/* 모달 */}
       {
-        modalDeleteOpen ? <ModalDelete handleDelete={handleDelete} /> : ''
+        modalUpdateOpen ? <ModalUpdate handleUpdate={handleUpdate} targetContent={targetContent} /> : ''
       }
       {
-        modalUpdateOpen ? <ModalUpdate handleUpdate={handleUpdate} /> : ''
+        modalDeleteOpen ? <ModalDelete handleDelete={handleDelete} targetContent={targetContent} /> : ''
       }
       
     </div>

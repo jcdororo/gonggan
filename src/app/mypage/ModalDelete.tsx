@@ -2,11 +2,15 @@
 import React from 'react'
 
 
-interface ModalProps {
-  handleDelete?: React.MouseEventHandler<HTMLDivElement> | undefined;
-}
 
-const ModalDelete: React.FC<ModalProps> = ({handleDelete}) => {
+
+const ModalDelete = ({handleDelete, targetContent}:any) => {
+
+  const handlerClick = () => {
+    fetch(`/api/post/deleteReview?_id=${targetContent._id}`, { method : 'DELETE' })
+  }
+
+
   return (
     <div>
       <div 
@@ -18,10 +22,16 @@ const ModalDelete: React.FC<ModalProps> = ({handleDelete}) => {
             </div>
 
             <div className='flex items-center justify-center mt-5 text-sm font-bold'>
-              <div className='cursor-pointer px-8 py-1 m-3 border-2 border-sygnature-brown text-sygnature-brown rounded-md ' onClick={handleDelete}>
+              <div 
+                className='cursor-pointer px-8 py-1 m-3 border-2 border-sygnature-brown text-sygnature-brown rounded-md ' 
+                onClick={handleDelete}>
                 취소하기
               </div>
-              <div className='cursor-pointer px-8 py-1 m-3 bg-sygnature-brown border border-sygnature-brown text-white rounded-md '>
+              <div 
+                className='cursor-pointer px-8 py-1 m-3 bg-sygnature-brown border border-sygnature-brown text-white rounded-md '
+                onClick={handlerClick}
+              >
+
                 삭제하기
               </div>
             </div>
