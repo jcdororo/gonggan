@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next";
 import KakaoProvider from "next-auth/providers/kakao";
 import { connectDB } from "@/util/database";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import { NextAuthOptions } from "next-auth";
 
 export const authOptions = {
   providers: [
