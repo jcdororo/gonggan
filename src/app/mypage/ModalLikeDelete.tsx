@@ -1,13 +1,14 @@
 'use client'
+
 import React from 'react'
 
 
 
 
-const ModalDelete = ({handleDelete, targetContent}:any) => {
+const ModalLikeDelete = ({handleDelete, targetContent}:any) => {
 
   const handlerClick = () => {
-    fetch(`/api/delete/deleteReview?_id=${targetContent._id}`, { method : 'DELETE' })
+    fetch(`/api/delete/deleteLike?place_id=${targetContent._id}`, { method : 'DELETE' })
     .then(r => r.json())
     .then(r => window.location.reload())
   }
@@ -20,7 +21,7 @@ const ModalDelete = ({handleDelete, targetContent}:any) => {
       >
           <div className="bg-white p-8 rounded-lg w-96 h-40">
             <div className='text-center my-2 text-sm font-semibold'>
-              리뷰를 삭제 하시겠습니까?
+              좋아요를 삭제 하시겠습니까?
             </div>
 
             <div className='flex items-center justify-center mt-5 text-sm font-bold'>
@@ -43,4 +44,4 @@ const ModalDelete = ({handleDelete, targetContent}:any) => {
   )
 }
 
-export default ModalDelete
+export default ModalLikeDelete

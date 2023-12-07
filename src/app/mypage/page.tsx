@@ -19,12 +19,18 @@ export default async function MyPage() {
   let likePlace = [];
   for(let i = 0; i < result.length; i++) {
     let response = await db.collection('place').findOne({_id:new ObjectId(result[i].place_id)})
-    likePlace.push(response.name)
+    response._id = response._id.toString()
+    likePlace.push(response)
   }
+  // console.log('likePlace',likePlace)
   
-  let placeReview = await db.collection('review').find({writerid:new ObjectId(session.user.id)}).toArray()
+  let placeReview: any = await (await db.collection('review').find({writerid:new ObjectId(session.user.id)}).toArray())
+  for(let i = 0; i < placeReview.length; i++) {
+    placeReview[i]._id = placeReview[i]._id.toString();
+    placeReview[i].placeid = placeReview[i].placeid.toString();
+    placeReview[i].writerid = placeReview[i].writerid.toString();
 
-  console.log('placeReview',placeReview)
+  }
 
   
 

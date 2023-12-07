@@ -3,7 +3,6 @@ import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(request:NextApiRequest, response:NextApiResponse) {
-  console.log(request.query._id)
   if(request.method == 'DELETE') {
     try {
       const db = (await connectDB).db("gonggan");
@@ -11,7 +10,8 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
 
 
       if (result) {
-        response.redirect(301,'/mypage')
+        // response.redirect(301,'/contact')
+        response.status(200).json(result)
         } else {
         response.status(500).json({ error: 'Delete failed' });
       }     

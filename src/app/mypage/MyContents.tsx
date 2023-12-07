@@ -1,9 +1,10 @@
 'use client'
 
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import ModalDelete from './ModalDelete';
 import ModalUpdate from './ModalUpdate';
-import { FaStar, FaThumbsUp } from 'react-icons/fa'
+import { FaHeart, FaStar, FaThumbsUp } from 'react-icons/fa'
+import ModalLikeDelete from './ModalLikeDelete';
 
 export interface PlaceReview {
   content: string;
@@ -23,6 +24,7 @@ interface MyContentsProps {
 }
 
 
+
 type MyMouseEventHandler = (e: React.MouseEvent<HTMLDivElement>, content: PlaceReview) => void;
 
 
@@ -31,6 +33,8 @@ const MyContents: React.FC<MyContentsProps> = ({ likePlace, placeReview }: MyCon
   const [btnName, setBtnName] = useState('like')
   const [modalDeleteOpen, setModalDeletelOpen] = useState(false)
   const [modalUpdateOpen, setModalUpdateOpen] = useState(false)
+  const [modalLikeOpen, setModalLikeOpen] = useState(false)
+
   const [targetContent, setTargetContent] = useState<PlaceReview | undefined>(undefined);
   
 
@@ -38,16 +42,27 @@ const MyContents: React.FC<MyContentsProps> = ({ likePlace, placeReview }: MyCon
     event.currentTarget.textContent == '좋아요' ? setBtnName('like') : setBtnName('review')
   }
 
+  
+
+  // 리뷰 -> 삭제
   const handleDelete: MyMouseEventHandler = (e, content) => {
     e.preventDefault();
     setTargetContent(content);
     setModalDeletelOpen(!modalDeleteOpen);
   }
 
+  // 리뷰 -> 수정
   const handleUpdate: MyMouseEventHandler = (e, content) => {
     e.preventDefault();
     setTargetContent(content);
     setModalUpdateOpen(!modalUpdateOpen);
+  }
+
+  // 좋아요 -> ♥
+  const handleLike: MyMouseEventHandler = (e, content) => {
+    e.preventDefault();
+    setTargetContent(content);
+    setModalLikeOpen(!modalLikeOpen);
   }
 
   
@@ -76,18 +91,23 @@ const MyContents: React.FC<MyContentsProps> = ({ likePlace, placeReview }: MyCon
         
         <div className='flex flex-col place-items-center justify-center'>
 
-          {
-            likePlace.length 
+          {            
+            likePlace.length             
             ?
-            likePlace.map((x:string,i:number) => (
+            likePlace.map((x: any, i: number) => (
               <div key={i} className='flex flex-row relative border border-black rounded-md my-3'>
                 <div className='font-extrabold my-3 ml-3 mr-1 w-52'>
-                  {x}
+                  {x.name}
                 </div>
                 <div className='flex justify-end items-center font-bold w-56'>
-                  <div className='mx-5 text-3xl' style={{ color: '#998373' }}>♥</div>
+                  <div className='mx-5 text-3xl' style={{ color: '#998373' }}>
+                    <FaHeart 
+                      className='cursor-pointer hover:scale-125 transition-transform duration-300' 
+                      onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => handleLike(e, x)}
+                    />
+                  </div>
                 </div>
-              </div>            
+              </div>
             ))
             :
             <div className='relative my-8 font-bold'>
@@ -157,6 +177,9 @@ const MyContents: React.FC<MyContentsProps> = ({ likePlace, placeReview }: MyCon
       }
       {
         modalDeleteOpen ? <ModalDelete handleDelete={handleDelete} targetContent={targetContent} /> : ''
+      }
+      {
+        modalLikeOpen ? <ModalLikeDelete handleDelete={handleLike} targetContent={targetContent} /> : ''
       }
       
     </div>
