@@ -1,11 +1,12 @@
 'use client'
 import { useEffect, useRef, useState } from "react";
-import ModalPropose from "./ModalPropose";
 import { useDebounce } from "../hooks/useDebounce";
 import { inputHoverFocus } from "../styles/styles";
+import { FaFlag } from "react-icons/fa";
 
 
 interface Result {
+  _id?: string,
   address_name : string,
   category_group_code : string,
   category_group_name : string,
@@ -62,8 +63,12 @@ const Propose = () => {
     try {
       // 검색어가 빈칸일땐 호출하지 않음
       if(query.length > 0) {
+        let datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
-  
+        
+        const place = await fetch(`/api/get/placeSearch?query=${searchQuery}`, { method: 'GET' })
+                                                                              .then(r => r.json())
+                                                                              .then(r => datas.push(...r))
         const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {
@@ -76,7 +81,10 @@ const Propose = () => {
         }
   
         const data = await response.json();
-        setResults(data.documents);
+        datas.push(...data.documents)
+        
+        
+        setResults(datas);
         
       }
     } catch (error) {
@@ -128,7 +136,7 @@ const Propose = () => {
     descValue ? '' : info += '[설명]'
     
 
-    info ? info += '(을)를 완료 해 주세요' : info = ''
+    info ? info += ' 을 작성 해 주세요' : info = ''
 
     
     return info
@@ -149,7 +157,7 @@ const Propose = () => {
       <div className='text-center font-extrabold text-2xl my-4'>장소 제안하기</div>
 
       <form action="/api/post/propose" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
-        <div className="font-semibold">위치</div>
+        <div className="font-semibold">위치<span className="text-red-500 font-bold">*</span></div>
         <input 
           className="px-2 my-2 border-gray-300 w-full hover:outline-none hover:ring hover:ring-sygnature-brown focus:outline-none focus:ring focus:ring-sygnature-brown" 
           name="location" 
@@ -157,26 +165,29 @@ const Propose = () => {
           value={query}
           onChange={handleChange}
           ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정
+          autoComplete="off"
         />
         <div 
           className={`border absolute -translate-y-3 bg-white ${focus ? 'visible' : 'hidden'}`}
         >
           <ul>
-            {results.map((result:Result) => (
+            {
+            results.map((result:Result,i) => (
               <li 
-                className="cursor-pointer p-1 m-1 hover:bg-gray-100"
-                key={result.id} 
+                className={`cursor-pointer p-1 m-1 hover:bg-gray-100 ${result._id? 'text-sygnature-brown': ''}`}
+                key={i} 
                 onClick={() => handleResultClick(result)}
               >
-                <span className="font-bold">{result.place_name}</span>
+                {result._id?<FaFlag className='inline' />:''}
+                <span className="font-bold"> {result.place_name}</span>
                 <span> [{result.address_name}],</span>
                 <span> [{result.road_address_name}]</span>
               </li>
-            )).filter((x,i) => i < 5)}
+            ))}
          </ul>
         </div>
 
-        <div className="font-semibold mt-2">영업시간</div>
+        <div className="font-semibold mt-2">영업시간<span className="text-red-500 font-bold">*</span></div>
         <div className="flex flex-row mt-2 mb-4 ">
           <select className="w-24 text-center border border-gray-300 rounded-md cursor-pointer" name="openhour">
             <option value="00:00">00 : 00</option>
@@ -308,32 +319,39 @@ const Propose = () => {
           className={`px-2 border-gray-300 w-full ${inputHoverFocus}`} 
           onChange={handlePhoneChange}
           value={phoneValue}
+          autoComplete="off"
         />
 
-        <div className="font-semibold my-2">이용방법</div>
+        <div className="font-semibold my-2">이용방법<span className="text-red-500 font-bold">*</span></div>
         <textarea 
           maxLength={500} 
           name="howtouse" 
-          className={`h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`} 
+          className={`p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`} 
           onChange={handleHowtouseChange}
           value={howtouseValue}
+          autoComplete="off"
         />
 
-        <div className="font-semibold my-2">설명</div>
+        <div className="font-semibold my-2">설명<span className="text-red-500 font-bold">*</span></div>
         <textarea 
           maxLength={500} 
           name="desc" 
-          className={`h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`} 
+          className={`p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`} 
           onChange={handleDescChange}
           value={descValue}
+          autoComplete="off"
         />        
 
-              <div>
+              <div className="my-5 flex flex-row justify-center">
                 {
                   checkForm()
+                  ?
+                  checkForm()
+                  :
+                  <button className='w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300' type="submit">작성 완료</button>
+
                 }
                 </div>
-        <button className="text-black" type="submit">전송</button>
 
         <div className="hidden">
             {placeInfo?.address_name && <input name="address_name" value={placeInfo?.address_name} onChange={()=>{}} />}
@@ -356,7 +374,6 @@ const Propose = () => {
 
       </form>
 
-      <ModalPropose />
 
 
     </div>

@@ -12,9 +12,7 @@ import Link from 'next/link'
 export default async function Header() {
   let session: Session | null = await getServerSession(authOptions)
 
-  const handleClick = () => {
-    console.log('clicked')
-  }
+  
   return (
     <div>
       <div className="flex w-full h-20 bg-sygnature-brown fixed">
