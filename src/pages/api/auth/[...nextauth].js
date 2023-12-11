@@ -55,8 +55,8 @@ export const authOptions = {
   secret: process.env.MONGODB_PASSWORD,
   adapter: MongoDBAdapter(connectDB),
   session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, //30일
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60 //30일
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
@@ -65,7 +65,7 @@ export const authOptions = {
     async redirect({ url, baseUrl }) {
       return baseUrl;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user, account, profile, isNewUser }) {      
       if (user) {
         token.user = {};
         token.user.name = user.name;

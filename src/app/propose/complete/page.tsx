@@ -1,8 +1,20 @@
+'use client'
+import { useRouter } from 'next/navigation'
+
 export default function ThanksToPropose() {
+  const router = useRouter()
+
+  setTimeout(() => {
+    router.push('/mypage')
+  }, 2500);
   return (
-    <div className="h-96 flex justify-center items-center font-bold text-2xl text-sygnature-brown">
-      작성해 주셔서 감사합니다. <br />
-      검토 후 반영하겠습니다.
+    <div className="h-96 flex flex-col justify-center items-center font-bold text-2xl text-sygnature-brown">
+      <div>
+        작성해 주셔서 감사합니다. <br />
+        검토 후 반영하겠습니다.<br /><br />
+      </div>
+
+      <div>잠시 후 마이페이지로 이동합니다.</div>
     </div>
   )
 }
