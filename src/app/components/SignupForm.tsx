@@ -1,43 +1,52 @@
 "use client";
-import { connectDB } from "@/util/database";
-import { toast } from "react-toastify";
-import { useRouter } from 'next/navigation'
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function SignUpForm() {
+  const router = useRouter();
 
-  const router = useRouter()
+  const { register, handleSubmit } = useForm<FieldValues>({
+    defaultValues: {
+      id: "",
+      nickname: "",
+      password: "",
+    },
+  });
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<FieldValues> = async (body) => {
     try {
-      const db = (await connectDB).db("gonggan");
-      await db.collection('users').insertOne({
-        
-      });
-
-      toast.success("회원가입에 성공했습니다.");
-      router.push("/");
-    } catch (error: any) {
+      console.log(body);
+      const { data } = await axios.post("/api/signup/route", body);
+      console.log(data);
+      router.push("/signin");
+    } catch (error) {
       console.log(error);
-      toast.error(error?.code);
     }
-  }
+  };
 
   return (
     <div className="mx-auto max-w-2xl p-5">
-      <form action="/post" method="POST" className="m-auto p-11">
+      <form onSubmit={handleSubmit(onSubmit)}  className="m-auto p-11">
         <h1 className="text-3xl font-bold text-center">회원가입</h1>
         <div className="form__block">
           <label className="lab" htmlFor="id">
             아이디
           </label>
-          <input className="in" type="id" name="id" id="id" required />
+          <input
+            {...register("id")}
+            className="in"
+            type="id"
+            name="id"
+            required
+          />
         </div>
         <div className="form__block">
           <label className="lab" htmlFor="nickname">
             닉네임
           </label>
           <input
+            {...register("nickname")}
             className="in"
             type="nickname"
             name="nickname"
@@ -50,6 +59,7 @@ export default function SignUpForm() {
             비밀번호
           </label>
           <input
+            {...register("password")}
             className="in"
             type="password"
             name="password"
@@ -62,6 +72,7 @@ export default function SignUpForm() {
             비밀번호 확인
           </label>
           <input
+            {...register("password_confirm")}
             className="in"
             type="password_confirm"
             name="password_confirm"
@@ -71,9 +82,6 @@ export default function SignUpForm() {
         </div>
         <div className="form_block">
           <p className="mt-5">입력한 암호가 일치하지 않습니다.</p>
-        </div>
-        <div className="form_block">
-          <p className="mt-5">캡챠</p>
         </div>
         <div className="form_block flex">
           <input

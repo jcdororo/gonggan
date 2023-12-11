@@ -36,7 +36,7 @@
     "src/app/features/saga.js",
     "src/pages/api/post/oauth.ts",
     "src/util/database.ts",
-    "src/pages/api/auth/[...nextauth].js",
+    "src/pages/api/auth/[...nextauth].ts",
     ".next/types/**/*.ts",
     "src/**/*",
     "global.d.ts"
