@@ -9,7 +9,6 @@ import Link from 'next/link';
 export default async function MyPage() {
   let session = await getServerSession(authOptions);
 
-  console.log('마이페이지 세션',session)
   
 
   let db = (await connectDB).db('gonggan');
@@ -21,7 +20,6 @@ export default async function MyPage() {
     response._id = response._id.toString()
     likePlace.push(response)
   }
-  // console.log('likePlace',likePlace)
   
   let placeReview: any = await (await db.collection('review').find({writerid:new ObjectId(session.user.id)}).toArray())
   for(let i = 0; i < placeReview.length; i++) {

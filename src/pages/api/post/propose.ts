@@ -8,7 +8,6 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
 
 
   request.body["proposerId"] = session?.user.id;
-  console.log('request@@@@',request.body)
   if(request.method == 'POST') {
     try {
       const db = (await connectDB).db("gonggan");

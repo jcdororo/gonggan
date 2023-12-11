@@ -1,8 +1,10 @@
 'use client'
 import { useEffect, useRef, useState } from "react";
-import { useDebounce } from "../hooks/useDebounce";
-import { inputHoverFocus } from "../styles/styles";
+import { useDebounce } from "@/app/hooks/useDebounce";
+import { inputHoverFocus } from "@/app/styles/styles";
 import { FaFlag } from "react-icons/fa";
+import { connectDB } from "@/util/database";
+import { ObjectId } from "mongodb";
 
 
 interface Result {
@@ -21,8 +23,15 @@ interface Result {
   y : string,
 }
 
+interface Props {
+  params: {
+    id: string
+  },
+  searchParams: {}
+}
 
-const Propose = () => {
+
+const Propose = (props:Props) => {
   const [focus, setFocus] = useState(false);
   const [query, setQuery] = useState('');
   const [phoneValue, setPhoneValue] = useState('')
@@ -33,8 +42,49 @@ const Propose = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
   
+  const [sun, setSun] = useState(false)
+  const [mon, setMon] = useState(false)
+  const [tue, setTue] = useState(false)
+  const [wed, setWed] = useState(false)
+  const [thu, setThu] = useState(false)
+  const [fri, setFri] = useState(false)
+  const [sat, setSat] = useState(false)
+
 
   useEffect(() => {
+    const propose = fetch(`/api/get/proposeSearch/?id=${props.params.id}`, { method: 'GET' })
+    .then(r => r.json())
+    .then(r => {
+        setQuery(r.location),
+        setPhoneValue(r.phone),
+        setHowtouseValue(r.howtouse),
+        setdescValue(r.desc),
+        (r.businessday && r.businessday.indexOf('월') !== -1) ? setMon(true) : setMon(false),
+        (r.businessday && r.businessday.indexOf('화') !== -1) ? setTue(true) : setTue(false),
+        (r.businessday && r.businessday.indexOf('수') !== -1) ? setWed(true) : setWed(false),
+        (r.businessday && r.businessday.indexOf('목') !== -1) ? setThu(true) : setThu(false),
+        (r.businessday && r.businessday.indexOf('금') !== -1) ? setFri(true) : setFri(false),
+        (r.businessday && r.businessday.indexOf('토') !== -1) ? setSat(true) : setSat(false),
+        (r.businessday && r.businessday.indexOf('일') !== -1) ? setSun(true) : setSun(false),
+        (setPlaceInfo(r))
+          
+        
+      }
+
+      
+    )
+    
+  
+    
+  }, [])
+  
+  
+
+
+  useEffect(() => {
+    // propose정보 가져오기
+    // const propose = await fetch(`/api/get/proposeSearch/?id=${props.params.id}`, { method: 'GET' })
+
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
   
@@ -153,9 +203,9 @@ const Propose = () => {
 
   return (
     <div>
-      <div className='text-center font-extrabold text-2xl my-4'>장소 제안하기</div>
+      <div className='text-center font-extrabold text-2xl my-4'>Admin 장소 제안 내용</div>
 
-      <form action="/api/post/propose" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
+      <form action="/api/post/proposeConfirm" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
         <div className="font-semibold">위치<span className="text-red-500 font-bold">*</span></div>
         <input 
           className="px-2 my-2 border-gray-300 w-full hover:outline-none hover:ring hover:ring-sygnature-brown focus:outline-none focus:ring focus:ring-sygnature-brown" 
@@ -295,19 +345,19 @@ const Propose = () => {
 
         <div className="font-semibold">영업일</div>
         <div className="flex flex-row items-center justify-center my-2">
-          <input name="businessday" type="checkbox" value={'월'} className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`} />
+          <input name="businessday" readOnly={true} checked={mon} type="checkbox" value={'월'} className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block">월</span>
-          <input name="businessday" type="checkbox" value={'화'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input name="businessday" readOnly={true} checked={tue} type="checkbox" value={'화'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block">화</span>
-          <input name="businessday" type="checkbox" value={'수'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input name="businessday" readOnly={true} checked={wed} type="checkbox" value={'수'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block">수</span>
-          <input name="businessday" type="checkbox" value={'목'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input name="businessday" readOnly={true} checked={thu} type="checkbox" value={'목'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block">목</span>
-          <input name="businessday" type="checkbox" value={'금'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input name="businessday" readOnly={true} checked={fri} type="checkbox" value={'금'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block">금</span>
-          <input name="businessday" type="checkbox" value={'토'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input name="businessday" readOnly={true} checked={sat} type="checkbox" value={'토'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block">토</span>
-          <input name="businessday" type="checkbox" value={'일'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input name="businessday" readOnly={true} checked={sun} type="checkbox" value={'일'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-4 block">일</span>
         </div>
 
@@ -339,17 +389,20 @@ const Propose = () => {
           onChange={handleDescChange}
           value={descValue}
           autoComplete="off"
-        />        
+        />   
 
-              <div className="my-5 flex flex-row justify-center">
-                {
-                  checkForm()
-                  ?
-                  checkForm()
-                  :
-                  <button className='w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300' type="submit">작성 완료</button>
-                }
-                </div>
+        
+
+        <div className="my-5 flex flex-row justify-center">
+          {
+            checkForm()
+            ?
+            checkForm()
+            :
+            <button className='w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300' type="submit">승인</button>
+
+          }
+        </div>
 
         <div className="hidden">
             {placeInfo?.address_name && <input name="address_name" value={placeInfo?.address_name} onChange={()=>{}} />}
@@ -364,11 +417,9 @@ const Propose = () => {
             {placeInfo?.road_address_name && <input name="road_address_name" value={placeInfo?.road_address_name} onChange={()=>{}} />}
             {placeInfo?.x && <input name="x" value={placeInfo?.x} onChange={()=>{}} />}
             {placeInfo?.y && <input name="y" value={placeInfo?.y} onChange={()=>{}} />}          
-            {placeInfo?.y && <input name="date" value={new Date().toLocaleDateString('ko-KR').toString()} onChange={()=>{}} />}          
-            {placeInfo?.y && <input name="status" value={'진행중'} onChange={()=>{}} />}          
-
+            {<input name="_id" value={props.params.id} onChange={()=>{}} />}
+            
         </div>
-
 
         
 
