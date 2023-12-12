@@ -126,7 +126,7 @@ const SearchBar = () => {
   };
   console.log('선택한 장소의 결과 : ',place)
   return (
-    <div className="p-3 h-96 z-0 flex flex-col items-center">
+    <div className="p-3 h-30 z-0 flex flex-col items-center">
       <div className='relative w-128 flex flex-row justify-center items-center border-2 rounded-3xl overflow-hidden border-sygnature-brown hover:shadow-lg'>
         <span className='bg-white text-2xl h-8 -mr-1 z-10 font-bold text-sygnature-brown mx-3 cursor-pointer'>工</span>
         <input 
