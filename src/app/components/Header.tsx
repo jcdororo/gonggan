@@ -22,7 +22,7 @@ export default async function Header() {
   
   return (
     <div>
-      <div className="flex w-full h-20 bg-sygnature-brown fixed opacity-90">
+      <div className="flex w-full h-20 bg-sygnature-brown fixed opacity-80 z-9999">
       <Link href={'/'}>
         <Image 
           className="mx-1 ml-3 relative"

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+header {
+  z-index: 9999;
+}
+
+
 button {
   background-color: #998373;
   color: #fff;

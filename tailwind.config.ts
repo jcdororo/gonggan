@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      zIndex: {
+        '9999': '9999'
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -29,6 +32,9 @@ const config: Config = {
         '120' : '36rem',
         '124' : '38rem',
         '128' : '40rem',
+      },
+      top: {
+        '42' : '10.5rem'
       }
     },
   },
