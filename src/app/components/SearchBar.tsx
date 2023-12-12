@@ -28,6 +28,7 @@ const SearchBar = () => {
   const [focus, setFocus] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [results, setResults] = useState<Result[]>([]);
+  const [place, setPlace] = useState([]);
   const [placeInfo, setPlaceInfo] = useState<Result | null>(null);
 
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
@@ -68,7 +69,9 @@ const SearchBar = () => {
         
         const place = await fetch(`/api/get/placeSearch?query=${searchQuery}`, { method: 'GET' })
                                                                               .then(r => r.json())
-                                                                              .then(r => datas.push(...r))
+                                                                              // .then(r => datas.push(...r))
+        datas.push(...place)                  
+        setPlace(place);                                    
         const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {
@@ -119,10 +122,9 @@ const SearchBar = () => {
     // 클릭한 결과 정보를 출력
     setQuery(result.place_name)
     setPlaceInfo(result)
-    setFocus(false);
-    console.log('선택한 장소의 결과 : ',placeInfo)
+    setFocus(false);    
   };
-
+  console.log('선택한 장소의 결과 : ',place)
   return (
     <div className="p-3 h-96 z-0 flex flex-col items-center">
       <div className='relative w-128 flex flex-row justify-center items-center border-2 rounded-3xl overflow-hidden border-sygnature-brown hover:shadow-lg'>
@@ -145,8 +147,7 @@ const SearchBar = () => {
       <div className={`border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pt-3 -translate-y-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
         <ul>
           {
-            results.length
-            ?
+            
             results.map((result:Result,i) => (
               <li 
                 className={`cursor-pointer p-1 m-1 hover:bg-gray-100 ${result._id? 'text-sygnature-brown': ''}`}
@@ -159,16 +160,21 @@ const SearchBar = () => {
                 <span> [{result.road_address_name}]</span>
               </li>
             ))
+          }
+          {
+            place.length
+            ?
+            ''
             :
             <li>
-              <div className='w-128 h-24 flex flex-col justify-center items-center overflow-hidden'>
-                <div className='p-3 text-2xl font-bold hover:font-bold'>&quot;{query}&quot; 검색 결과 없음</div>
-                <div 
-                  className='p-1 cursor-pointer text-blue-600 mb-1 hover:font-bold'
-                  onClick={()=>{console.log('clicked!')}}
-                ><Link href={'/propose'}>+ 장소 제안하기</Link></div>
-              </div>
-            </li>
+                <div className='w-128 h-24 flex flex-col justify-center items-center overflow-hidden'>
+                  <div className='p-3 text-2xl font-bold hover:font-bold'>&quot;{query}&quot; 검색 결과 없음</div>
+                  <div 
+                    className='p-1 cursor-pointer text-blue-600 mb-1 hover:font-bold'
+                    onClick={()=>{console.log('clicked!')}}
+                  ><Link href={'/propose'}>+ 장소 제안하기</Link></div>
+                </div>
+              </li>
           }
       </ul>
       </div>
