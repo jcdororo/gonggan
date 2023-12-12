@@ -6,27 +6,44 @@ import Image from 'next/image';
 import { ObjectId } from 'mongodb';
 import Link from 'next/link';
 
-export default async function MyPage() {
-  let session = await getServerSession(authOptions);
-
-  
-
-  let db = (await connectDB).db('gonggan');
-  let result = await db.collection('like_place').find({liked_user:new ObjectId(session.user.id)}).toArray()
-  let likePlace = [];
-  let user = await db.collection('users').findOne({_id:new ObjectId(session.user.id)})
-  for(let i = 0; i < result.length; i++) {
-    let response = await db.collection('place').findOne({_id:new ObjectId(result[i].place_id)})
-    response._id = response._id.toString()
-    likePlace.push(response)
+interface Session {
+  user: {
+    name?: string,
+    email?: string,
+    image?: string,
+    nickname: string,
+    id: string
   }
-  
-  let placeReview: any = await (await db.collection('review').find({writerid:new ObjectId(session.user.id)}).toArray())
-  for(let i = 0; i < placeReview.length; i++) {
-    placeReview[i]._id = placeReview[i]._id.toString();
-    placeReview[i].placeid = placeReview[i].placeid.toString();
-    placeReview[i].writerid = placeReview[i].writerid.toString();
+}
 
+export default async function MyPage() {
+  let session:Session | undefined | null = await getServerSession(authOptions);
+  console.log('session',session)
+
+  let likePlace = [];
+  let placeReview = [];
+  if(
+      session.user.id && 
+      session.user.name && 
+      session.user.image && 
+      session.user.nickname
+    ) {
+      let db = (await connectDB).db('gonggan');
+      let result = await db.collection('like_place').find({liked_user:new ObjectId(session.user.id)}).toArray()
+      likePlace = [];
+      let user = await db.collection('users').findOne({_id:new ObjectId(session.user.id)})
+      for(let i = 0; i < result.length; i++) {
+        let response = await db.collection('place').findOne({_id:new ObjectId(result[i].place_id)})
+        response._id = response._id.toString()
+        likePlace.push(response)
+      }
+      
+      let placeReview: any = await (await db.collection('review').find({writerid:new ObjectId(session.user.id)}).toArray())
+      for(let i = 0; i < placeReview.length; i++) {
+        placeReview[i]._id = placeReview[i]._id.toString();
+        placeReview[i].placeid = placeReview[i].placeid.toString();
+        placeReview[i].writerid = placeReview[i].writerid.toString();
+      }
   }
 
   
@@ -41,22 +58,24 @@ export default async function MyPage() {
           {/* <div className='bg-black w-20 h-20 mx-3 mt-4 rounded-full'></div> */}
           <Image 
             className='bg-black w-20 h-20 mx-3 mt-4 rounded-full'
-            src={session.user.image}
+            src={`${session.user.image ? session.user.image : '/logo2.png'}`}
             width={110}
             height={75}
             alt="header"
-        />
+          />
         </div>
         <div>
           <div className='my-4 mx-1 font-medium text-xl'>
-            <span className=''>[{user.nickname}]</span>{" "}<span className='text-' style={{ color: '#998373' }}>님</span>
+            <span className=''>[{`${session.user.nickname ? session.user.nickname : '닉네임설정'}`}]</span>{" "}<span className='text' style={{ color: '#998373' }}>님</span>
           </div>
           <div className='flex'>
             <Link className='w-32 h-8 font-bold mx-1 text-xs text-white bg-sygnature-brown border rounded-md flex flex-col text-center justify-center' href={'/contact'}>문의 하기</Link>
-            <Link className='w-32 h-8 font-bold mx-1 text-xs text-white bg-sygnature-brown border rounded-md flex flex-col text-center justify-center' href={'/mypage/profile'}>프로필 설정</Link>        </div>
+            <Link className='w-32 h-8 font-bold mx-1 text-xs text-white bg-sygnature-brown border rounded-md flex flex-col text-center justify-center' href={'/mypage/profile'}>프로필 설정</Link></div>
           </div>
       </div>
+     
       <MyContents likePlace={likePlace} placeReview={placeReview} />
+      
     </div>
   )
 }

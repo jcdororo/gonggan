@@ -22,7 +22,7 @@ export default function Home() {
   };
 
   return (
-    <div className={roboto.className}>
+    <div className={`${roboto.className} h-screen`}>
       <button>버튼</button>
       <input type="text" value="텍스트박스"></input>
       <div className="" onClick={handleModal}>

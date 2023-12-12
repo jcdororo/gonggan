@@ -1,21 +1,10 @@
 'use client'
 import React, { useState } from 'react'
 import { FaBell } from 'react-icons/fa'
-import LoginBtn from './LoginBtn'
-import LogOutBtn from './LogOutBtn'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { signIn, signOut } from 'next-auth/react'
 
-// interface Sess {
-//   user: {
-//     email : string,
-//     id : string,
-//     image : string,
-//     name : string,
-//     nickname : string
-//   }
-// }
 
 const HeaderInfo = ({session} ) => {
   const [isDropboxOpen, setIsDropboxOpen] = useState(false);
@@ -46,7 +35,7 @@ const HeaderInfo = ({session} ) => {
             <FaBell className="block mx-4 mr-6 text-sygnature-beige cursor-pointer" onClick={handleAlarm} size="30"/>
             <img 
               className="rounded-full h-14 w-14 overflow-hidden cursor-pointer"
-              src={session.user.image}
+              src={session.user.image ? session.user.image : '/logo2.png'}
               width={640}
               height={640}
               alt='아이콘'
