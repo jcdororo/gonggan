@@ -3,9 +3,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
 export default async function POST(request: any, response: any) {
-
   
-
   const data = request.body;
   const { id, nickname, password } = data;
 
