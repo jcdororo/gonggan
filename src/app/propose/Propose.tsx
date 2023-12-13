@@ -114,7 +114,9 @@ const Propose = ({session}) => {
   const debouncedQuery = useDebounce(query, 100);
   useEffect(() => {
     handleSearch(debouncedQuery);
+    
     setFocus(true)
+    
   }, [debouncedQuery])
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
