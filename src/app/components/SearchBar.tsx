@@ -124,7 +124,6 @@ const SearchBar = () => {
     setPlaceInfo(result)
     setFocus(false);    
   };
-  console.log('선택한 장소의 결과 : ',place)
   return (
     <div className="p-3 h-96 z-0 flex flex-col items-center">
       <div className='relative w-128 flex flex-row justify-center items-center border-2 rounded-3xl overflow-hidden border-sygnature-brown hover:shadow-lg'>

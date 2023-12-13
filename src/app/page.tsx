@@ -2,6 +2,7 @@ import { Roboto } from "next/font/google";
 import SearchBar from "./components/SearchBar";
 import { connectDB } from "@/util/database";
 import { ObjectId } from "mongodb";
+import DetailModal from "./detail/DetailModal";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -18,6 +19,7 @@ export default async function Home() {
       {/* Search Bar */}
       <SearchBar />
 
+      <DetailModal />
        
     </div>
   );
