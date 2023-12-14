@@ -4,6 +4,7 @@ import { connectDB } from "@/util/database";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { ObjectId } from "mongodb";
 
 const db = (await connectDB).db("gonggan");
 
@@ -25,7 +26,7 @@ export const authOptions = {
           throw new Error('Invalid credentials');
         }
         
-        const user = await db.collection("users").findOne({ id: credentials.id } );
+        const user = await db.collection("users").findOne({ loginId: credentials.id } );
 
         if(!user || !user?.password) {
           throw new Error('Invalid credentials');

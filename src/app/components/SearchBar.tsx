@@ -64,6 +64,7 @@ const SearchBar = () => {
     try {
       // 검색어가 빈칸일땐 호출하지 않음
       if(query.length > 0) {
+        setPlaceInfo(null)
         let datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
         
@@ -87,7 +88,10 @@ const SearchBar = () => {
         datas.push(...data.documents)
         
         setResults(datas);
-        setFocus(true)
+        if(!placeInfo) {
+          setFocus(true)
+        }
+        
         
       }
     } catch (error) {
