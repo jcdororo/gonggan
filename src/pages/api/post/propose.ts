@@ -7,6 +7,7 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
   let session = await getServerSession(request, response, authOptions);
 
 
+
   request.body["proposerId"] = session?.user.id;
   if(request.method == 'POST') {
     try {

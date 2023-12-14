@@ -1,13 +1,21 @@
 'use client'
 
-
+import { useRouter } from "next/navigation";
 
 export default function Error({error, reset}:any){
+  const router = useRouter()
 
+  setTimeout(() => {
+    router.push('/signin')
+  }, 1000);
   return (
-    <div>
-      <h4>에러</h4>
-      <button onClick={()=>{ reset() }}>다시시도</button>
+    <div className="h-96 flex flex-col justify-center items-center font-bold text-2xl text-sygnature-brown">
+      <div>
+        세션 오류발생 <br />
+        <br /><br />
+      </div>
+
+      <div>잠시 후 로그인페이지로 이동합니다.</div>
     </div>
   )
 }
