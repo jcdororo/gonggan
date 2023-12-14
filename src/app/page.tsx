@@ -34,19 +34,17 @@ export default async function Home() {
           <div className="w-1/3">
             <Space category="주변" />
           </div>
-          <div className="w-2/3"><Map /></div>
-          <div className="w-1/3">주변공간</div>
-      {/* 핫한공간 */}
-      <HotPlace />
         </div>
       </div>
+      {/* 핫한공간 */}
+      <HotPlace />
     </div>
   );
 }
 
 async function getData() {
   try {
-    const res = await axios.get("http://localhost:3000/api/places/route");
+    const res = await axios.get("/api/places/route");
     const data = res.data;
     return data;
   } catch (e) {
