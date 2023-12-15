@@ -4,6 +4,9 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { getServerSession } from "next-auth"
 import HeaderInfo from "./HeaderInfo";
 import Link from 'next/link'
+import { connectDB } from "@/util/database";
+import { ObjectId } from "mongodb";
+import { AlarmType } from "../interface";
 
 
 interface Session {
@@ -19,6 +22,14 @@ interface Session {
 export default async function Header() {
   const session: any = await getServerSession(authOptions)
 
+  const db = (await connectDB).db("gonggan");
+  const alarms = await db.collection('alarm').find({receiver: new ObjectId(session.user.id)}).toArray();
+  for(let alarm of alarms) {
+    alarm._id = alarm._id.toString()
+    alarm.receiver = alarm.receiver.toString();
+  }
+
+
   
   return (
     <div>
@@ -32,7 +43,8 @@ export default async function Header() {
           alt="header"
         />
       </Link>
-      <HeaderInfo session={session} />
+      
+      <HeaderInfo session={session} alarms={alarms} />
         
         
       </div>

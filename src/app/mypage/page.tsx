@@ -56,7 +56,6 @@ export default async function MyPage() {
       }
 
       const placeReview: any = await db.collection('review').find({writerid:new ObjectId(session.user.id)}).toArray()
-      console.log('placeReview',placeReview)
       for(let i = 0; i < placeReview.length; i++) {
         placeReview[i]._id = placeReview[i]._id.toString();
         placeReview[i].placeid = placeReview[i].placeid.toString();

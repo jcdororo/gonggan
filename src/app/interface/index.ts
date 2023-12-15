@@ -39,3 +39,13 @@ export interface ReviewType {
   writerpic: string;
   star: string;  
 }
+
+export interface AlarmType {
+  map: any;
+  _id: string | ObjectId;
+  check: boolean;
+  content: string;
+  date: Date;
+  link: string;
+  receiver: string | ObjectId;
+}

@@ -1,14 +1,26 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaBell } from 'react-icons/fa'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { signIn, signOut } from 'next-auth/react'
+import { AlarmType } from '../interface'
 
+interface Props {
+  session: any,
+  alarms: AlarmType[]
+}
 
-const HeaderInfo = ({session}: any) => {
+const HeaderInfo = ({session, alarms}:Props) => {
   const [isDropboxOpen, setIsDropboxOpen] = useState(false);
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
+  const [alarmsContens, setAlarmsContens] = useState([])
+
+  useEffect(() => {
+    setAlarmsContens([...alarms])
+  
+  }, [])
+  
 
   const handleClick = () => {
     setIsAlarmOpen(false)
@@ -20,51 +32,99 @@ const HeaderInfo = ({session}: any) => {
     setIsAlarmOpen(!isAlarmOpen)
   }
 
+  const handleContent = (e, id, index) => {
+    const response = fetch(`/api/post/alarmCheck?_id=${id}`, {method:'POST'})
+    .then(r => r.json())
+    .then(r => {
+        setAlarmsContens([...alarmsContens.slice(0,index), r, ...alarmsContens.slice(index+1, alarmsContens.length)])
+      })
+     
+
+  }
+
+  const alarmTime = (input) => {
+    const currentTime = new Date();
+    const inputTime = new Date(input);
+
+    // 시간 차이 계산 (밀리초 단위)
+    const timeDiff = currentTime - inputTime;
+
+    // 밀리초를 분, 시간, 일, 월, 년으로 변환
+    const seconds = Math.floor(timeDiff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30.44); // 평균 월 길이
+    const years = Math.floor(months / 12);
+
+    // 결과 생성
+    if (minutes < 60) {
+      return `${minutes}분 전`;
+    } else if (hours < 24) {
+      return `${hours}시간 전`;
+    } else if (days < 30) {
+      return `${days}일 전`;
+    } else if (months < 12) {
+      return `${months}개월 전 `;
+    } else {
+      return `${years}년 전 `;
+    }
+  }
+
   
   
 
   return (
     <div>
       {
-        
         session 
         // 로그인 상태일 때
         ?
         <div className="absolute right-0 flex items-center px-7 py-3">
-          <div className="right-1 flex justify-center items-center">
-            <FaBell className={`block mx-4 mr-6 text-sygnature-beige cursor-pointer border-sygnature-brown rounded-xl ${isAlarmOpen ? 'bg-black' : ''}`} onClick={handleAlarm} size="30"/>
+          <div className="right-1 flex justify-center items-center">            
+              <div className='absolute w-5 top-5 left-14 font-bold text-sm text-center rounded-2xl bg-red-600 text-white'>
+                {alarmsContens ? alarmsContens.filter(x=> x.check == false).length : ''}   
+              </div> 
+            <FaBell className={`block mx-4 mr-6 text-sygnature-beige cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${isAlarmOpen ? 'text-red-400' : ''}`} onClick={handleAlarm} size="30"/>
             <img 
-              className="rounded-full h-14 w-14 overflow-hidden cursor-pointer"
+              className="rounded-full h-14 w-14 overflow-hidden cursor-pointer hover:scale-105 transition duration-300"
               src={session.user.image ? session.user.image : '/logo2.png'}
               width={640}
               height={640}
               alt='아이콘'
               onClick={handleClick}
             />
+            
 
             {/* 알람 아이콘 클릭시 나오는 드랍박스 */}
             <div 
             className={clsx( 
-              'bg-sygnature-beige top-20 w-80 h-auto absolute rounded-md text-center flex flex-col items-center justify-center transform -translate-x-24 p-2',
+              'bg-sygnature-beige top-20 w-80 h-auto font-bold absolute rounded-md text-center flex flex-col items-center justify-center transform -translate-x-24 p-2',
               {
                 'visible' : isAlarmOpen === true,
                 'hidden' : isAlarmOpen === false
               }
               )}
               onClick={()=>{setIsAlarmOpen(false)}}           
-              >
+              >                
 
-              <Link 
-                href={'/mypage'} 
-                className='hover:font-bold'
-                >마이페이지
-              </Link>
+              {
+                alarmsContens.map((x:AlarmType, i:number) => (
+                  <Link 
+                    href={x.link ? x.link : ''} 
+                    key={x._id.toString()} 
+                    className={`cursor-pointer hover:scale-105 transition duration-300 py-1 ${x.check ? 'opacity-50': 'opacity-100'}`}
+                    onClick={(e) => {handleContent(e, x._id, i)}}
+                  >
+                    <span className='text-left'>{x.content}</span>
+                    <div className='text-left text-sm opacity-80'> {alarmTime(x.date)}</div>
+                    <div className='flex justify-center'>
+                      <div className='h-[0.5px] w-full bg-black opacity-30'></div>
+                    </div>
+                  </Link>
+                ))
+              }
               
-              <div className='cursor-pointer hover:font-bold py-1'>등록한 문의 내용 답변</div>
-              <div className='cursor-pointer hover:font-bold py-1'>hi님이 내 리뷰에 좋아요를 눌렀습니다.</div>
-              <div className='cursor-pointer hover:font-bold py-1'>교촌허니콤보 교촌허니콤보 교촌허니콤보 교촌허니콤보 교촌허니콤보 교촌허니콤보 </div>
-              <div className='cursor-pointer hover:font-bold py-1'>hello님이 내 리뷰에 좋아요를 눌렀습니다.</div>
-
               <div className="absolute bottom-full left-1/2 transform translate-x-14 w-0 h-0 border-solid border-8 border-transparent border-b-sygnature-beige"></div>
             </div>
             
@@ -72,13 +132,13 @@ const HeaderInfo = ({session}: any) => {
             {/* 유저 아이콘 클릭시 나오는 드랍박스 */}
             <div 
             className={clsx(
-              'bg-sygnature-beige top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center',
+        'bg-sygnature-beige top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top',
               {
                 'visible' : isDropboxOpen === true,
-                'hidden' : isDropboxOpen === false
+                'invisible' : isDropboxOpen === false
               }
               )}   
-              onClick={()=>{setIsDropboxOpen(false)}}           
+              onClick={handleClick}           
             >
               <Link 
                 href={'/mypage'} 
@@ -86,10 +146,11 @@ const HeaderInfo = ({session}: any) => {
               >
                 마이페이지
               </Link>
-              <div className='hover:font-bold cursor-pointer py-1' onClick={() => {signOut()}}>로그아웃</div>
+              <div className='hover:font-bold cursor-pointer py-1' onClick={() => {signOut()}}>
+                로그아웃
+              </div>
               <div className="absolute bottom-full left-1/2 transform translate-x-6 w-0 h-0 border-solid border-8 border-transparent border-b-sygnature-beige"></div>
             </div>
-
           </div>
         </div>
 

@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import ModalDelete from './ModalDelete';
 import ModalUpdate from './ModalUpdate';
 import { FaHeart, FaStar, FaThumbsUp } from 'react-icons/fa'
