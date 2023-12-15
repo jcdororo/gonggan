@@ -4,9 +4,8 @@ import { connectDB } from "@/util/database";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import { ObjectId } from "mongodb";
 
-const db = (await connectDB).db("gonggan");
+
 
 export const authOptions = {
   providers: [
@@ -25,7 +24,7 @@ export const authOptions = {
         if(!credentials?.id || !credentials?.password) {
           throw new Error('Invalid credentials');
         }
-        
+        const db = (await connectDB).db("gonggan");
         const user = await db.collection("users").findOne({ loginId: credentials.id } );
 
         if(!user || !user?.password) {
@@ -61,6 +60,7 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
+    // async signIn() {
       return true;
     },
     async redirect({ url, baseUrl }) {
@@ -69,7 +69,7 @@ export const authOptions = {
     async jwt({ token, user, account, profile, isNewUser }) {      
       if (user) {
         token.user = {};
-        token.user.name = user.name;
+        token.user.name  = user.name;
         token.user.email = user.email;
         token.user.image = user.image;
         token.user.nickname = user.nickname;

@@ -12,7 +12,7 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
   if(request.method == 'POST') {
     try {
       const db = (await connectDB).db("gonggan");
-      let result = await db.collection('propose').insertOne(request.body)   
+      const result = await db.collection('propose').insertOne(request.body)   
       if (result) {
         response.redirect(301,'/propose/complete')
         } else {

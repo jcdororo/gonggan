@@ -1,6 +1,6 @@
 import Image from "next/image";
 import header from '/public/logo2.png'
-import { authOptions } from "@/pages/api/auth/[...nextauth].js"
+import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { getServerSession } from "next-auth"
 import HeaderInfo from "./HeaderInfo";
 import Link from 'next/link'

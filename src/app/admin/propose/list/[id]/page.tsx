@@ -27,7 +27,7 @@ interface Props {
   params: {
     id: string
   },
-  searchParams: {}
+  searchParams: object
 }
 
 
@@ -41,7 +41,8 @@ const Propose = (props:Props) => {
   const [placeInfo, setPlaceInfo] = useState<Result | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
-  
+  const [place, setPlace] = useState([]);
+
   const [sun, setSun] = useState(false)
   const [mon, setMon] = useState(false)
   const [tue, setTue] = useState(false)
@@ -113,12 +114,16 @@ const Propose = (props:Props) => {
     try {
       // 검색어가 빈칸일땐 호출하지 않음
       if(query.length > 0) {
-        let datas = [];
+        setPlaceInfo(null)
+        const datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
         
         const place = await fetch(`/api/get/placeSearch?query=${searchQuery}`, { method: 'GET' })
                                                                               .then(r => r.json())
-                                                                              .then(r => datas.push(...r))
+                                                                              // .then(r => datas.push(...r))
+                                                                              
+        datas.push(...place)                  
+        setPlace(place); 
         const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {
@@ -135,6 +140,10 @@ const Propose = (props:Props) => {
         
         
         setResults(datas);
+        if(!placeInfo) {
+          setFocus(true)
+        }
+        
         
       }
     } catch (error) {
@@ -146,7 +155,6 @@ const Propose = (props:Props) => {
   const debouncedQuery = useDebounce(query, 100);
   useEffect(() => {
     handleSearch(debouncedQuery);
-    setFocus(true)
   }, [debouncedQuery])
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
