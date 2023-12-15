@@ -1,6 +1,5 @@
 // 장소들 가져오기
 import { connectDB } from "@/util/database";
-import { NextResponse } from "next/server";
 
 export default async function GET(request: any, response: any) {
   const db = (await connectDB).db("gonggan");
