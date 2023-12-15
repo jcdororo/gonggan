@@ -17,7 +17,7 @@ interface Session {
 }
 
 export default async function Header() {
-  let session:Session | undefined | null = await getServerSession(authOptions)
+  const session: any = await getServerSession(authOptions)
 
   
   return (

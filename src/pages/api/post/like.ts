@@ -25,7 +25,7 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
         response.status(200).json('true')
       }
     } catch (error) {
-      console.log('like error',error)
+      response.status(500).json({ error: error });
     }
     
     

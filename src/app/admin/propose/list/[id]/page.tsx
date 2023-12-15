@@ -114,8 +114,9 @@ const Propose = (props:Props) => {
     try {
       // 검색어가 빈칸일땐 호출하지 않음
       if(query.length > 0) {
-        setPlaceInfo(null)
-        const datas = [];
+        if(!placeInfo) {
+          setPlaceInfo(null)
+        }        const datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
         
         const place = await fetch(`/api/get/placeSearch?query=${searchQuery}`, { method: 'GET' })

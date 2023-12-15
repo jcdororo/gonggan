@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { signIn, signOut } from 'next-auth/react'
 
 
-const HeaderInfo = ({session} ) => {
+const HeaderInfo = ({session}: any) => {
   const [isDropboxOpen, setIsDropboxOpen] = useState(false);
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
 
@@ -32,7 +32,7 @@ const HeaderInfo = ({session} ) => {
         ?
         <div className="absolute right-0 flex items-center px-7 py-3">
           <div className="right-1 flex justify-center items-center">
-            <FaBell className="block mx-4 mr-6 text-sygnature-beige cursor-pointer" onClick={handleAlarm} size="30"/>
+            <FaBell className={`block mx-4 mr-6 text-sygnature-beige cursor-pointer border-sygnature-brown rounded-xl ${isAlarmOpen ? 'bg-black' : ''}`} onClick={handleAlarm} size="30"/>
             <img 
               className="rounded-full h-14 w-14 overflow-hidden cursor-pointer"
               src={session.user.image ? session.user.image : '/logo2.png'}
@@ -50,8 +50,15 @@ const HeaderInfo = ({session} ) => {
                 'visible' : isAlarmOpen === true,
                 'hidden' : isAlarmOpen === false
               }
-              )}>
-              <Link href={'/mypage'} className='hover:font-bold'>마이페이지</Link>
+              )}
+              onClick={()=>{setIsAlarmOpen(false)}}           
+              >
+
+              <Link 
+                href={'/mypage'} 
+                className='hover:font-bold'
+                >마이페이지
+              </Link>
               
               <div className='cursor-pointer hover:font-bold py-1'>등록한 문의 내용 답변</div>
               <div className='cursor-pointer hover:font-bold py-1'>hi님이 내 리뷰에 좋아요를 눌렀습니다.</div>
@@ -70,9 +77,15 @@ const HeaderInfo = ({session} ) => {
                 'visible' : isDropboxOpen === true,
                 'hidden' : isDropboxOpen === false
               }
-              )}
+              )}   
+              onClick={()=>{setIsDropboxOpen(false)}}           
+            >
+              <Link 
+                href={'/mypage'} 
+                className='hover:font-bold' 
               >
-              <Link href={'/mypage'} className='hover:font-bold'>마이페이지</Link>
+                마이페이지
+              </Link>
               <div className='hover:font-bold cursor-pointer py-1' onClick={() => {signOut()}}>로그아웃</div>
               <div className="absolute bottom-full left-1/2 transform translate-x-6 w-0 h-0 border-solid border-8 border-transparent border-b-sygnature-beige"></div>
             </div>

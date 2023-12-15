@@ -19,7 +19,7 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
         response.status(500).json({ error: 'Propose failed' });
       }     
     } catch (error) {
-      throw new Error('Propose failed')
+      response.status(500).json({ error: error });
     }
   }
 

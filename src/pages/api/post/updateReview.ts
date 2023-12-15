@@ -21,7 +21,7 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
         response.status(500).json({ error: 'Update failed' });
       }      
     } catch (error) {
-      console.log(error)
+      response.status(500).json({ error: error });
     }
   }
 

@@ -35,8 +35,9 @@ const Propose = ({session}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;  
   const router = useRouter()
+  const [place, setPlace] = useState([]);
 
-
+  
   if(!session) {
     setTimeout(() => {
       router.push('/signin')
@@ -81,12 +82,18 @@ const Propose = ({session}) => {
     try {
       // 검색어가 빈칸일땐 호출하지 않음
       if(query.length > 0) {
-        let datas = [];
+        if(!placeInfo) {
+          setPlaceInfo(null)
+        }
+        const datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
         
         const place = await fetch(`/api/get/placeSearch?query=${searchQuery}`, { method: 'GET' })
                                                                               .then(r => r.json())
-                                                                              .then(r => datas.push(...r))
+                                                                              // .then(r => datas.push(...r))
+                                                                              
+        datas.push(...place)                  
+        setPlace(place);                                                                  
         const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {
@@ -103,6 +110,9 @@ const Propose = ({session}) => {
         
         
         setResults(datas);
+        if(!placeInfo) {
+          setFocus(true)
+        }
         
       }
     } catch (error) {
@@ -114,9 +124,7 @@ const Propose = ({session}) => {
   const debouncedQuery = useDebounce(query, 100);
   useEffect(() => {
     handleSearch(debouncedQuery);
-    
-    setFocus(true)
-    
+        
   }, [debouncedQuery])
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {

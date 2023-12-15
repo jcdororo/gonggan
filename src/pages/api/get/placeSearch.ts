@@ -8,7 +8,6 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
     response.status(200).json(result);
   } catch (error) {
     response.status(500).json({ error: 'Place search fail' });
-    throw new Error('Place search fail')
   }
 
 
