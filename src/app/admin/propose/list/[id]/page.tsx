@@ -1,10 +1,10 @@
 'use client'
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDebounce } from "@/app/hooks/useDebounce";
 import { inputHoverFocus } from "@/app/styles/styles";
 import { FaFlag } from "react-icons/fa";
-import { connectDB } from "@/util/database";
-import { ObjectId } from "mongodb";
+import { useSendAlarm } from "@/app/hooks/useSendAlarm";
+import { useParams } from "next/navigation";
 
 
 interface Result {
@@ -27,8 +27,11 @@ interface Props {
   params: {
     id: string
   },
-  searchParams: object
+  searchParams: {
+    _id: string
+  }
 }
+
 
 
 const Propose = (props:Props) => {
@@ -42,7 +45,7 @@ const Propose = (props:Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
   const [place, setPlace] = useState([]);
-
+  const [confirm, setConfirm] = useState('approved')
   const [sun, setSun] = useState(false)
   const [mon, setMon] = useState(false)
   const [tue, setTue] = useState(false)
@@ -50,6 +53,7 @@ const Propose = (props:Props) => {
   const [thu, setThu] = useState(false)
   const [fri, setFri] = useState(false)
   const [sat, setSat] = useState(false)
+
 
 
   useEffect(() => {
@@ -153,7 +157,7 @@ const Propose = (props:Props) => {
   };
 
   // 검색 api 호출에 0.5초 딜레이를 줌
-  const debouncedQuery = useDebounce(query, 100);
+  const debouncedQuery = useDebounce(query, 500);
   useEffect(() => {
     handleSearch(debouncedQuery);
   }, [debouncedQuery])
@@ -185,6 +189,23 @@ const Propose = (props:Props) => {
     setPlaceInfo(result)
     setFocus(false);
   };
+
+  const handleClick = (e:React.MouseEvent<HTMLButtonElement>) => {
+    if(confirm == 'approved') {
+      const content = `제안 해주신 장소 [${query}] 승인 되었습니다.`
+      useSendAlarm(content,props.searchParams._id,'','user')
+    }
+
+    if(confirm == 'rejected') {
+      const content = `제안 해주신 장소 [${query}] 반려 되었습니다.`
+      useSendAlarm(content,props.searchParams._id,'','user')
+    }
+    // useSendAlarm()
+  }
+
+  const handleSelect = (e:React.ChangeEvent<HTMLSelectElement>) => {
+    setConfirm(e.target.value)
+  }
 
   const checkForm = () => {
     let info = '';
@@ -408,7 +429,26 @@ const Propose = (props:Props) => {
             ?
             checkForm()
             :
-            <button className='w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300' type="submit">승인</button>
+            <div className="flex gap-3">
+            <select 
+              className="w-24 text-center border border-gray-300 rounded-md cursor-pointer" 
+              name="confirm"
+              onChange={handleSelect}
+            >
+              <option value="approved">승인</option>      
+              <option value="rejected">반려</option>      
+            </select>       
+            <button 
+              className='w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300' 
+              type="submit"
+              onClick={handleClick}
+            >
+              완료
+            </button>
+              
+            </div>              
+            
+
 
           }
         </div>

@@ -25,11 +25,11 @@ export default async function PlaceList() {
 
             <tbody className="">
               { 
-                result.map((x, i) => (
+                result.reverse().map((x, i) => (
                   <tr key={x._id.toString()} className="h-10">                    
                     <td className="py-2 ">
                       <Link 
-                        href={`/admin/propose/list/${x._id.toString()}`}
+                        href={`/admin/propose/list/${x._id.toString()}?_id=${x.proposerId}`}
                         className="hover:underline cursor-pointer"
                       >
                         {x.place_name}

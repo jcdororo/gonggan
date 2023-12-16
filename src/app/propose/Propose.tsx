@@ -5,6 +5,7 @@ import { inputHoverFocus } from "../styles/styles";
 import { FaFlag } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useSendAlarm } from "../hooks/useSendAlarm";
 
 
 interface Result {
@@ -121,7 +122,7 @@ const Propose = ({session}) => {
   };
 
   // 검색 api 호출에 0.5초 딜레이를 줌
-  const debouncedQuery = useDebounce(query, 100);
+  const debouncedQuery = useDebounce(query, 500);
   useEffect(() => {
     handleSearch(debouncedQuery);
         
@@ -154,6 +155,10 @@ const Propose = ({session}) => {
     setPlaceInfo(result)
     setFocus(false);
   };
+
+  const handleClick = () => {
+    useSendAlarm('[admin] 장소제안 1건이 등록 되었습니다.', '', '/admin/propose/list', 'admin')
+  }
 
   const checkForm = () => {
     let info = '';
@@ -375,7 +380,12 @@ const Propose = ({session}) => {
                   ?
                   checkForm()
                   :
-                  <button className='w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300' type="submit">작성 완료</button>
+                  <button 
+                    className='w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300' 
+                    type="submit"
+                    onClick={handleClick}
+                  >작성 완료
+                  </button>
                 }
                 </div>
 

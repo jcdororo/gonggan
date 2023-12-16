@@ -33,7 +33,6 @@ export interface Place {
 
 export default async function MyPage() {
   const session: any = await getServerSession(authOptions);
-  console.log('session',session)
 
   let likePlace = [];
   const placeReview: ReviewType[] = [];

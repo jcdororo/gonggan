@@ -11,10 +11,22 @@ interface Props {
   alarms: AlarmType[]
 }
 
+interface AlarmsContents {
+  _id: string,
+  check: boolean,
+  content: string,
+  date: string,
+  link: string,
+  receiver: string,
+  role: string,
+}
+
+
 const HeaderInfo = ({session, alarms}:Props) => {
   const [isDropboxOpen, setIsDropboxOpen] = useState(false);
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
   const [alarmsContens, setAlarmsContens] = useState([])
+
 
   useEffect(() => {
     setAlarmsContens([...alarms])
@@ -32,19 +44,18 @@ const HeaderInfo = ({session, alarms}:Props) => {
     setIsAlarmOpen(!isAlarmOpen)
   }
 
-  const handleContent = (e, id, index) => {
-    const response = fetch(`/api/post/alarmCheck?_id=${id}`, {method:'POST'})
+  const handleContent = async (e:React.MouseEvent<HTMLAnchorElement>, id:object | string, index:number) => {
+    const response = await fetch(`/api/post/alarmCheck?_id=${id}`, {method:'POST'})
     .then(r => r.json())
     .then(r => {
-        setAlarmsContens([...alarmsContens.slice(0,index), r, ...alarmsContens.slice(index+1, alarmsContens.length)])
-      })
-     
-
+        alarmsContens[index].check = true
+        setAlarmsContens([...alarmsContens.slice(0,index), alarmsContens[index], ...alarmsContens.slice(index+1, alarmsContens.length)])
+      })     
   }
 
-  const alarmTime = (input) => {
-    const currentTime = new Date();
-    const inputTime = new Date(input);
+  const alarmTime = (input: string | number | Date) => {
+    const currentTime = Number(new Date());
+    const inputTime = Number(new Date(input))
 
     // 시간 차이 계산 (밀리초 단위)
     const timeDiff = currentTime - inputTime;
@@ -65,7 +76,7 @@ const HeaderInfo = ({session, alarms}:Props) => {
     } else if (days < 30) {
       return `${days}일 전`;
     } else if (months < 12) {
-      return `${months}개월 전 `;
+      return `${months+1}개월 전 `;
     } else {
       return `${years}년 전 `;
     }
@@ -83,7 +94,7 @@ const HeaderInfo = ({session, alarms}:Props) => {
         <div className="absolute right-0 flex items-center px-7 py-3">
           <div className="right-1 flex justify-center items-center">            
               <div className='absolute w-5 top-5 left-14 font-bold text-sm text-center rounded-2xl bg-red-600 text-white'>
-                {alarmsContens ? alarmsContens.filter(x=> x.check == false).length : ''}   
+                {alarmsContens.filter((x:AlarmsContents) => x.check == false).length ? alarmsContens.filter((x:AlarmsContents)=> x.check == false).length : ''}   
               </div> 
             <FaBell className={`block mx-4 mr-6 text-sygnature-beige cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${isAlarmOpen ? 'text-red-400' : ''}`} onClick={handleAlarm} size="30"/>
             <img 
@@ -109,9 +120,11 @@ const HeaderInfo = ({session, alarms}:Props) => {
               >                
 
               {
-                alarmsContens.map((x:AlarmType, i:number) => (
+                alarmsContens.length
+                ?
+                alarmsContens.sort((a:AlarmsContents, b:AlarmsContents) => Number(new Date(b.date)) - Number(new Date(a.date))).map((x:AlarmType, i:number) => (
                   <Link 
-                    href={x.link ? x.link : ''} 
+                    href={x.link.toString()} 
                     key={x._id.toString()} 
                     className={`cursor-pointer hover:scale-105 transition duration-300 py-1 ${x.check ? 'opacity-50': 'opacity-100'}`}
                     onClick={(e) => {handleContent(e, x._id, i)}}
@@ -123,6 +136,8 @@ const HeaderInfo = ({session, alarms}:Props) => {
                     </div>
                   </Link>
                 ))
+                :
+                <div>등록된 알람이 없습니다.</div>
               }
               
               <div className="absolute bottom-full left-1/2 transform translate-x-14 w-0 h-0 border-solid border-8 border-transparent border-b-sygnature-beige"></div>
@@ -149,6 +164,18 @@ const HeaderInfo = ({session, alarms}:Props) => {
               <div className='hover:font-bold cursor-pointer py-1' onClick={() => {signOut()}}>
                 로그아웃
               </div>
+              {
+                session.user.role == 'admin'
+                ?
+                <Link 
+                  href={'/admin/propose/list'} 
+                  className='hover:font-bold' 
+                >
+                장소 제안 목록 
+              </Link>
+                :
+                ''
+              }
               <div className="absolute bottom-full left-1/2 transform translate-x-6 w-0 h-0 border-solid border-8 border-transparent border-b-sygnature-beige"></div>
             </div>
           </div>
