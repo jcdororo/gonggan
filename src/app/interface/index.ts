@@ -5,7 +5,6 @@ export interface LocationType {
 }
 
 export interface PlaceType {
-  distance?: ReactNode;
   _id?: number;
   location?: string;
   openhour?: string | null;
