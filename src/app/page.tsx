@@ -24,12 +24,12 @@ export default async function Home() {
       <SearchBar />
       <div className="p-20">
         <div className="flex gap-10">
-          <div className="w-2/3">
+          <div className="w-3/5">
             <Map />
           </div>
           <Marker places={places} />
-          <div className="w-1/3">
-            <Space category="주변" />
+          <div className="w-2/5">
+            <Space category="주변" places={places} />
           </div>
         </div>
       </div>
