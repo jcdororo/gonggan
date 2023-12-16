@@ -3,42 +3,58 @@ import MyContents from './MyContents';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import Image from 'next/image';
-import { ObjectId } from 'mongodb';
+import { ObjectId, WithId } from 'mongodb';
 import Link from 'next/link';
+import { ReviewType } from '../interface';
 
-interface Session {
-  user: {
-    name?: string,
-    email?: string,
-    image?: string,
-    nickname: string,
-    id: string
-  }
+
+
+export interface Place {
+  _id?: string;
+  location?: string;
+  openhour?: string | null;
+  closehour?: string | null;
+  businessday?: string[] | null;
+  phone?: string | null;
+  howtouse?: string | null;
+  desc?: string | null;
+  address_name?: string | null;
+  category_group_code?: string | null;
+  category_group_name?: string | null;
+  category_name?: string | null;
+  id?: string | null;
+  place_name?: string | null;
+  place_url?: string | null;
+  road_address_name?: string | null;
+  x?: string | null;
+  y?: string | null;
+  status?: string | null;
 }
 
 export default async function MyPage() {
-  let session:Session | undefined | null = await getServerSession(authOptions);
-  console.log('session',session)
+  const session: any = await getServerSession(authOptions);
 
   let likePlace = [];
-  let placeReview = [];
+  const placeReview: ReviewType[] = [];
   if(
       session.user.id && 
       session.user.name && 
       session.user.image && 
       session.user.nickname
     ) {
-      let db = (await connectDB).db('gonggan');
-      let result = await db.collection('like_place').find({liked_user:new ObjectId(session.user.id)}).toArray()
+      const db = (await connectDB).db('gonggan');
+      const result = await db.collection('like_place').find({liked_user:new ObjectId(session.user.id)}).toArray()
       likePlace = [];
-      let user = await db.collection('users').findOne({_id:new ObjectId(session.user.id)})
+      const user = await db.collection('users').findOne({_id:new ObjectId(session.user.id)})
       for(let i = 0; i < result.length; i++) {
-        let response = await db.collection('place').findOne({_id:new ObjectId(result[i].place_id)})
-        response._id = response._id.toString()
-        likePlace.push(response)
+        const response = await db.collection('place').findOne({_id: new ObjectId(result[i].place_id)}) as WithId<Place> | null;
+        if(response) {
+          response._id = response._id.toString()
+          likePlace.push(response)
+        }
       }
-      
-      let placeReview: any = await (await db.collection('review').find({writerid:new ObjectId(session.user.id)}).toArray())
+
+      const placeReview: any = await db.collection('review').find({writerid:new ObjectId(session.user.id)}).toArray()
       for(let i = 0; i < placeReview.length; i++) {
         placeReview[i]._id = placeReview[i]._id.toString();
         placeReview[i].placeid = placeReview[i].placeid.toString();

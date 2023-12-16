@@ -77,7 +77,7 @@ export default function SignInForm() {
           <p className="mr-2">아이디 및 비밀번호 찾기</p>
         </Link>
         <p className="mr-2">|</p>
-        <Link href="/">
+        <Link href="/signup">
           <p className="">회원가입</p>
         </Link>
       </div>

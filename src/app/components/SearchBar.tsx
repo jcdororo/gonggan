@@ -64,6 +64,7 @@ const SearchBar = () => {
     try {
       // 검색어가 빈칸일땐 호출하지 않음
       if(query.length > 0) {
+        setPlaceInfo(null)
         let datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
         
@@ -87,7 +88,10 @@ const SearchBar = () => {
         datas.push(...data.documents)
         
         setResults(datas);
-        setFocus(true)
+        if(!placeInfo) {
+          setFocus(true)
+        }
+        
         
       }
     } catch (error) {
@@ -96,7 +100,7 @@ const SearchBar = () => {
   };
 
   // 검색 api 호출에 0.5초 딜레이를 줌
-  const debouncedQuery = useDebounce(query, 100);
+  const debouncedQuery = useDebounce(query, 500);
   useEffect(() => {
     handleSearch(debouncedQuery);
   }, [debouncedQuery])
@@ -143,7 +147,7 @@ const SearchBar = () => {
           onClick={handleclick}
         >X</div>
       </div>
-      <div className={`border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pt-3 -translate-y-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
+      <div className={`z-9999 border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pt-3 -translate-y-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
         <ul>
           {
             
@@ -167,9 +171,9 @@ const SearchBar = () => {
             :
             <li>
                 <div className='w-128 h-24 flex flex-col justify-center items-center overflow-hidden'>
-                  <div className='p-3 text-2xl font-bold hover:font-bold'>&quot;{query}&quot; 검색 결과 없음</div>
+                  <div className='p-3 text-2xl font-bold'>&quot;{query}&quot; 검색 결과 없음</div>
                   <div 
-                    className='p-1 cursor-pointer text-blue-600 mb-1 hover:font-bold'
+                    className='p-1 cursor-pointer text-blue-600 mb-1 hover:font-bold hover:underline'
                     onClick={()=>{console.log('clicked!')}}
                   ><Link href={'/propose'}>+ 장소 제안하기</Link></div>
                 </div>

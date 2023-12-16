@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface LocationType {
   lat?: string | null;
   lng?: string | null;
@@ -24,4 +26,26 @@ export interface PlaceType {
   x?: string | null;
   y?: string | null;
   status?: string | null;
+}
+
+export interface ReviewType {
+  _id: string | ObjectId;
+  placeid: string;
+  content: string;
+  date: Date;
+  writerid: string;
+  placename: string;
+  writernickname: string;
+  writerpic: string;
+  star: string;  
+}
+
+export interface AlarmType {
+  map: any;
+  _id: string | ObjectId;
+  check: boolean;
+  content: string;
+  date: Date;
+  link: string;
+  receiver: string | ObjectId;
 }

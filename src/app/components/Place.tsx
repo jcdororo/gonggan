@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import { FaThumbsUp } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io'
 
 export interface PlaceProps {
@@ -22,6 +23,7 @@ export interface PlaceProps {
   x: string;
   y: string;
   status: string;
+  like?: number | undefined
 }
 
 interface Props {
@@ -44,7 +46,7 @@ const Place = ({result}: Props) => {
           <div key={x._id} className="flex flex-row m-3">
             <div className="text-xl font-semibold mx-1">{x.place_name.length >= 10 ?x.place_name.slice(0,8)+'...':x.place_name}</div>
             <div className="text-sm mt-1.5 ml-1 text-sygnature-brown">{x.category_group_name}</div>
-            <div className="absolute right-7 mt-1.5 text-sygnature-brown">522m</div>
+            <div className="absolute right-7 mt-1.5 text-sygnature-brown flex flex-row items-center gap-1"><FaThumbsUp />{x.like}</div>
           </div>
           :
           ''

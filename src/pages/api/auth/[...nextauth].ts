@@ -4,14 +4,15 @@ import { connectDB } from "@/util/database";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { RequestInternal } from "next-auth";
 
-const db = (await connectDB).db("gonggan");
 
-export const authOptions = {
+
+export const authOptions:any = {
   providers: [
     KakaoProvider({
-      clientId: process.env.KAKAO_CLIENT_ID,
-      clientSecret: process.env.KAKAO_CLIENT_SECRET,
+      clientId: process.env.KAKAO_CLIENT_ID as string,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET as string,
     }),
     CredentialsProvider({
       name: 'Credentials',
@@ -19,13 +20,13 @@ export const authOptions = {
         id: { label: 'id', type: 'text' },
         password: { label: 'password', type: 'password' },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials: Record<"id" | "password", string> | undefined, req: Pick<RequestInternal, "body" | "query" | "headers" | "method">): Promise<any> {
 
         if(!credentials?.id || !credentials?.password) {
           throw new Error('Invalid credentials');
         }
-        
-        const user = await db.collection("users").findOne({ id: credentials.id } );
+        const db = (await connectDB).db("gonggan");
+        const user = await db.collection("users").findOne({ loginId: credentials.id } );
 
         if(!user || !user?.password) {
           throw new Error('Invalid credentials');
@@ -59,16 +60,17 @@ export const authOptions = {
     maxAge: 30 * 24 * 60 * 60 //30일
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user, account, profile, email, credentials }: any) {
+    // async signIn() {
       return true;
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ url, baseUrl }: any) {
       return baseUrl;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {      
+    async jwt({ token, user, account, profile, isNewUser }: any) {      
       if (user) {
         token.user = {};
-        token.user.name = user.name;
+        token.user.name  = user.name;
         token.user.email = user.email;
         token.user.image = user.image;
         token.user.nickname = user.nickname;
@@ -80,8 +82,9 @@ export const authOptions = {
       return token;
     },
     //5. 유저 세션이 조회될 때 마다 실행되는 코드
-    async session({ session, token }) {
+    async session({ session, token }: any) {
       session.user = token.user;
+      session.user.role = token.role ? token.role : 'user'
       return session;
     },
   },

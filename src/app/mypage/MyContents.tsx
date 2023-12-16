@@ -1,31 +1,23 @@
 'use client'
 
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import ModalDelete from './ModalDelete';
 import ModalUpdate from './ModalUpdate';
 import { FaHeart, FaStar, FaThumbsUp } from 'react-icons/fa'
 import ModalLikeDelete from './ModalLikeDelete';
+import { Place } from './page';
+import { ReviewType } from '../interface';
 
-export interface PlaceReview {
-  content: string;
-  date: Date;
-  placeid: string;
-  placename: string;
-  star: string;
-  writerid: string;
-  writernickname: string;
-  writerpic: string;
-  _id: string;
-}
+
 
 interface MyContentsProps {
-  likePlace: string[];
-  placeReview: PlaceReview[];
+  likePlace: Place[];
+  placeReview: ReviewType[];
 }
 
 
 
-type MyMouseEventHandler = (e: React.MouseEvent<HTMLDivElement>, content: PlaceReview) => void;
+type MyMouseEventHandler = (e: React.MouseEvent<HTMLDivElement>, content: ReviewType) => void;
 
 
 
@@ -35,7 +27,7 @@ const MyContents: React.FC<MyContentsProps> = ({ likePlace, placeReview }: MyCon
   const [modalUpdateOpen, setModalUpdateOpen] = useState(false)
   const [modalLikeOpen, setModalLikeOpen] = useState(false)
 
-  const [targetContent, setTargetContent] = useState<PlaceReview | undefined>(undefined);
+  const [targetContent, setTargetContent] = useState<ReviewType | undefined>(undefined);
   
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> | undefined = (event):void => {

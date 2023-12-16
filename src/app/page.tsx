@@ -1,8 +1,5 @@
 import { Roboto } from "next/font/google";
 import SearchBar from "./components/SearchBar";
-import { connectDB } from "@/util/database";
-import { ObjectId } from "mongodb";
-import DetailModal from "./detail/DetailModal";
 import HotPlace from "./components/HotPlace";
 import Map from "./components/Map";
 import Space from "./components/Space";
