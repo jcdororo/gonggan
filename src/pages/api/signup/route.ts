@@ -5,11 +5,11 @@ import bcrypt from "bcryptjs";
 export default async function POST(request: any, response: any) {
   
   const data = request.body;
-  const { id, nickname, password } = data;
+  const { loginId, nickname, password } = data;
 
   const db = (await connectDB).db("gonggan");
 
-  const checkExisting = await db.collection("users").findOne({ id });
+  const checkExisting = await db.collection("users").findOne({ loginId });
 
   if (checkExisting) {
     return;
@@ -19,7 +19,7 @@ export default async function POST(request: any, response: any) {
 
   try {
     const user = await db.collection("users").insertOne({
-      id: id,
+      loginId: loginId,
       nickname: nickname,
       password: hashedPassword,
     });
