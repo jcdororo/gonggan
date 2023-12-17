@@ -4,11 +4,11 @@ import { connectDB } from "@/util/database";
 export default async function POST(request: any, response: any) {
   const db = (await connectDB).db("gonggan");
 
-  const { id, nickname } = request.body;
+  const { loginId, nickname } = request.body;
   let checkExisting;
 
-  if(id != undefined) {
-    checkExisting = await db.collection("users").findOne({ id });
+  if(loginId != undefined) {
+    checkExisting = await db.collection("users").findOne({ loginId });
   }
 
   if(nickname != undefined) {

@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,9 +9,14 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 export default function SignInForm() {
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm<FieldValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
     defaultValues: {
-      id: "",
+      loginId: "",
       password: "",
     },
   });
@@ -33,30 +39,50 @@ export default function SignInForm() {
       >
         <h1 className="text-3xl font-bold text-center">로그인</h1>
         <div className="form__block">
-          <label className="lab" htmlFor="id">
+          <label className="lab" htmlFor="loginId">
             아이디
           </label>
           <input
-            {...register("id")}
+            {...register("loginId", {
+              required: "아이디를 입력해주세요.",
+              validate: async (val: string) => {
+                try {
+                  const res = await axios.post("/api/duplicate/route", {
+                    loginId: val,
+                  });
+                  if (res.data != "duplication") {
+                    return "존재하지 않는 아이디입니다.";
+                  }
+                } catch (error) {
+                  return;
+                }
+              },
+            })}
             className="in"
-            type="id"
-            name="id"
-            id="id"
-            required
+            type="text"
           />
+          {errors.loginId && (
+            <p className="text-sm text-red-500 p-2">
+              {errors.loginId.message}
+            </p>
+          )}
         </div>
         <div className="form__block">
           <label className="lab" htmlFor="password">
             비밀번호
           </label>
           <input
-            {...register("password")}
+            {...register("password", {
+              required: "비밀번호를 입력해주세요.",
+            })}
             className="in"
             type="password"
-            name="password"
-            id="password"
-            required
           />
+          {errors.password && (
+              <p className="text-sm text-red-500 p-2">
+                {errors?.password?.message}
+              </p>
+            )}
         </div>
         <div className="form_block flex">
           <input

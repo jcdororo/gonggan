@@ -19,7 +19,7 @@ export default function SignUpForm() {
   } = useForm({
     mode: "onBlur",
     defaultValues: {
-      id: "",
+      loginId: "",
       nickname: "",
       password: "",
       password_confirm: "",
@@ -43,11 +43,11 @@ export default function SignUpForm() {
         <form onSubmit={handleSubmit(onSubmit)} className="m-auto p-11">
           <h1 className="text-3xl font-bold text-center">회원가입</h1>
           <div className="form__block">
-            <label className="lab" htmlFor="id">
+            <label className="lab" htmlFor="loginId">
               아이디
             </label>
             <input
-              {...register("id", {
+              {...register("loginId", {
                 required: "아이디를 입력해주세요.",
                 minLength: {
                   value: 5,
@@ -69,8 +69,8 @@ export default function SignUpForm() {
               className="in"
               type="text"
             />
-            {errors.id && (
-              <p className="text-sm text-red-500 p-2">{errors?.id?.message}</p>
+            {errors.loginId && (
+              <p className="text-sm text-red-500 p-2">{errors?.loginId?.message}</p>
             )}
           </div>
           <div className="form__block">
