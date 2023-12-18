@@ -29,8 +29,7 @@ export const useSendAlarm = async (content:string, receiver:string | "", link:st
        * 그래서 query가 아닌 body로 보냄.
        * **/
 
-      response = await fetch(`/api/post/sendAlarm?content=${content}&receiver=${receiver}&link=${link}&role=${role}`, 
-                                      {method: 'POST', body: JSON.stringify(temp)}).then(r=>r.json())
+      response = await fetch(`/api/post/sendAlarm`, {method: 'POST', body: JSON.stringify(temp)}).then(r=>r.json())
     } catch (error) {
       throw new Error(error?.toString())
     }

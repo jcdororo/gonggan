@@ -17,16 +17,16 @@ export const authOptions:any = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        loginId: { label: 'loginId', type: 'text' },
+        id: { label: 'id', type: 'text' },
         password: { label: 'password', type: 'password' },
       },
-      async authorize(credentials: Record<"loginId" | "password", string> | undefined, req: Pick<RequestInternal, "body" | "query" | "headers" | "method">): Promise<any> {
+      async authorize(credentials: Record<"id" | "password", string> | undefined, req: Pick<RequestInternal, "body" | "query" | "headers" | "method">): Promise<any> {
 
-        if(!credentials?.loginId || !credentials?.password) {
+        if(!credentials?.id || !credentials?.password) {
           throw new Error('Invalid credentials');
         }
         const db = (await connectDB).db("gonggan");
-        const user = await db.collection("users").findOne({ loginId: credentials.loginId } );
+        const user = await db.collection("users").findOne({ loginId: credentials.id } );
 
         if(!user || !user?.password) {
           throw new Error('Invalid credentials');
