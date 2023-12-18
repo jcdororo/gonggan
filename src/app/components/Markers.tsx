@@ -1,7 +1,7 @@
 "use client";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { PlaceType } from "../interface";
-import { mapState } from "../atom";
+import { currentPlaceState, locationState, mapState } from "../atom";
 import { useCallback, useEffect } from "react";
 
 interface MarkerProps {
@@ -10,6 +10,8 @@ interface MarkerProps {
 
 export default function Marker({ places }: MarkerProps) {
   const map = useRecoilValue(mapState);
+  const setCurrentPlace = useSetRecoilState(currentPlaceState);
+  const [location, setLocation] = useRecoilState(locationState);
 
   const loadKakaoMarkers = useCallback(() => {
     if (map) {
@@ -39,6 +41,39 @@ export default function Marker({ places }: MarkerProps) {
         })
 
         marker.setMap(map);
+
+        // 마커 커서가 오버 되었을 때 마커 위에 표시할 인포윈도우 생성
+        const content = `<div class="infowindow">${place?.place_name}</div>`;
+
+        // 커스텀 오버레이 생성
+        const customOverlay = new window.kakao.maps.CustomOverlay({
+          position: markerPosition,
+          content: content,
+          xAnchor: 0.6,
+          yAnchor: 0.91,
+        });
+
+        // 마커에 마우스오버 이벤트 등록
+        window.kakao.maps.event.addListener(marker, "mouseover", function() {
+          // 마커에 마우스오버 이벤트가 발생하면 커스텀 오버레이를 마커위에 표시
+          customOverlay.setMap(map);
+        })
+
+        // 마커에 마우스아웃 이벤트 등록
+        window.kakao.maps.event.addListener(marker, "mouseout", function() {
+          // 마커에 마우스오버 이벤트가 발생하면 커스텀 오버레이를 제거
+          customOverlay.setMap(null);
+        });
+
+        // 선택한 가게 저장
+        window.kakao.maps.event.addListener(marker, "click", function() {
+          setCurrentPlace(place);
+          setLocation({
+            ...location,
+            lat: place.y,
+            lng: place.x,
+          })
+        })
       });
     }
   }, [map, places]);

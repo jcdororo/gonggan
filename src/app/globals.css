@@ -44,3 +44,7 @@ form .form__btn--submit:hover,
 form .form__btn--submit:focus {
   @apply bg-[#5f544d]
 }
+
+.infowindow {
+  @apply bg-[#998373] text-white block text-sm text-center h-6 rounded-md px-2 leading-6
+}

@@ -12,7 +12,7 @@ export interface PlaceType {
   openhour?: string | null;
   closehour?: string | null;
   businessday?: string[] | null;
-  phone?: string | null;
+  phone?: string[] | null;
   howtouse?: string | null;
   desc?: string | null;
   address_name?: string | null;
