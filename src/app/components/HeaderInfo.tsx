@@ -45,7 +45,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
   }
 
   const handleContent = async (e:React.MouseEvent<HTMLAnchorElement>, id:object | string, index:number) => {
-    const response = await fetch(`/api/post/alarmCheck?_id=${id}`, {method:'POST'})
+    const response = await fetch(`/api/alarm/alarmCheck?_id=${id}`, {method:'POST'})
     .then(r => r.json())
     .then(r => {
         alarmsContens[index].check = true

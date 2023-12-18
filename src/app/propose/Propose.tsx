@@ -89,7 +89,7 @@ const Propose = ({session}) => {
         const datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
         
-        const place = await fetch(`/api/get/placeSearch?query=${searchQuery}`, { method: 'GET' })
+        const place = await fetch(`/api/place/placeSearch?query=${searchQuery}`, { method: 'GET' })
                                                                               .then(r => r.json())
                                                                               // .then(r => datas.push(...r))
                                                                               
@@ -188,7 +188,7 @@ const Propose = ({session}) => {
     <div>
       <div className='text-center font-extrabold text-2xl my-4'>장소 제안하기</div>
 
-      <form action="/api/post/propose" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
+      <form action="/api/propose/propose" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
         <div className="font-semibold">위치<span className="text-red-500 font-bold">*</span></div>
         <input 
           className="px-2 my-2 border-gray-300 w-full hover:outline-none hover:ring hover:ring-sygnature-brown focus:outline-none focus:ring focus:ring-sygnature-brown" 

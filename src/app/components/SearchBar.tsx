@@ -68,7 +68,7 @@ const SearchBar = () => {
         let datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
         
-        const place = await fetch(`/api/get/placeSearch?query=${searchQuery}`, { method: 'GET' })
+        const place = await fetch(`/api/place/placeSearch?query=${searchQuery}`, { method: 'GET' })
                                                                               .then(r => r.json())
                                                                               // .then(r => datas.push(...r))
         datas.push(...place)                  

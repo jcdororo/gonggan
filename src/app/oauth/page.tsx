@@ -18,7 +18,8 @@ export default async function SignUpForm() {
               nickname : '',
               password : '',
               alarm : false,
-              role : ''
+              role : '',
+              method: 'oauth'
         }
 
 
@@ -30,7 +31,7 @@ export default async function SignUpForm() {
 
   return (
     <div className="mx-auto max-w-2xl p-5">
-      <form action="/api/post/oauth" method="POST" className="m-auto p-11">
+      <form action="/api/auth/oauth" method="POST" className="m-auto p-11">
         <h1 className="text-3xl font-bold text-center">회원가입</h1>
 
         <div className="form__block">

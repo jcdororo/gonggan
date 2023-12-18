@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default async function PlaceList() {
   const db = (await connectDB).db("gonggan");
-  let result = await db.collection('propose').find().toArray();
+  const result = await db.collection('propose').find().toArray();
 
 
   return (

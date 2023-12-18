@@ -8,7 +8,7 @@ import React from 'react'
 const ModalLikeDelete = ({handleDelete, targetContent}:any) => {
 
   const handlerClick = () => {
-    fetch(`/api/delete/deleteLike?place_id=${targetContent._id}`, { method : 'DELETE' })
+    fetch(`/api/like/deleteLike?place_id=${targetContent._id}`, { method : 'DELETE' })
     .then(r => r.json())
     .then(r => window.location.reload())
   }

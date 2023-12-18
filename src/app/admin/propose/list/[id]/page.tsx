@@ -4,7 +4,6 @@ import { useDebounce } from "@/app/hooks/useDebounce";
 import { inputHoverFocus } from "@/app/styles/styles";
 import { FaFlag } from "react-icons/fa";
 import { useSendAlarm } from "@/app/hooks/useSendAlarm";
-import { useParams } from "next/navigation";
 
 
 interface Result {
@@ -57,7 +56,7 @@ const Propose = (props:Props) => {
 
 
   useEffect(() => {
-    const propose = fetch(`/api/get/proposeSearch/?id=${props.params.id}`, { method: 'GET' })
+    const propose = fetch(`/api/propose/proposeSearch/?id=${props.params.id}`, { method: 'GET' })
     .then(r => r.json())
     .then(r => {
         setQuery(r.location),
@@ -87,10 +86,7 @@ const Propose = (props:Props) => {
 
 
   useEffect(() => {
-    // propose정보 가져오기
-    // const propose = await fetch(`/api/get/proposeSearch/?id=${props.params.id}`, { method: 'GET' })
-
-    const handleClickOutside = (event: MouseEvent) => {
+     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
   
       // 클릭된 엘리먼트가 input 엘리먼트 혹은 그 자손인 경우에는
@@ -123,7 +119,7 @@ const Propose = (props:Props) => {
         }        const datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
         
-        const place = await fetch(`/api/get/placeSearch?query=${searchQuery}`, { method: 'GET' })
+        const place = await fetch(`/api/place/placeSearch?query=${searchQuery}`, { method: 'GET' })
                                                                               .then(r => r.json())
                                                                               // .then(r => datas.push(...r))
                                                                               
@@ -235,7 +231,7 @@ const Propose = (props:Props) => {
     <div>
       <div className='text-center font-extrabold text-2xl my-4'>Admin 장소 제안 내용</div>
 
-      <form action="/api/post/proposeConfirm" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
+      <form action="/api/propose/proposeConfirm" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
         <div className="font-semibold">위치<span className="text-red-500 font-bold">*</span></div>
         <input 
           className="px-2 my-2 border-gray-300 w-full hover:outline-none hover:ring hover:ring-sygnature-brown focus:outline-none focus:ring focus:ring-sygnature-brown" 

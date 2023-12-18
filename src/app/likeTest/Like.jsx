@@ -19,7 +19,7 @@ const Like = ({result, likeResult, liked_user}) => {
 
     try {
       const response = await fetch(
-        `/api/post/like?place_id=${place_id}&liked_user=${liked_user}&isLike=${isLike}`,
+        `/api/like/like?place_id=${place_id}&liked_user=${liked_user}&isLike=${isLike}`,
          {method: 'POST'}
          )
         .then(r=>r.json())

@@ -28,7 +28,7 @@ const ModalUpdate = ({handleUpdate, targetContent}:any) => {
   return (
     <div>
       <form 
-        action="/api/post/updateReview"
+        action="/api/review/updateReview"
         method='POST'
         className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       >
