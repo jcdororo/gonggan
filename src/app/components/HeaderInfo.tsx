@@ -4,12 +4,8 @@ import { FaBell } from 'react-icons/fa'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { signIn, signOut } from 'next-auth/react'
-import { AlarmType } from '../interface'
 
-interface Props {
-  session: any,
-  alarms: AlarmType[]
-}
+
 
 interface AlarmsContents {
   _id: string,
@@ -21,11 +17,15 @@ interface AlarmsContents {
   role: string,
 }
 
+interface HeaderInfoProps {
+  session: any;
+  alarms: AlarmsContents[];
+}
 
-const HeaderInfo = ({session, alarms}:Props) => {
+const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
   const [isDropboxOpen, setIsDropboxOpen] = useState(false);
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
-  const [alarmsContens, setAlarmsContens] = useState([])
+  const [alarmsContens, setAlarmsContens] = useState<AlarmsContents[]>([])
 
 
   useEffect(() => {
@@ -122,7 +122,7 @@ const HeaderInfo = ({session, alarms}:Props) => {
               {
                 alarmsContens.length
                 ?
-                alarmsContens.sort((a:AlarmsContents, b:AlarmsContents) => Number(new Date(b.date)) - Number(new Date(a.date))).map((x:AlarmType, i:number) => (
+                alarmsContens.sort((a:AlarmsContents, b:AlarmsContents) => Number(new Date(b.date)) - Number(new Date(a.date))).map((x, i) => (
                   <Link 
                     href={x.link.toString()} 
                     key={x._id.toString()} 
