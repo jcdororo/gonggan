@@ -48,7 +48,6 @@ export default function Surroundings({ places }: SurroundingsProps) {
       Number(place.y),
       Number(place.x)
     );
-    console.log("distance: ", distance);
     const mDistance = Number(distance.toFixed(2)) * 1000 + "m";
     return { ...place, mDistance };
   });
