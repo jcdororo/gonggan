@@ -2,7 +2,7 @@
 
 /*global kakao */
 import Script from "next/script";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { locationState, mapState } from "../atom"
 
 declare global {
@@ -18,7 +18,7 @@ interface MapProps {
 }
 
 export default function Map({ lat, lng, zoom }: MapProps) {
-  const setMap = useSetRecoilState(mapState);
+  const [map, setMap] = useRecoilState(mapState);
   const location = useRecoilValue(locationState);
 
   const loadKakaoMap = () => {
