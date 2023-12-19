@@ -17,7 +17,7 @@ interface MapProps {
   zoom?: number;
 }
 
-export default function Map({ lat, lng, zoom }: MapProps) {
+export default function ProposeMap({ lat, lng, zoom }: MapProps) {
   const setMap = useSetRecoilState(mapState);
   const location = useRecoilValue(locationState);
 
@@ -44,7 +44,7 @@ export default function Map({ lat, lng, zoom }: MapProps) {
         src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_CLIENT}&autoload=false`}
         onReady={loadKakaoMap}
       />
-      <div id="map" className="w-full h-[700px] rounded-lg"></div>
+      <div id="map" className="w-full h-[500px]"></div>
     </>
   )
 }
