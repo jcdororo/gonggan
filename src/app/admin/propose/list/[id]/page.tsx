@@ -4,6 +4,13 @@ import { useDebounce } from "@/app/hooks/useDebounce";
 import { inputHoverFocus } from "@/app/styles/styles";
 import { FaFlag } from "react-icons/fa";
 import { useSendAlarm } from "@/app/hooks/useSendAlarm";
+<<<<<<< HEAD
+=======
+import { useParams } from "next/navigation";
+import { useRecoilState } from "recoil";
+import { mapState } from "@/app/atom";
+import Map from "@/app/components/Map";
+>>>>>>> develop
 
 
 interface Result {
@@ -45,6 +52,8 @@ const Propose = (props:Props) => {
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
   const [place, setPlace] = useState([]);
   const [confirm, setConfirm] = useState('approved')
+  const [map, setMap] = useRecoilState(mapState);
+
   const [sun, setSun] = useState(false)
   const [mon, setMon] = useState(false)
   const [tue, setTue] = useState(false)
@@ -52,7 +61,6 @@ const Propose = (props:Props) => {
   const [thu, setThu] = useState(false)
   const [fri, setFri] = useState(false)
   const [sat, setSat] = useState(false)
-
 
 
   useEffect(() => {
@@ -70,17 +78,32 @@ const Propose = (props:Props) => {
         (r.businessday && r.businessday.indexOf('금') !== -1) ? setFri(true) : setFri(false),
         (r.businessday && r.businessday.indexOf('토') !== -1) ? setSat(true) : setSat(false),
         (r.businessday && r.businessday.indexOf('일') !== -1) ? setSun(true) : setSun(false),
-        (setPlaceInfo(r))
-          
-        
-      }
-
-      
-    )
-    
-  
-    
+        (setPlaceInfo(r))   
+      }      
+    )      
   }, [])
+
+  useEffect(() => {
+    if(placeInfo) {
+      // 이동할 위도 경도 위치를 생성합니다 
+      const moveLatLon = new window.kakao.maps.LatLng(placeInfo.y, placeInfo.x);      
+      // 지도 중심을 이동 시킵니다
+      map.setCenter(moveLatLon);
+      const iwContent = `<div style="padding:10px;">${placeInfo.place_name}</div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+      iwPosition = new window.kakao.maps.LatLng(placeInfo.y, placeInfo.x), //인포윈도우 표시 위치입니다
+      iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+  
+      // 인포윈도우를 생성하고 지도에 표시합니다
+      const infowindow = new window.kakao.maps.InfoWindow({
+          map: map, // 인포윈도우가 표시될 지도
+          position : iwPosition, 
+          content : iwContent,
+          removable : iwRemoveable
+      });
+    }
+    
+  }, [placeInfo])
+  
   
   
 
@@ -184,6 +207,21 @@ const Propose = (props:Props) => {
     setQuery(result.place_name)
     setPlaceInfo(result)
     setFocus(false);
+    // 이동할 위도 경도 위치를 생성합니다 
+    const moveLatLon = new window.kakao.maps.LatLng(result.y, result.x);      
+    // 지도 중심을 이동 시킵니다
+    map.setCenter(moveLatLon);
+    const iwContent = `<div style="padding:10px;">${result.place_name}</div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    iwPosition = new window.kakao.maps.LatLng(result.y, result.x), //인포윈도우 표시 위치입니다
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+    // 인포윈도우를 생성하고 지도에 표시합니다
+    const infowindow = new window.kakao.maps.InfoWindow({
+        map: map, // 인포윈도우가 표시될 지도
+        position : iwPosition, 
+        content : iwContent,
+        removable : iwRemoveable
+    });
   };
 
   const handleClick = (e:React.MouseEvent<HTMLButtonElement>) => {
@@ -261,6 +299,8 @@ const Propose = (props:Props) => {
             ))}
          </ul>
         </div>
+        {/* 지도 */}
+        <Map />
 
         <div className="font-semibold mt-2">영업시간<span className="text-red-500 font-bold">*</span></div>
         <div className="flex flex-row mt-2 mb-4 ">

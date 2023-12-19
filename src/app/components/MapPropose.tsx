@@ -2,7 +2,7 @@
 
 /*global kakao */
 import Script from "next/script";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { locationState, mapState } from "../atom"
 
 declare global {
@@ -22,6 +22,7 @@ export default function Map({ lat, lng, zoom }: MapProps) {
   const location = useRecoilValue(locationState);
 
   const loadKakaoMap = () => {
+    let map;
     window.kakao.maps.load(() => {
       const mapContainer = document.getElementById("map");
       const mapOption = {
@@ -31,10 +32,11 @@ export default function Map({ lat, lng, zoom }: MapProps) {
         ),
         level: zoom ?? location.zoom,
       };
-      const map = new window.kakao.maps.Map(mapContainer, mapOption);
+      map = new window.kakao.maps.Map(mapContainer, mapOption);
       setMap(map);
     })
   }
+  
   
   return (
     <>

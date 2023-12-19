@@ -6,7 +6,9 @@ import { FaFlag } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSendAlarm } from "../hooks/useSendAlarm";
-
+import { useRecoilState } from "recoil";
+import { mapState } from "../atom";
+import Map from "../components/Map";
 
 interface Result {
   _id?: string,
@@ -38,6 +40,8 @@ const Propose = ({session}) => {
   const router = useRouter()
   const [place, setPlace] = useState([]);
 
+  const [map, setMap] = useRecoilState(mapState);
+  
   
   if(!session) {
     setTimeout(() => {
@@ -154,6 +158,27 @@ const Propose = ({session}) => {
     setQuery(result.place_name)
     setPlaceInfo(result)
     setFocus(false);
+
+    // 이동할 위도 경도 위치를 생성합니다 
+    const moveLatLon = new window.kakao.maps.LatLng(result.y, result.x);      
+    // 지도 중심을 이동 시킵니다
+    map.setCenter(moveLatLon);
+    const iwContent = `<div style="padding:10px;">${result.place_name}</div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    iwPosition = new window.kakao.maps.LatLng(result.y, result.x), //인포윈도우 표시 위치입니다
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+    // 인포윈도우를 생성하고 지도에 표시합니다
+    const infowindow = new window.kakao.maps.InfoWindow({
+        map: map, // 인포윈도우가 표시될 지도
+        position : iwPosition, 
+        content : iwContent,
+        removable : iwRemoveable
+    });
+
+
+
+
+    
   };
 
   const handleClick = () => {
@@ -200,7 +225,7 @@ const Propose = ({session}) => {
           autoComplete="off"
         />
         <div 
-          className={`border absolute -translate-y-3 bg-white ${focus ? 'visible' : 'hidden'}`}
+          className={`z-10 border absolute -translate-y-3 bg-white ${focus ? 'visible' : 'hidden'}`}
         >
           <ul>
             {
@@ -218,6 +243,8 @@ const Propose = ({session}) => {
             ))}
          </ul>
         </div>
+        {/* 지도 */}
+        <Map />
 
         <div className="font-semibold mt-2">영업시간<span className="text-red-500 font-bold">*</span></div>
         <div className="flex flex-row mt-2 mb-4 ">

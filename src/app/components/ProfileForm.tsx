@@ -6,6 +6,8 @@ export default function ProfileForm({session}) {
   const [picture, setPicture] = useState(session.user.image)
   const [nickname, setNickname] = useState(session.user.nickname)
 
+console.log('picture',picture)
+
   const handleCheck = async () => {
     try {
       const reseult = await fetch('/api/auth/nicknameCheck', {method: 'POST', body:  JSON.stringify({nickname:nickname})}).then(r=>r.json())

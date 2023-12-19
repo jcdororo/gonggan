@@ -33,6 +33,7 @@ const MyContents: React.FC<MyContentsProps> = ({ likePlace, placeReview }: MyCon
   const handleClick: React.MouseEventHandler<HTMLDivElement> | undefined = (event):void => {
     event.currentTarget.textContent == '좋아요' ? setBtnName('like') : setBtnName('review')
   }
+  console.log('placeReview',placeReview)
 
   
 

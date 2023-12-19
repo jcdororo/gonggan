@@ -35,13 +35,9 @@ export default async function MyPage() {
   const session: any = await getServerSession(authOptions);
 
   let likePlace = [];
-  const placeReview: ReviewType[] = [];
-  if(
-      session.user.id && 
-      session.user.name && 
-      session.user.image && 
-      session.user.nickname
-    ) {
+  let placeReview: ReviewType[] = [];  
+
+  if(session) {
       const db = (await connectDB).db('gonggan');
       const result = await db.collection('like_place').find({liked_user:new ObjectId(session.user.id)}).toArray()
       likePlace = [];
@@ -53,17 +49,16 @@ export default async function MyPage() {
           likePlace.push(response)
         }
       }
-
-      const placeReview: any = await db.collection('review').find({writerid:new ObjectId(session.user.id)}).toArray()
-      for(let i = 0; i < placeReview.length; i++) {
-        placeReview[i]._id = placeReview[i]._id.toString();
-        placeReview[i].placeid = placeReview[i].placeid.toString();
-        placeReview[i].writerid = placeReview[i].writerid.toString();
+      const result2 = await db.collection('review').find({writerid:new ObjectId(session.user.id)}).toArray()
+      for(let i = 0; i < result2.length; i++) {
+        result2[i]._id = result2[i]._id.toString();
+        result2[i].placeid = result2[i].placeid.toString();
+        result2[i].writerid = result2[i].writerid.toString();
+        placeReview.push(result2[i]);
       }
+      
   }
-
   
-
   
 
   return(

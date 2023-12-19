@@ -6,6 +6,7 @@ import Space from "./components/Space";
 import Marker from "./components/Markers";
 import { PlaceType } from "./interface";
 import axios from "axios";
+import CurrentPlaceBox from "./components/CurrentPlaceBox";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -19,15 +20,16 @@ export default async function Home() {
   const places: PlaceType[] = await getData();
 
   return (
-    <div className={`${roboto.className} h-screen`}>
+    <div className={`${roboto.className} `}>
       {/* Search Bar */}
       <SearchBar />
-      <div className="p-20">
+      <div className="m-12 h-screen">
         <div className="flex gap-10">
-          <div className="w-3/5">
+          <div className="w-3/5 h-vh">
             <Map />
+            <Marker places={places} />
+            <CurrentPlaceBox />
           </div>
-          <Marker places={places} />
           <div className="w-2/5">
             <Space category="주변" places={places} />
           </div>

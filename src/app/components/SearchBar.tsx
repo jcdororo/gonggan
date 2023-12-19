@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FaFlag, FaMapMarkerAlt  } from "react-icons/fa";
 import { useDebounce } from '../hooks/useDebounce';
 import Link from 'next/link';
+import { useRecoilState } from 'recoil';
+import { mapState } from '../atom';
 
 
 interface Result {
@@ -30,6 +32,7 @@ const SearchBar = () => {
   const [results, setResults] = useState<Result[]>([]);
   const [place, setPlace] = useState([]);
   const [placeInfo, setPlaceInfo] = useState<Result | null>(null);
+  const [map, setMap] = useRecoilState(mapState);
 
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
 
@@ -127,6 +130,23 @@ const SearchBar = () => {
     setQuery(result.place_name)
     setPlaceInfo(result)
     setFocus(false);    
+
+    // 이동할 위도 경도 위치를 생성합니다 
+    const moveLatLon = new window.kakao.maps.LatLng(result.y, result.x);      
+    // 지도 중심을 이동 시킵니다
+    map.setCenter(moveLatLon);
+    const iwContent = `<div style="padding:10px;">${result.place_name}</div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    iwPosition = new window.kakao.maps.LatLng(result.y, result.x), //인포윈도우 표시 위치입니다
+    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+    // 인포윈도우를 생성하고 지도에 표시합니다
+    const infowindow = new window.kakao.maps.InfoWindow({
+        map: map, // 인포윈도우가 표시될 지도
+        position : iwPosition, 
+        content : iwContent,
+        removable : iwRemoveable
+    });
+    
   };
   return (
     <div className="p-3 h-30 z-0 flex flex-col items-center">
@@ -147,7 +167,7 @@ const SearchBar = () => {
           onClick={handleclick}
         >X</div>
       </div>
-      <div className={`z-9999 border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pt-3 -translate-y-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
+      <div className={`z-9999 border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 -translate-y-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
         <ul>
           {
             
@@ -174,7 +194,6 @@ const SearchBar = () => {
                   <div className='p-3 text-2xl font-bold'>&quot;{query}&quot; 검색 결과 없음</div>
                   <div 
                     className='p-1 cursor-pointer text-blue-600 mb-1 hover:font-bold hover:underline'
-                    onClick={()=>{console.log('clicked!')}}
                   ><Link href={'/propose'}>+ 장소 제안하기</Link></div>
                 </div>
               </li>
