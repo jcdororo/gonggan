@@ -1,6 +1,9 @@
-"use client"
+"use client";
 
-import { RecoilRoot } from "recoil"
+import { QueryClient, QueryClientProvider } from "react-query";
+import { RecoilRoot } from "recoil";
+
+const queryClient = new QueryClient();
 
 interface Props {
   children?: React.ReactNode;
@@ -9,7 +12,7 @@ interface Props {
 export const NextProvider = ({ children }: Props) => {
   return (
     <RecoilRoot>
-      {children}
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </RecoilRoot>
-  )
-}
+  );
+};
