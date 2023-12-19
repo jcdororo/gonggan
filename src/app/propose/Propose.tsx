@@ -6,7 +6,9 @@ import { FaFlag } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSendAlarm } from "../hooks/useSendAlarm";
-
+import MapPropose from "../components/MapPropose";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { locationState, mapState } from "../atom";
 
 interface Result {
   _id?: string,
@@ -38,6 +40,8 @@ const Propose = ({session}) => {
   const router = useRouter()
   const [place, setPlace] = useState([]);
 
+  const [map, setMap] = useRecoilState(mapState);
+  
   
   if(!session) {
     setTimeout(() => {
@@ -154,6 +158,21 @@ const Propose = ({session}) => {
     setQuery(result.place_name)
     setPlaceInfo(result)
     setFocus(false);
+    console.log('result',result)
+    
+
+
+    // 이동할 위도 경도 위치를 생성합니다 
+    const moveLatLon = new window.kakao.maps.LatLng(result.y, result.x);
+      
+    // 지도 중심을 이동 시킵니다
+    map.setCenter(moveLatLon);
+
+    // setLocaiont({lat: result.y, lng: result.x, zoom: 3})
+
+
+
+    
   };
 
   const handleClick = () => {
@@ -200,7 +219,7 @@ const Propose = ({session}) => {
           autoComplete="off"
         />
         <div 
-          className={`border absolute -translate-y-3 bg-white ${focus ? 'visible' : 'hidden'}`}
+          className={`z-10 border absolute -translate-y-3 bg-white ${focus ? 'visible' : 'hidden'}`}
         >
           <ul>
             {
@@ -218,6 +237,7 @@ const Propose = ({session}) => {
             ))}
          </ul>
         </div>
+        <MapPropose />
 
         <div className="font-semibold mt-2">영업시간<span className="text-red-500 font-bold">*</span></div>
         <div className="flex flex-row mt-2 mb-4 ">

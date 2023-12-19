@@ -20,6 +20,8 @@ interface Session {
 }
 
 export default async function Header() {
+
+
   const session: any = await getServerSession(authOptions)
   let alarms = [];
   if(session) {
