@@ -1,37 +1,80 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FaToggleOn } from "react-icons/fa";
+import Image from "next/image";
+import { useInputImg } from "../hooks/useInputImg";
+import { useUploadImg } from "../hooks/useUploadImg";
+import { useRouter } from "next/navigation";
 
-export default function ProfileForm({session}) {
+export default function ProfileForm({session}:any) {
   const [picture, setPicture] = useState(session.user.image)
   const [nickname, setNickname] = useState(session.user.nickname)
-
-console.log('picture',picture)
+  const [newNickname, setNewNickname] = useState<string | null>(null)
+  const imageRef = useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState<File | null>(null)
+  const [checkVisable, setCheckVisable] = useState(false);
+  const [infoVisable, setInfoVisable] = useState(false);
+  const router = useRouter();
 
   const handleCheck = async () => {
+    if(nickname == '') return;
+    setCheckVisable(true);
     try {
-      const reseult = await fetch('/api/auth/nicknameCheck', {method: 'POST', body:  JSON.stringify({nickname:nickname})}).then(r=>r.json())
-      
+      const isExistNickname = await fetch('/api/auth/nicknameCheck', {method: 'POST', body:  JSON.stringify({nickname:nickname})}).then(r=>r.json())
+      if(isExistNickname == 'N') {
+        setNewNickname(nickname)
+      } else {
+        setNewNickname(null)
+      }
+      setInfoVisable(true)
     } catch (error) {
       throw new Error(error?.toString())
     }
   }
 
-  const handleNickname = (e:React.KeyboardEvent<HTMLInputElement>) => {
+  const handleClick = () => {
+    imageRef.current?.click();
+  }
+
+  const handleNickname = (e:React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value)
-  }
-
-  const handleChange = (e) => {
-    setPicture(e.target.value);
+    setCheckVisable(true)
 
   }
+
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    useInputImg(e, setImage, setPicture);
+  }
+
+  const handleSubmit = async () => {
+    console.log('submit!!!!',image)
+    let url = '';
+    // 이미지가 변경되었다면
+    if(image != null) {
+      url = await useUploadImg(image)
+      const result = await fetch(`/api/upload/image?_id=${session.user.id}&url=${url}`,{method: 'POST'})
+      .then(r => r.json())
+      
+      if(result.toString().includes('success')) {
+        router.push('/mypage');
+      }
+      
+
+      console.log('result',result)
+    }
+
+    console.log('submit done !!!')
+  }
+
+
+
 
   return (
     <div className="mx-auto max-w-2xl p-5">
       <h1 className="text-3xl font-bold text-center mb-[40px]">프로필 수정</h1>
       <div className="flex justify-center mb-5">
         {/* <div className="bg-black w-[100px] h-[100px] rounded-full"></div> */}
-        <img 
+        <Image 
           className="rounded-full w-[100px] h-[100px] overflow-hidden"
           src={session.user.image ? picture : '/logo2.png'}
           width={640}
@@ -40,12 +83,24 @@ console.log('picture',picture)
         />
       </div>
       <div className="flex justify-center">
-        <button className="border-2 border-[#998373] rounded-sm bg-inherit text-[#998373] text-xs w-[100px] h-[30px]">
+      <input 
+        type='file'
+        ref={imageRef}
+        accept='image/*'
+        multiple={false}    
+        onChange={handleChange}   
+        className='hidden' 
+      />
+        <button 
+          className="border-2 border-[#998373] rounded-sm bg-inherit text-[#998373] text-xs w-[100px] h-[30px] hover:shadow-lg"
+          onClick={handleClick}  
+        >
           이미지 업로드
         </button>
-        <input type="file" onChange={handleChange}></input>
+        
+
       </div>
-      <form action="/post" method="POST" className="m-auto p-11">
+      <form onSubmit={handleSubmit} method="POST" className="m-auto p-11">
         <div className="form__block">
           <div className="flex justify-between mr-2">
             <p className="font-bold text-xl">알림 받기</p>
@@ -78,13 +133,34 @@ console.log('picture',picture)
           />
         </div>
         <div className="absolute translate-x-120 -translate-y-12">
-          <div 
-            className="w-24 border border-gray-300 p-3 rounded-lg cursor-pointer hover:font-bold"
-            onClick={handleCheck}
-          >
+          {
+            checkVisable
+            ?
+            <div 
+              className="w-24 border border-gray-300 p-3 rounded-lg cursor-pointer hover:font-bold"
+              onClick={handleCheck}
+            >
             중복체크
-          </div>
-          <span className="block my-1">사용 가능한 닉네임입니다</span>
+            </div>
+            :
+            ''
+          }
+          
+          {
+            infoVisable
+            ?
+
+            newNickname == null
+            ?
+            <span className="block my-1">중복된 닉네임 입니다.</span>
+            :
+            <span className="block my-1">사용 가능한 멋진! 닉네임입니다!</span>
+            
+            :
+            ''
+            
+            
+          }
         </div>
         {
           session.user.method == 'credential'

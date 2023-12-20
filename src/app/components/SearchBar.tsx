@@ -167,7 +167,7 @@ const SearchBar = () => {
           onClick={handleclick}
         >X</div>
       </div>
-      <div className={`z-9999 border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 -translate-y-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
+      <div className={`z-50 border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 -translate-y-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
         <ul>
           {
             

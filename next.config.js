@@ -7,6 +7,10 @@ const nextConfig = {
         protocol: 'http',
         hostname: '**.kakaocdn.net',
       },
+      {
+        protocol: 'http',
+        hostname: 'res.cloudinary.com',
+      }
     ],
   },
 }
