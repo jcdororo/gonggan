@@ -16,6 +16,9 @@ export default function ProfileForm({session}:any) {
   const [infoVisable, setInfoVisable] = useState(false);
   const router = useRouter();
 
+
+  console.log(session.user.method)
+
   const handleCheck = async () => {
     if(nickname == '') return;
     setCheckVisable(true);
@@ -49,19 +52,20 @@ export default function ProfileForm({session}:any) {
   const handleSubmit = async () => {
     console.log('submit!!!!',image)
     let url = '';
+    let result = '';
     // 이미지가 변경되었다면
     if(image != null) {
       url = await useUploadImg(image)
-      const result = await fetch(`/api/upload/image?_id=${session.user.id}&url=${url}`,{method: 'POST'})
+      result = await fetch(`/api/upload/image?_id=${session.user.id}&url=${url}`,{method: 'POST'})
       .then(r => r.json())
       
-      if(result.toString().includes('success')) {
-        router.push('/mypage');
-      }
-      
-
-      console.log('result',result)
     }
+    if(result.toString().includes('success')) {
+      router.push('/mypage/profile/complete');
+    }
+    
+
+    console.log('result',result)
 
     console.log('submit done !!!')
   }
@@ -152,9 +156,9 @@ export default function ProfileForm({session}:any) {
 
             newNickname == null
             ?
-            <span className="block my-1">중복된 닉네임 입니다.</span>
+            <span className="block my-1 text-red-700">중복된 닉네임 입니다.</span>
             :
-            <span className="block my-1">사용 가능한 멋진! 닉네임입니다!</span>
+            <span className="block my-1">사용 가능한 닉네임 입니다</span>
             
             :
             ''

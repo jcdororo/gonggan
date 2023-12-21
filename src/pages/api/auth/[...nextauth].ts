@@ -17,16 +17,16 @@ export const authOptions:any = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        id: { label: 'id', type: 'text' },
+        loginId: { label: 'loginId', type: 'text' },
         password: { label: 'password', type: 'password' },
       },
-      async authorize(credentials: Record<"id" | "password", string> | undefined, req: Pick<RequestInternal, "body" | "query" | "headers" | "method">): Promise<any> {
+      async authorize(credentials: Record<"loginId" | "password", string> | undefined, req: Pick<RequestInternal, "body" | "query" | "headers" | "method">): Promise<any> {
 
-        if(!credentials?.id || !credentials?.password) {
+        if(!credentials?.loginId || !credentials?.password) {
           throw new Error('Invalid credentials');
         }
         const db = (await connectDB).db("gonggan");
-        const user = await db.collection("users").findOne({ loginId: credentials.id } );
+        const user = await db.collection("users").findOne({ loginId: credentials.loginId } );
 
         if(!user || !user?.password) {
           throw new Error('Invalid credentials');
@@ -78,7 +78,6 @@ export const authOptions:any = {
         token.emailVerified = user.emailVerified;
         token.alarm = user.alarm;
         token.role = user.role;
-        token.method = user.method;
       }
       return token;
     },
@@ -86,11 +85,9 @@ export const authOptions:any = {
     async session({ session, token }: any) {
       session.user = token.user;
       session.user.role = token.role ? token.role : 'user'
-      session.user.method = token.method
       return session;
     },
   },
 };
 
 export default NextAuth(authOptions);
-

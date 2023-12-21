@@ -7,10 +7,11 @@ import {
 } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { signOut } from "next-auth/react";
 
-export default function SignUpForm() {
-  const router = useRouter();
+export default function SignUpForm({session}) {
+  const router = useRouter();  
   const {
     register,
     handleSubmit,
@@ -25,6 +26,13 @@ export default function SignUpForm() {
       password_confirm: "",
     },
   });
+
+  useEffect(() => {
+    if(session != null) {
+      signOut();
+    }    
+  }, [])
+  
 
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
     try {

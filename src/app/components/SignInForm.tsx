@@ -1,13 +1,22 @@
 "use client";
 import axios from "axios";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-export default function SignInForm() {
+export default function SignInForm({session}) {
   const router = useRouter();
+  
+
+  useEffect(() => {
+    if(session != null) {
+      signOut();
+    }    
+  }, [])
+  
 
   const {
     register,
