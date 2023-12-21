@@ -29,7 +29,7 @@ export interface PlaceType {
 }
 
 export interface ReviewType {
-  _id: string | ObjectId;
+  _id: ObjectId;
   placeid: string;
   content: string;
   date: Date;
@@ -37,7 +37,8 @@ export interface ReviewType {
   placename: string;
   writernickname: string;
   writerpic: string;
-  star: string;  
+  star: number;  
+  like: number;
 }
 
 export interface AlarmType {
