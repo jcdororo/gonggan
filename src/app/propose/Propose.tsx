@@ -2,13 +2,15 @@
 import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
 import { inputHoverFocus } from "../styles/styles";
-import { FaFlag } from "react-icons/fa";
+import { FaCamera, FaFlag, FaWindowClose } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSendAlarm } from "../hooks/useSendAlarm";
 import { useRecoilState } from "recoil";
 import { mapState } from "../atom";
 import Map from "../components/Map";
+import Image from "next/image";
+import { useInputImgs } from "../hooks/useInputImgs";
 
 interface Result {
   _id?: string,
@@ -39,10 +41,13 @@ const Propose = ({session}) => {
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;  
   const router = useRouter()
   const [place, setPlace] = useState([]);
-
   const [map, setMap] = useRecoilState(mapState);
+  const imageRef = useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState<File[]>([])
+  const [imagePreview, setImagePreview] = useState<string[]>([])
+
   
-  
+
   if(!session) {
     setTimeout(() => {
       router.push('/signin')
@@ -199,8 +204,21 @@ const Propose = ({session}) => {
     return info
   }
 
+  // 사진첨부기능
+  const handleClose = (e:React.MouseEvent<HTMLElement>, i:number) => {
+    setImagePreview([...imagePreview.slice(0,i), ...imagePreview.slice(i+1,imagePreview.length)])
+    
+  }
 
+  const handleAttach = () => {
+    imageRef.current?.click();
+  }
 
+  const handleAttachChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    // console.log('e.target.files',e.target.files)
+    useInputImgs(e, image, setImage, imagePreview, setImagePreview);
+
+  }
   
 
 
@@ -214,6 +232,51 @@ const Propose = ({session}) => {
       <div className='text-center font-extrabold text-2xl my-4'>장소 제안하기</div>
 
       <form action="/api/propose/propose" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
+
+        {/* 사진첨부 */}
+        <div className="w-full p-5 bg-sygnature-beige my-2">
+          <div className="grid grid-cols-3 gap-4">
+            
+          {
+            imagePreview.map((x, i) => (
+              <div key={i} className="relative">
+                <div className="h-[150px]">
+                  <Image 
+                    className="w-full h-full"
+                    src={x}
+                    width={110}
+                    height={75}
+                    alt="header"
+                  />
+                  <FaWindowClose 
+                  className="absolute top-0 right-0 cursor-pointer text-sygnature-brown"  
+                  onClick={(e:React.MouseEvent<HTMLElement>) => handleClose(e,i)}
+                  />
+                </div>
+              </div>
+            ))
+          }
+            
+
+          </div>     
+        </div>
+
+        <div 
+          className="my-4 h-14 flex flex-row justify-center items-center border-2 border-black border-dashed hover:bg-gray-100 cursor-pointer"
+          onClick={handleAttach}
+        >
+          <input 
+            type='file'
+            ref={imageRef}
+            accept='image/*'
+            multiple={false}
+            onChange={handleAttachChange}   
+            className='hidden' 
+          />
+          <FaCamera className="mx-1"/> 사진 첨부하기 (최대 6장)
+        </div>
+
+        {/* 위치 */}
         <div className="font-semibold">위치<span className="text-red-500 font-bold">*</span></div>
         <input 
           className="px-2 my-2 border-gray-300 w-full hover:outline-none hover:ring hover:ring-sygnature-brown focus:outline-none focus:ring focus:ring-sygnature-brown" 
@@ -353,6 +416,7 @@ const Propose = ({session}) => {
           </select>
         </div>
 
+        {/* 영업 시간 */}
         <div className="font-semibold">영업일</div>
         <div className="flex flex-row items-center justify-center my-2">
           <input name="businessday" type="checkbox" value={'월'} className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`} />
@@ -370,7 +434,8 @@ const Propose = ({session}) => {
           <input name="businessday" type="checkbox" value={'일'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-4 block">일</span>
         </div>
-
+        
+        {/* 전화번호 */}
         <div className="font-semibold mt-4 mb-2 w-full">전화번호<span className="ml-1 text-sm text-red-500">( - 없이, 생략가능)</span></div>
         <input 
           maxLength={20} 
@@ -381,6 +446,7 @@ const Propose = ({session}) => {
           autoComplete="off"
         />
 
+        {/* 이용방법 */}
         <div className="font-semibold my-2">이용방법<span className="text-red-500 font-bold">*</span></div>
         <textarea 
           maxLength={500} 
@@ -391,6 +457,7 @@ const Propose = ({session}) => {
           autoComplete="off"
         />
 
+        {/* 설명 */}
         <div className="font-semibold my-2">설명<span className="text-red-500 font-bold">*</span></div>
         <textarea 
           maxLength={500} 
@@ -431,7 +498,7 @@ const Propose = ({session}) => {
             {placeInfo?.y && <input name="y" value={placeInfo?.y} onChange={()=>{}} />}          
             {placeInfo?.y && <input name="date" value={new Date().toLocaleDateString('ko-KR').toString()} onChange={()=>{}} />}          
             {placeInfo?.y && <input name="status" value={'진행중'} onChange={()=>{}} />}          
-
+            {image.length > 0 && <input name="image" value={image} onChange={()=>{}} />}  
         </div>
 
 
