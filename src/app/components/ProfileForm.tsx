@@ -167,7 +167,7 @@ export default function ProfileForm({session}:any) {
           }
         </div>
         {
-          session.user.method == 'credential'
+          session.user.method != 'oauth'
           ?
           <>
             <div className="form__block">
