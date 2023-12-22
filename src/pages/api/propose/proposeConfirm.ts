@@ -4,8 +4,6 @@ import { ObjectId } from "mongodb";
 
 export default async function handler(request:NextApiRequest, response:NextApiResponse) {
 
-
-  
   if(request.method == 'POST') {
     if(request.body.confirm == 'approved') {
       try {

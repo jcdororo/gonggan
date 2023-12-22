@@ -1,5 +1,5 @@
 export const useUploadImg = async (image:File | null) => {
-    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`
+    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`
     const formData = new FormData();
 
     formData.append('file', image as Blob);

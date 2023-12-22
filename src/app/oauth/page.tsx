@@ -5,13 +5,13 @@ import { ObjectId } from "mongodb";
 
 
 export default async function SignUpForm() {
-  let session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
   const db = (await connectDB).db("gonggan");
-  let result = await db.collection('users').findOne({name : session.user.name})
+  const result = await db.collection('users').findOne({name : session.user.name})
 
   // 세션 정보와 Oauth 정보를 합쳐 db 업데이트 하기 위한 정보 생성
-  let temp = 
+  const temp = 
         {
                   ...result,
             ...session.user,
@@ -23,7 +23,7 @@ export default async function SignUpForm() {
         }
 
 
-  let update = await db.collection('users').updateOne(
+  const update = await db.collection('users').updateOne(
     {_id : new ObjectId(temp._id)},
     {$set : temp}
   )
