@@ -110,7 +110,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             {/* 알람 아이콘 클릭시 나오는 드랍박스 */}
             <div 
             className={clsx( 
-              'bg-sygnature-beige top-20 w-80 h-auto font-bold absolute rounded-md text-center flex flex-col items-center justify-center transform -translate-x-24 p-2',
+              'bg-sygnature-beige overflow-scroll top-20 w-96 h-80 font-bold absolute rounded-md text-center flex flex-col items-center justify-center transform -translate-x-24 py-3 z-10',
               {
                 'visible' : isAlarmOpen === true,
                 'hidden' : isAlarmOpen === false
@@ -123,10 +123,13 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                 alarmsContens.length
                 ?
                 alarmsContens.sort((a:AlarmsContents, b:AlarmsContents) => Number(new Date(b.date)) - Number(new Date(a.date))).map((x, i) => (
+                  <div 
+                    key={x._id.toString()} 
+                    className='my-2 hover:scale-105 transition duration-300 '
+                  >
                   <Link 
                     href={x.link.toString()} 
-                    key={x._id.toString()} 
-                    className={`cursor-pointer hover:scale-105 transition duration-300 py-1 ${x.check ? 'opacity-50': 'opacity-100'}`}
+                    className={`h-16 cursor-pointer py-1 ${x.check ? 'opacity-50': 'opacity-100'}`}
                     onClick={(e) => {handleContent(e, x._id, i)}}
                   >
                     <span className='text-left'>{x.content}</span>
@@ -135,19 +138,18 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                       <div className='h-[0.5px] w-full bg-black opacity-30'></div>
                     </div>
                   </Link>
+                  </div>
                 ))
                 :
                 <div>등록된 알람이 없습니다.</div>
               }
               
-              <div className="absolute bottom-full left-1/2 transform translate-x-14 w-0 h-0 border-solid border-8 border-transparent border-b-sygnature-beige"></div>
             </div>
             
             
             {/* 유저 아이콘 클릭시 나오는 드랍박스 */}
             <div 
-            className={clsx(
-        'bg-sygnature-beige top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top',
+            className={clsx('bg-sygnature-beige top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top',
               {
                 'visible' : isDropboxOpen === true,
                 'invisible' : isDropboxOpen === false
