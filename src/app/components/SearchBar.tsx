@@ -103,7 +103,7 @@ const SearchBar = () => {
   };
 
   // 검색 api 호출에 0.5초 딜레이를 줌
-  const debouncedQuery = useDebounce(query, 500);
+  const debouncedQuery = useDebounce(query, 300);
   useEffect(() => {
     handleSearch(debouncedQuery);
   }, [debouncedQuery])

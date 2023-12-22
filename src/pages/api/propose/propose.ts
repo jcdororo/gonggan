@@ -4,17 +4,18 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(request:NextApiRequest, response:NextApiResponse) {
-  let session = await getServerSession(request, response, authOptions);
+  const session = await getServerSession(request, response, authOptions);
 
 
-
-  request.body["proposerId"] = session?.user.id;
-  if(request.method == 'POST') {
+  if(request.method == 'POST') {    
+    const body = JSON.parse(request.body);
+    body["proposerId"] = session?.user.id;
+    
     try {
       const db = (await connectDB).db("gonggan");
-      const result = await db.collection('propose').insertOne(request.body)   
+      const result = await db.collection('propose').insertOne(body)   
       if (result) {
-        response.redirect(301,'/propose/complete')
+        response.status(200).json(result.insertedId.toString())
         } else {
         response.status(500).json({ error: 'Propose failed' });
       }     

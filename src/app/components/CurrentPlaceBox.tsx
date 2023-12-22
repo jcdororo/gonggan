@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AiOutlineClose, AiOutlinePhone } from "react-icons/ai";
 import { HiOutlineMapPin } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function CurrentPlaceBox() {
   const [place, setPlace] = useRecoilState(currentPlaceState);
