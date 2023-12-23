@@ -9,9 +9,10 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import { signOut } from "next-auth/react";
+import React from "react";
 
-export default function SignUpForm({session}) {
-  const router = useRouter();  
+export default function SignUpForm({ session }) {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -22,17 +23,17 @@ export default function SignUpForm({session}) {
     defaultValues: {
       loginId: "",
       nickname: "",
+      email: "",
       password: "",
       password_confirm: "",
     },
   });
 
   useEffect(() => {
-    if(session != null) {
+    if (session != null) {
       signOut();
-    }    
-  }, [])
-  
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
     try {
@@ -78,7 +79,9 @@ export default function SignUpForm({session}) {
               type="text"
             />
             {errors.loginId && (
-              <p className="text-sm text-red-500 p-2">{errors?.loginId?.message}</p>
+              <p className="text-sm text-red-500 p-2">
+                {errors?.loginId?.message}
+              </p>
             )}
           </div>
           <div className="form__block">
@@ -110,6 +113,39 @@ export default function SignUpForm({session}) {
             {errors.nickname && (
               <p className="text-sm text-red-500 p-2">
                 {errors?.nickname?.message}
+              </p>
+            )}
+          </div>
+          <div className="form__block">
+            <label className="lab" htmlFor="email">
+              이메일
+            </label>
+            <input
+              {...register("email", {
+                required: "이메일을 입력해주세요.",
+                pattern: {
+                  value:
+                    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+                  message: "이메일형식으로 기입해주세요.",
+                },
+                validate: async (val: string) => {
+                  try {
+                    const res = await axios.post("/api/duplicate/route", {
+                      email: val,
+                    });
+                    if (res.data == "duplication") {
+                      return "중복된 이메일입니다.";
+                    }
+                  } catch (error) {
+                    console.log(error);
+                  }
+                },
+              })}
+              className="in"
+            />
+            {errors.email && (
+              <p className="text-sm text-red-500 p-2">
+                {errors?.email?.message}
               </p>
             )}
           </div>

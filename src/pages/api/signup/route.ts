@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 export default async function POST(request: any, response: any) {
   
   const data = request.body;
-  const { loginId, nickname, password } = data;
+  const { loginId, nickname, email, password } = data;
 
   const db = (await connectDB).db("gonggan");
 
@@ -19,9 +19,10 @@ export default async function POST(request: any, response: any) {
 
   try {
     const user = await db.collection("users").insertOne({
-      loginId: loginId,
-      nickname: nickname,
+      loginId,
+      nickname,
       password: hashedPassword,
+      email
     });
   
     response.status(200).json("success");

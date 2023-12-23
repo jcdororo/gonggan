@@ -1,9 +1,10 @@
 "use client";
-import { ReviewType } from "@/app/interface";
 import axios from "axios";
 import { ObjectId } from "mongodb";
+import React from "react";
 import { useEffect, useState } from "react";
 import { BiLike, BiSolidLike } from "react-icons/bi";
+import { ReviewType } from "../../interface";
 
 interface LikeProps {
   review: ReviewType;

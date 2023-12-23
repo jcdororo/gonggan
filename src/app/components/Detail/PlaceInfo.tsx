@@ -1,9 +1,10 @@
-import { PlaceType } from "@/app/interface";
 import axios from "axios";
+import React from "react";
 import { BiLike } from "react-icons/bi";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoMdTime } from "react-icons/io";
 import { useQuery } from "react-query";
+import { PlaceType } from "../../interface";
 
 
 interface PlaceProps {
