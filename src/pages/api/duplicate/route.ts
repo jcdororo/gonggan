@@ -4,7 +4,7 @@ import { connectDB } from "@/util/database";
 export default async function POST(request: any, response: any) {
   const db = (await connectDB).db("gonggan");
 
-  const { loginId, nickname } = request.body;
+  const { loginId, nickname, email } = request.body;
   let checkExisting;
 
   if(loginId != undefined) {
@@ -13,6 +13,10 @@ export default async function POST(request: any, response: any) {
 
   if(nickname != undefined) {
     checkExisting = await db.collection("users").findOne({ nickname });
+  }
+
+  if(email != undefined) {
+    checkExisting = await db.collection("users").findOne({ email });
   }
 
   if (checkExisting) {
