@@ -110,7 +110,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             {/* 알람 아이콘 클릭시 나오는 드랍박스 */}
             <div 
             className={clsx( 
-              'bg-sygnature-beige overflow-scroll top-20 w-96 h-80 font-bold absolute rounded-md text-center flex flex-col items-center justify-center transform -translate-x-24 py-3 z-10',
+              'bg-sygnature-beige top-20 w-96 h-80 overflow-scroll font-bold absolute rounded-md text-center transform -translate-x-24 py-3 z-10',
               {
                 'visible' : isAlarmOpen === true,
                 'hidden' : isAlarmOpen === false
@@ -125,7 +125,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                 alarmsContens.sort((a:AlarmsContents, b:AlarmsContents) => Number(new Date(b.date)) - Number(new Date(a.date))).map((x, i) => (
                   <div 
                     key={x._id.toString()} 
-                    className='my-2 hover:scale-105 transition duration-300 '
+                    className='my-2 hover:scale-105 transition duration-300'
                   >
                   <Link 
                     href={x.link.toString()} 
@@ -133,7 +133,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                     onClick={(e) => {handleContent(e, x._id, i)}}
                   >
                     <span className='text-left'>{x.content}</span>
-                    <div className='text-left text-sm opacity-80'> {alarmTime(x.date)}</div>
+                    <div className='text-left text-sm opacity-80 ml-8'> {alarmTime(x.date)}</div>
                     <div className='flex justify-center'>
                       <div className='h-[0.5px] w-full bg-black opacity-30'></div>
                     </div>
@@ -169,12 +169,20 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
               {
                 session.user.role == 'admin'
                 ?
+                <>
                 <Link 
                   href={'/admin/propose/list'} 
                   className='hover:font-bold' 
                 >
-                장소 제안 목록 
-              </Link>
+                  장소 제안 목록 
+                </Link>
+                <Link 
+                  href={'/admin/police/list'} 
+                  className='hover:font-bold' 
+                >
+                  신고 목록 
+                </Link>
+                </>
                 :
                 ''
               }

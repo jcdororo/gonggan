@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import ModalDelete from "@/app/mypage/ModalDelete";
 import Star from "../Review/Star";
 import Like from "../Review/Like";
+import ModalPolice from "../ModalPolice";
 
 interface PlaceProps {
   _id: string;
@@ -45,6 +46,8 @@ export default function PlaceReviews({ _id }: PlaceProps) {
   const [review, setReview] = useState<ReviewType>();
   const [like, setLike] = useState(false);
 
+  const [policeWrite, setPoliceWrite] = useState(false)
+
   // 리뷰 모달
   const onClick = (
     e: React.MouseEvent<HTMLDivElement>,
@@ -65,6 +68,11 @@ export default function PlaceReviews({ _id }: PlaceProps) {
     if (id == "delete") {
       setReview(review);
       setReviewDelete(!reviewDelete);
+    }
+
+    if (id == 'police') {
+      setReview(review);
+      setPoliceWrite(!policeWrite);
     }
   };
 
@@ -122,7 +130,11 @@ export default function PlaceReviews({ _id }: PlaceProps) {
                   </div>
                 </div>
               ) : (
-                <div className="flex justify-end text-xs cursor-pointer">
+                <div 
+                  id="police"
+                  onClick={(e) => onClick(e, review)}
+                  className="flex justify-end text-xs cursor-pointer"
+                >
                   신고하기
                 </div>
               )}
@@ -172,6 +184,16 @@ export default function PlaceReviews({ _id }: PlaceProps) {
       ) : (
         ""
       )}
+      {
+      policeWrite ? (
+        <ModalPolice targetContent={review} handleWrite={onClick} />
+      )
+      :
+      ""
+        
+      }
+
+      
     </>
   );
 }

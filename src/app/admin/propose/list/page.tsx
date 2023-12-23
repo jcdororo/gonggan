@@ -49,15 +49,7 @@ export default async function PlaceList() {
           </table>
 
         </div>
-        {/* <div className="my-12 text-lg">
-          <span className="mx-1 cursor-pointer hover:font-bold">1</span>
-          <span className="mx-1 cursor-pointer hover:font-bold">2</span>
-          <span className="mx-1 cursor-pointer hover:font-bold">3</span>
-          <span className="mx-1 cursor-pointer hover:font-bold">4</span>
-          <span className="mx-1 cursor-pointer hover:font-bold">5</span>
-          
-          
-        </div> */}
+        
       </div>
     </div>
   )

@@ -8,6 +8,7 @@ const ModalUpdate = ({handleUpdate, targetContent}:any) => {
   const [value, setValue] = useState('');
   const [star, setStar] = useState(0)
   
+  console.log(targetContent)
   
   useEffect(() => {
     setValue(targetContent.content)
@@ -34,7 +35,7 @@ const ModalUpdate = ({handleUpdate, targetContent}:any) => {
       >
           <div className="bg-white py-4 px-5 mx-2 rounded-lg w-96">
             <div className='my-2 text-lg font-semibold text-center'>
-              캐치카페 서울대점
+              {targetContent.placename}
             </div>
             
             <div className='my-2 font-bold flex justify-center text-2xl cursor-pointer'>

@@ -308,7 +308,6 @@ const ProposeList = ({session,params}:any) => {
   return (
     <div>
       <div className='text-center font-extrabold text-2xl my-4'>장소 제안하기</div>
-      {/* action="/api/propose/propose" */}
       <form action="/api/propose/proposeConfirm" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
 
         {/* 사진첨부 */}

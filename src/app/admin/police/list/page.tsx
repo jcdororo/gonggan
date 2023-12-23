@@ -1,4 +1,11 @@
-export default function ContactList() {
+import { connectDB } from "@/util/database";
+import Link from "next/link";
+
+export default async function PoliceList() {
+  const db = (await connectDB).db("gonggan");
+  const result = await db.collection('police').find().toArray();
+
+
   return (
     <div>
       <div className='text-center font-extrabold text-2xl my-4'>신고 목록</div>
@@ -10,72 +17,41 @@ export default function ContactList() {
             <thead>
               <tr className="h-14 border-b-4">
                 <th className="py-2 w-96">장소</th>
-                <th className="py-2 w-48">신고자</th>
-                <th className="py-2 w-44 ">대상자</th>
-                <th className="py-2 w-28 ">상태</th>
+                <th className="py-2 w-48">대상자</th>
+                <th className="py-2 w-44 ">신고자</th>
+                <th className="py-2 w-28 ">날짜</th>
+                <th className="py-2 w-16 ">상태</th>
               </tr>
             </thead>
 
             <tbody className="">
+              { 
+                result.reverse().map((x, i) => (
+                  <tr key={x._id.toString()} className="h-10">                    
+                    <td className="py-2 ">
+                      <Link 
+                        href={`/admin/police/list/${x._id.toString()}`}
+                        className="hover:underline cursor-pointer"
+                      >
+                        {x.placename}
+                      </Link>
+                    </td>
+                    <td className="py-2 hover:underline cursor-pointer">{x.writerid}</td>
+                    <td className="py-2">{x.reporter}</td>
+                    <td className="py-2">{x.date}</td>
+                    <td className="py-2">{x.status}</td>
+                  </tr>
+                ))
+                
 
-              <tr className="h-10">
-                <td className="py-2 hover:underline cursor-pointer">캐치 카페</td>
-                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
-                <td className="py-2 hover:underline cursor-pointer">gongganstudy@naver.com</td>
-                <td className="py-2">진행 중</td>
-              </tr>
-
-              <tr className="h-10">
-                <td className="py-2 hover:underline cursor-pointer">더 카페</td>
-                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
-                <td className="py-2 hover:underline cursor-pointer">gongganstudy@naver.com</td>
-                <td className="py-2">진행 중</td>
-              </tr>
-
-              <tr className="h-10">
-                <td className="py-2 hover:underline cursor-pointer">미유 커피</td>
-                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
-                <td className="py-2 hover:underline cursor-pointer">gongganstudy@naver.com</td>
-                <td className="py-2">진행 중</td>
-              </tr>
-
-              <tr className="h-10">
-                <td className="py-2 hover:underline cursor-pointer">캐치카페</td>
-                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
-                <td className="py-2 hover:underline cursor-pointer">gongganstudy@naver.com</td>
-                <td className="py-2">진행 중</td>
-              </tr>
-
-              <tr className="h-10">
-                <td className="py-2 hover:underline cursor-pointer">캐치카페</td>
-                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
-                <td className="py-2 hover:underline cursor-pointer">gongganstudy@naver.com</td>
-                <td className="py-2">진행 중</td>
-              </tr>
-
-              <tr className="h-10">
-                <td className="py-2 hover:underline cursor-pointer">캐치카페</td>
-                <td className="py-2 hover:underline cursor-pointer">example@example.com</td>
-                <td className="py-2 hover:underline cursor-pointer">gongganstudy@naver.com</td>
-                <td className="py-2">진행 중</td>
-              </tr>
-
-
+              }
 
 
             </tbody>
           </table>
 
         </div>
-        <div className="my-12 text-lg">
-          <span className="mx-1 cursor-pointer hover:font-bold">1</span>
-          <span className="mx-1 cursor-pointer hover:font-bold">2</span>
-          <span className="mx-1 cursor-pointer hover:font-bold">3</span>
-          <span className="mx-1 cursor-pointer hover:font-bold">4</span>
-          <span className="mx-1 cursor-pointer hover:font-bold">5</span>
-          
-          
-        </div>
+        
       </div>
     </div>
   )
