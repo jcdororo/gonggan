@@ -67,7 +67,7 @@ export const authOptions:any = {
     async redirect({ url, baseUrl }: any) {
       return baseUrl;
     },
-    async jwt({ token, user, account, profile, isNewUser }: any) {      
+    async jwt({ token, user, account, profile, isNewUser }: any) {   
       if (user) {
         token.user = {};
         token.user.name  = user.name;
@@ -78,6 +78,7 @@ export const authOptions:any = {
         token.emailVerified = user.emailVerified;
         token.alarm = user.alarm;
         token.role = user.role;
+        token.method = user.method;
       }
       return token;
     },
@@ -85,6 +86,7 @@ export const authOptions:any = {
     async session({ session, token }: any) {
       session.user = token.user;
       session.user.role = token.role ? token.role : 'user'
+      session.user.method = token.method == 'oauth' ? 'oauth' : 'credential';
       return session;
     },
   },

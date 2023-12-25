@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaToggleOn } from "react-icons/fa";
 import Image from "next/image";
 import { useInputImg } from "../hooks/useInputImg";
@@ -7,9 +7,11 @@ import { useUploadImg } from "../hooks/useUploadImg";
 import { useRouter } from "next/navigation";
 
 export default function ProfileForm({session}:any) {
-  const [picture, setPicture] = useState(session.user.image)
-  const [nickname, setNickname] = useState(session.user.nickname)
+  const [id, setId] = useState<string | ''>('')
+  const [picture, setPicture] = useState<string | null>(null)
+  const [nickname, setNickname] = useState('')
   const [newNickname, setNewNickname] = useState<string | null>(null)
+  const [email, setEmail] = useState('')
   const imageRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<File | null>(null)
   const [checkVisable, setCheckVisable] = useState(false);
@@ -17,7 +19,15 @@ export default function ProfileForm({session}:any) {
   const router = useRouter();
 
 
-  console.log(session.user.method)
+
+  useEffect(() => {
+    setId(session.user.id)
+    setPicture(session.user.image)
+    setNickname(session.user.nickname)
+    setNewNickname(session.user.nickname)
+    setEmail(session.user.email)
+    
+  }, [])
 
   const handleCheck = async () => {
     if(nickname == '') return;
@@ -42,6 +52,7 @@ export default function ProfileForm({session}:any) {
   const handleNickname = (e:React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value)
     setCheckVisable(true)
+    setNewNickname(null)
 
   }
 
@@ -49,25 +60,38 @@ export default function ProfileForm({session}:any) {
     useInputImg(e, setImage, setPicture);
   }
 
-  const handleSubmit = async () => {
-    console.log('submit!!!!',image)
-    let url = '';
-    let result = '';
+  const handleEmail = () => {
+    
+  }
+
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     // 이미지가 변경되었다면
     if(image != null) {
-      url = await useUploadImg(image)
-      result = await fetch(`/api/upload/image?_id=${session.user.id}&url=${url}`,{method: 'POST'})
+      const url = await useUploadImg(image)
+      const result = await fetch(`/api/upload/image?_id=${session.user.id}&url=${url}`,{method: 'POST'})
       .then(r => r.json())
-      
     }
+
+    const temp = {
+      id: id,
+      nickname: newNickname,
+      email: email,
+    }
+
+
+    const result = await fetch('/api/profile/update', {method:'PUT', body:JSON.stringify(temp)}).then(r=>r.json())
     if(result.toString().includes('success')) {
       router.push('/mypage/profile/complete');
     }
     
 
-    console.log('result',result)
 
-    console.log('submit done !!!')
+
+
+
+    
+
   }
 
 
@@ -80,7 +104,7 @@ export default function ProfileForm({session}:any) {
         {/* <div className="bg-black w-[100px] h-[100px] rounded-full"></div> */}
         <Image 
           className="rounded-full w-[100px] h-[100px] overflow-hidden"
-          src={session.user.image ? picture : '/logo2.png'}
+          src={picture ? picture : '/logo2.png'}
           width={640}
           height={640}
           alt='아이콘'
@@ -213,16 +237,17 @@ export default function ProfileForm({session}:any) {
           <label className="lab" htmlFor="email">이메일</label> 
           <input
             className="in"
-            value="wnwlcks123@gamil.com"
+            value={email}
             type="text"
             name="email"
             id="email"
             required
+            onChange={handleEmail}
           />
         </div>
-        <div className="form_block">
+        {/* <div className="form_block">
           <p className="mt-5 text-red-500">입력한 암호가 일치하지 않습니다.</p>
-        </div>
+        </div> */}
         <div className="form__block">
           <input type="submit" value="수정하기" className="form__btn--submit" />
         </div>
