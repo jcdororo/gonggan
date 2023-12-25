@@ -300,7 +300,7 @@ const Propose = ({session}:any) => {
       <form action="/api/propose/propose" onSubmit={handleSubmit} method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
 
         {/* 사진첨부 */}
-        <div className="w-full p-5 bg-sygnature-beige my-2">
+        <div className="w-full p-5 bg-sygnature-beige my-2 min-h-[180px]">
           <div className="grid grid-cols-3 gap-4">
             
           {

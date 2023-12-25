@@ -1,4 +1,4 @@
-import LoadingSpin from "./components/LoadingSpin"
+import LoadingSpin from "../components/LoadingSpin"
 
 export default function Loading() {
   return(

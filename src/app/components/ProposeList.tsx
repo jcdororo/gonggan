@@ -311,7 +311,7 @@ const ProposeList = ({session,params}:any) => {
       <form action="/api/propose/proposeConfirm" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
 
         {/* 사진첨부 */}
-        <div className="w-full p-5 bg-sygnature-beige my-2">
+        <div className="w-full p-5 bg-sygnature-beige min-h-[180px] my-2">
           <div className="grid grid-cols-3 gap-4">
             
           {

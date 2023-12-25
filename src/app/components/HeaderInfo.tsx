@@ -171,6 +171,12 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                 ?
                 <>
                 <Link 
+                  href={'/admin'} 
+                  className='hover:font-bold' 
+                >
+                  admin 페이지
+                </Link>
+                <Link 
                   href={'/admin/propose/list'} 
                   className='hover:font-bold' 
                 >
@@ -181,6 +187,12 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                   className='hover:font-bold' 
                 >
                   신고 목록 
+                </Link>
+                <Link 
+                  href={'/admin/contact/list'} 
+                  className='hover:font-bold' 
+                >
+                  문의 목록 
                 </Link>
                 </>
                 :
