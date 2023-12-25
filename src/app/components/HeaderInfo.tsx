@@ -125,7 +125,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                 alarmsContens.sort((a:AlarmsContents, b:AlarmsContents) => Number(new Date(b.date)) - Number(new Date(a.date))).map((x, i) => (
                   <div 
                     key={x._id.toString()} 
-                    className='my-2 hover:scale-105 transition duration-300'
+                    className='my-2 hover:shadow-lg'
                   >
                   <Link 
                     href={x.link.toString()} 

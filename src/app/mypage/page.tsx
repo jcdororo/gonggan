@@ -35,7 +35,7 @@ export default async function MyPage() {
   const session: any = await getServerSession(authOptions);
 
   let likePlace = [];
-  let placeReview: ReviewType[] = [];  
+  const placeReview: ReviewType[] = [];  
 
   if(session) {
       const db = (await connectDB).db('gonggan');

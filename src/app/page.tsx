@@ -24,7 +24,7 @@ export default async function Home() {
       {/* Search Bar */}
       <SearchBar />
       <div className="m-12 h-screen">
-        <div className="flex gap-10">
+        <div className="flex gap-10 sm:flex-col md:flex-row">
           <div className="w-3/5 h-vh">
             <Map />
             <Marker places={places} />

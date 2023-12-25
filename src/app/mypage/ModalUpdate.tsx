@@ -8,7 +8,6 @@ const ModalUpdate = ({handleUpdate, targetContent}:any) => {
   const [value, setValue] = useState('');
   const [star, setStar] = useState(0)
   
-  console.log(targetContent)
   
   useEffect(() => {
     setValue(targetContent.content)
