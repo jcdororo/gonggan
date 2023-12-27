@@ -46,7 +46,7 @@ export default function PlaceReviews({ _id }: PlaceProps) {
   const [review, setReview] = useState<ReviewType>();
   const [like, setLike] = useState(false);
 
-  const [policeWrite, setPoliceWrite] = useState(false)
+  const [policeWrite, setPoliceWrite] = useState(false);
 
   // 리뷰 모달
   const onClick = (
@@ -70,7 +70,7 @@ export default function PlaceReviews({ _id }: PlaceProps) {
       setReviewDelete(!reviewDelete);
     }
 
-    if (id == 'police') {
+    if (id == "police") {
       setReview(review);
       setPoliceWrite(!policeWrite);
     }
@@ -130,7 +130,7 @@ export default function PlaceReviews({ _id }: PlaceProps) {
                   </div>
                 </div>
               ) : (
-                <div 
+                <div
                   id="police"
                   onClick={(e) => onClick(e, review)}
                   className="flex justify-end text-xs cursor-pointer"
@@ -184,16 +184,11 @@ export default function PlaceReviews({ _id }: PlaceProps) {
       ) : (
         ""
       )}
-      {
-      policeWrite ? (
+      {policeWrite ? (
         <ModalPolice targetContent={review} handleWrite={onClick} />
-      )
-      :
-      ""
-        
-      }
-
-      
+      ) : (
+        ""
+      )}
     </>
   );
 }

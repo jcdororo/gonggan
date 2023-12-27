@@ -10,6 +10,8 @@ export default async function handler(
     try {
       const db = (await connectDB).db("gonggan");
 
+      console.log("request.body", request.body);
+
       if (request.body.like != undefined) {
         // 좋아요만 수정
         const result = await db.collection("review").updateOne(
