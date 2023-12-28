@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { FaBell } from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
+import { FaBell, FaWindowClose } from "react-icons/fa";
 import clsx from "clsx";
 import Link from "next/link";
 import { signIn, signOut } from "next-auth/react";
@@ -24,6 +24,47 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
   const [isDropboxOpen, setIsDropboxOpen] = useState(false);
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
   const [alarmsContens, setAlarmsContens] = useState<AlarmsContents[]>([]);
+
+  const alarmRef = useRef<HTMLDivElement>(null);
+  const dropboRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const handleAlarmClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      // 클릭된 엘리먼트가 input 엘리먼트 혹은 그 자손인 경우에는
+      // setFocus(false)를 호출하지 않음
+      if (alarmRef.current && alarmRef.current.contains(target)) {
+        return;
+      }
+
+      // 다른 곳을 클릭한 경우 setFocus(false) 호출
+
+      setIsAlarmOpen(false);
+    };
+
+    const handleDropBoxClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      // 클릭된 엘리먼트가 input 엘리먼트 혹은 그 자손인 경우에는
+      // setFocus(false)를 호출하지 않음
+      if (dropboRef.current && dropboRef.current.contains(target)) {
+        return;
+      }
+
+      // 다른 곳을 클릭한 경우 setFocus(false) 호출
+
+      setIsDropboxOpen(false);
+    };
+
+    document.addEventListener("click", handleAlarmClickOutside);
+    document.addEventListener("click", handleDropBoxClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleAlarmClickOutside);
+      document.removeEventListener("click", handleDropBoxClickOutside);
+    };
+  }, []); // useEffect는 한 번만 실행되도록 빈 배열을 전달
 
   useEffect(() => {
     setAlarmsContens([...alarms]);
@@ -100,13 +141,15 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                     .length
                 : ""}
             </div>
-            <FaBell
-              className={`block mx-4 mr-6 text-sygnature-brown cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${
-                isAlarmOpen ? "text-red-400" : ""
-              }`}
-              onClick={handleAlarm}
-              size="30"
-            />
+            <div ref={alarmRef}>
+              <FaBell
+                className={`block mx-4 mr-6 text-sygnature-brown cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${
+                  isAlarmOpen ? "text-red-400" : ""
+                }`}
+                onClick={handleAlarm}
+                size="30"
+              />
+            </div>
             <img
               className="rounded-full h-14 w-14 overflow-hidden cursor-pointer hover:scale-105 transition duration-300"
               src={session.user.image ? session.user.image : "/logo2.png"}
@@ -114,6 +157,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
               height={640}
               alt="아이콘"
               onClick={handleClick}
+              ref={dropboRef}
             />
 
             {/* 알람 아이콘 클릭시 나오는 드랍박스 */}
