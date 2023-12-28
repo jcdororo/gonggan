@@ -11,7 +11,7 @@ import { useEffect, useRef } from "react";
 import { signOut } from "next-auth/react";
 import React from "react";
 
-export default function SignUpForm({ session }) {
+export default function SignUpForm({ session }: any) {
   const router = useRouter();
   const {
     register,

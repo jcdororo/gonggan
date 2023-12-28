@@ -50,3 +50,13 @@ export interface AlarmType {
   link: string;
   receiver: string | ObjectId;
 }
+
+export interface ContactType {
+  _id: ObjectId;
+  email: string;
+  title: string;
+  date: Date;
+  content: string;
+  status: string;
+  reply: string;
+}
