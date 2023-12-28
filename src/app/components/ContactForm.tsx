@@ -29,7 +29,7 @@ export default function ContactForm() {
       const { data } = await axios.post("/api/contact/route", {
         email: userData?.user?.email,
         title: body.title,
-        content: body.content
+        content: body.content, 
       });
       router.push("/mypage");
     } catch (error) {
