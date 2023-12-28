@@ -1,5 +1,5 @@
 import Image from "next/image";
-import header from "/public/logo2.png";
+import header from "/public/logo.png";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import HeaderInfo from "./HeaderInfo";

@@ -101,7 +101,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                 : ""}
             </div>
             <FaBell
-              className={`block mx-4 mr-6 text-sygnature-beige cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${
+              className={`block mx-4 mr-6 text-sygnature-brown cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${
                 isAlarmOpen ? "text-red-400" : ""
               }`}
               onClick={handleAlarm}
