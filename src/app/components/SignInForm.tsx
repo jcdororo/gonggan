@@ -7,16 +7,14 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-export default function SignInForm({session}) {
+export default function SignInForm({ session }) {
   const router = useRouter();
-  
 
   useEffect(() => {
-    if(session != null) {
+    if (session != null) {
       signOut();
-    }    
-  }, [])
-  
+    }
+  }, []);
 
   const {
     register,
@@ -71,9 +69,7 @@ export default function SignInForm({session}) {
             type="text"
           />
           {errors.loginId && (
-            <p className="text-sm text-red-500 p-2">
-              {errors.loginId.message}
-            </p>
+            <p className="text-sm text-red-500 p-2">{errors.loginId.message}</p>
           )}
         </div>
         <div className="form__block">
@@ -88,10 +84,10 @@ export default function SignInForm({session}) {
             type="password"
           />
           {errors.password && (
-              <p className="text-sm text-red-500 p-2">
-                {errors?.password?.message}
-              </p>
-            )}
+            <p className="text-sm text-red-500 p-2">
+              {errors?.password?.message}
+            </p>
+          )}
         </div>
         <div className="form_block flex">
           <input

@@ -22,7 +22,7 @@ const page = async ({ params }: { params: { id: string } }) => {
         <div className="font-bold">대상자 닉네임</div>
         <div>{result?.writernickname}</div>
         <div className="font-bold">분류</div>
-        {result?.check.map((x, i) => (
+        {result?.check.map((x: string[], i: number) => (
           <div key={i}> - {x}</div>
         ))}
         <div className="font-bold">내용</div>
