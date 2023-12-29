@@ -11,7 +11,7 @@ export default function ContactForm() {
   const router = useRouter();
 
   const { data: userData, status } = useSession();
-  console.log(userData?.user?.email)
+
   const {
     register,
     handleSubmit,
