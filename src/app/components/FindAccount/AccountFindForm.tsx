@@ -69,10 +69,10 @@ export default function AccountFindForm() {
         };
 
         emailjs.send(
-          "service_zbn0dtf",
-          "template_vyx0c4j",
+          process.env.NEXT_PUBLIC_MAILJS_SERVICE_ID as string,
+          process.env.NEXT_PUBLIC_MAILJS_TEMPLATE_ID as string,
           emailValue,
-          "n8eqKpaiXtd_CFvVK"
+          process.env.NEXT_PUBLIC_MAILJS_API_KEY
         );
         setPwdModalOpen(true);
       } catch (error) {
