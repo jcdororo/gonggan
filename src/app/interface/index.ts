@@ -7,12 +7,12 @@ export interface LocationType {
 }
 
 export interface PlaceType {
-  _id?: number;
+  _id?: string | ObjectId;
   location?: string;
   openhour?: string | null;
   closehour?: string | null;
   businessday?: string[] | null;
-  phone?: string[] | null;
+  phone?: string | null;
   howtouse?: string | null;
   desc?: string | null;
   address_name?: string | null;
@@ -26,18 +26,19 @@ export interface PlaceType {
   x?: string | null;
   y?: string | null;
   status?: string | null;
+  date: string;
 }
 
 export interface ReviewType {
-  _id: ObjectId;
-  placeid: string;
+  _id: string | ObjectId;
+  placeid: string | ObjectId;
   content: string;
-  date: Date;
-  writerid: string;
+  date?: Date | string;
+  writerid: string | ObjectId;
   placename: string;
   writernickname: string;
-  writerpic: string;
-  star: number;  
+  writerpic: string | null;
+  star: number;
   like: number;
 }
 
@@ -49,6 +50,12 @@ export interface AlarmType {
   date: Date;
   link: string;
   receiver: string | ObjectId;
+}
+
+export interface LikePlace {
+  _id: ObjectId | string;
+  place_id: string;
+  liked_user: string;
 }
 
 export interface ContactType {

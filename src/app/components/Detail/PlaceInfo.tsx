@@ -6,13 +6,11 @@ import { IoMdTime } from "react-icons/io";
 import { useQuery } from "react-query";
 import { PlaceType } from "../../interface";
 
-
 interface PlaceProps {
-  _id: string
+  _id: string;
 }
 
 export default function PlaceInfo({ _id }: PlaceProps) {
-
   const getPlace = async () => {
     const { data } = await axios.get(`/api/place/route?_id=${_id}`);
     return data as PlaceType;
@@ -28,7 +26,6 @@ export default function PlaceInfo({ _id }: PlaceProps) {
     refetchOnWindowFocus: false,
   });
 
-  
   return (
     <>
       <div className="flex px-8 pb-3 text-2xl font-bold">

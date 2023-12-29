@@ -7,7 +7,6 @@ const page = async ({ params }: { params: { id: string } }) => {
   const result = await db
     .collection("police")
     .findOne({ _id: new ObjectId(params.id) });
-  console.log(result);
 
   return (
     <div>

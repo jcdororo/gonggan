@@ -1,15 +1,7 @@
 "use client";
 import PlaceInfo from "@/app/components/Detail/PlaceInfo";
 import PlaceReviews from "@/app/components/Detail/PlaceReviews";
-import { PlaceType } from "@/app/interface";
-import axios from "axios";
-import { useSearchParams } from "next/navigation";
-import { Key } from "react";
-import React, { useState } from "react";
-import { AiOutlineCloseCircle } from "react-icons/ai";
-import { BiLike, BiSolidLike } from "react-icons/bi";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { IoMdTime, IoIosArrowDown } from "react-icons/io";
+import React from "react";
 
 export default function PlacePage({ params }: { params: { _id: string } }) {
   const _id = params?._id;

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { ReviewType } from "../../interface";
 import { useQuery } from "react-query";
-import { BiLike } from "react-icons/bi";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import ReviewShape from "../Review/ReviewShape";
@@ -17,7 +16,7 @@ interface PlaceProps {
 
 export default function PlaceReviews({ _id }: PlaceProps) {
   // 사용자 정보
-  const { data: userData, status } = useSession();
+  const { data: userData, status }: any = useSession();
 
   const getReviews = async () => {
     const { data } = await axios.get(`/api/reviews/findReviews?_id=${_id}`);

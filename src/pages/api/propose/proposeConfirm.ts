@@ -11,6 +11,7 @@ export default async function handler(
   if (request.method == "POST") {
     if (request.body.confirm == "approved") {
       try {
+        request.body._id = new ObjectId(request.body._id);
         const temp = { status: "완료" };
         const db = (await connectDB).db("gonggan");
         request.body.status = "완료";
