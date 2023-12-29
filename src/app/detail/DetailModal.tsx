@@ -80,7 +80,9 @@ const DetailModal: React.FC<ModalProps> = ({ handleModal }) => {
               {limit < comments.length && (
                 <div className="flex justify-center w-[150px] p-2 bg-black/10 rounded-2xl">
                   <div onClick={handleReadMore}>리뷰 더 보기 &nbsp; </div>
-                  <div className="flex items-center"><IoIosArrowDown /></div>
+                  <div className="flex items-center">
+                    <IoIosArrowDown />
+                  </div>
                 </div>
               )}
             </div>

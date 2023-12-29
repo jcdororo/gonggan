@@ -5,32 +5,23 @@ import ModalDelete from "./ModalDelete";
 import ModalUpdate from "./ModalUpdate";
 import { FaHeart, FaStar, FaThumbsUp } from "react-icons/fa";
 import ModalLikeDelete from "./ModalLikeDelete";
-import { Place } from "./page";
-import { ReviewType } from "../interface";
+import { PlaceType, ReviewType } from "../interface";
 import Link from "next/link";
 
 interface MyContentsProps {
-  likePlace: Place[];
+  likePlace: PlaceType[];
   placeReview: ReviewType[];
 }
 
-type MyMouseEventHandler = (
-  e: React.MouseEvent<HTMLDivElement>,
-  content: ReviewType
-) => void;
-
-const MyContents: React.FC<MyContentsProps> = ({
-  likePlace,
-  placeReview,
-}: MyContentsProps) => {
+const MyContents = ({ likePlace, placeReview }: MyContentsProps) => {
   const [btnName, setBtnName] = useState("like");
   const [modalDeleteOpen, setModalDeletelOpen] = useState(false);
   const [modalUpdateOpen, setModalUpdateOpen] = useState(false);
   const [modalLikeOpen, setModalLikeOpen] = useState(false);
 
-  const [targetContent, setTargetContent] = useState<ReviewType | undefined>(
-    undefined
-  );
+  const [targetContent, setTargetContent] = useState<
+    PlaceType | ReviewType | undefined
+  >(undefined);
 
   const handleClick: React.MouseEventHandler<HTMLDivElement> | undefined = (
     event
@@ -41,22 +32,28 @@ const MyContents: React.FC<MyContentsProps> = ({
   };
 
   // 리뷰 -> 삭제
-  const handleDelete: MyMouseEventHandler = (e, content) => {
-    e.preventDefault();
+  const handleDelete = (
+    e: React.MouseEvent<HTMLDivElement>,
+    content: ReviewType
+  ) => {
     setTargetContent(content);
     setModalDeletelOpen(!modalDeleteOpen);
   };
 
   // 리뷰 -> 수정
-  const handleUpdate: MyMouseEventHandler = (e, content) => {
-    e.preventDefault();
+  const handleUpdate = (
+    e: React.MouseEvent<HTMLDivElement>,
+    content: ReviewType
+  ) => {
     setTargetContent(content);
     setModalUpdateOpen(!modalUpdateOpen);
   };
 
   // 좋아요 -> ♥
-  const handleLike: MyMouseEventHandler = (e, content) => {
-    e.preventDefault();
+  const handleLike = (
+    e: React.MouseEvent<HTMLDivElement>,
+    content: PlaceType
+  ) => {
     setTargetContent(content);
     setModalLikeOpen(!modalLikeOpen);
   };
@@ -87,7 +84,7 @@ const MyContents: React.FC<MyContentsProps> = ({
       {btnName == "like" ? (
         <div className="flex flex-col place-items-center justify-center">
           {likePlace.length ? (
-            likePlace.map((x: any, i: number) => (
+            likePlace.map((x, i) => (
               <div
                 key={i}
                 className="flex flex-row relative border border-black rounded-md my-3"
@@ -122,8 +119,10 @@ const MyContents: React.FC<MyContentsProps> = ({
                 className="flex flex-col relative border border-black rounded-md my-3 h-40"
               >
                 <div className="flex flex-row h-9">
-                  <div className="font-extrabold my-3 mx-3 w-80">
-                    {x.placename}
+                  <div className="font-extrabold my-3 mx-3 w-80 hover:underline">
+                    <Link href={`/places/${x.placeid.toString()}`}>
+                      {x.placename}
+                    </Link>
                   </div>
                   <div className="flex flex-row pt-4 text-xs font-semibold">
                     <div
@@ -143,11 +142,6 @@ const MyContents: React.FC<MyContentsProps> = ({
 
                 <div className="mx-3 my-1 text-xs font-bold flex flex-row align-middle">
                   <FaStar /> {x.star}점
-                </div>
-
-                <div className="mx-3 text-xs">
-                  {new Date(x.date).toLocaleDateString("ko-KR")}{" "}
-                  {/* 'yyyy.mm.dd' 형식으로 날짜를 표시 */}
                 </div>
 
                 <div className="mx-2 my-2 px-1 flex flex-row items-center text-sygnature-brown">
