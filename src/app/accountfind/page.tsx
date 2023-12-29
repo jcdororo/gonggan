@@ -1,4 +1,4 @@
-import AccountFindForm from '../components/AccountFindForm';
+import AccountFindForm from '../components/FindAccount/AccountFindForm';
 
 export default async function AccountFindPage() {
   return(

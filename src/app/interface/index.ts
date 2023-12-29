@@ -6,6 +6,14 @@ export interface LocationType {
   zoom?: number;
 }
 
+export interface UserInfoType {
+  _id: ObjectId;
+  loginId?: string;
+  nickname: string;
+  password: string;
+  email: string;
+}
+
 export interface PlaceType {
   _id?: string | ObjectId;
   location?: string;

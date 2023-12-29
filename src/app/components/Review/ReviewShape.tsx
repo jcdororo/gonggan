@@ -52,7 +52,6 @@ export default function ReviewShape({
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
-    console.log(body)
     try {
       // 리뷰 새로 쓸 때
       if (type=="write") {
