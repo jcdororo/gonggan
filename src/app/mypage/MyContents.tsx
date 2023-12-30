@@ -155,7 +155,7 @@ const MyContents = ({ likePlace, placeReview }: MyContentsProps) => {
                   </div>
                 </div>
               </div>
-            ))
+            )).reverse()
           ) : (
             <div className="relative my-8 font-bold">
               등록 된 리뷰가 없습니다
