@@ -43,7 +43,7 @@ export default function AccountFindForm() {
     const buttonValue = submitButton?.getAttribute("value");
 
     try {
-      const { data } = await axios.post("/api/accountFind/route", body);
+      const { data } = await axios.post("/api/accountFind/findEmail", body);
       setUserInfo(data);
     } catch (error) {
       console.log(error);
@@ -58,7 +58,7 @@ export default function AccountFindForm() {
         const message =
           "이 주소로 접속하여 비밀번호를 변경해주십시오. \n" +
           process.env.NEXT_PUBLIC_URL +
-          "/accountFind/" +
+          "/accountfind/" +
           userInfo?._id;
 
         const emailValue = {

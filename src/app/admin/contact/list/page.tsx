@@ -1,5 +1,5 @@
 import Table from "@/app/components/Admin/ContactTable";
-import Title from "@/app/components/Admin/Title";
+import Title from "@/app/components/Title";
 
 export default function ContactPage() {
   return (

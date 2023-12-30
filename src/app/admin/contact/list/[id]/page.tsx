@@ -1,5 +1,5 @@
 import ContactDetail from "@/app/components/Admin/ContactDetail";
-import Title from "@/app/components/Admin/Title";
+import Title from "@/app/components/Title";
 
 export default function Detail ({ params }: { params: { id: string } }) {
   const id = params?.id;

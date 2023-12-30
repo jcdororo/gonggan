@@ -179,7 +179,7 @@ export default function SignUpForm({ session }: any) {
                 required: "비밀번호 확인을 입력해주세요.",
                 validate: (val: string) => {
                   if (watch("password") != val) {
-                    return "비밀번호와 일치하지 않습니다.";
+                    return "입력하신 비밀번호와 일치하지 않습니다.";
                   }
                 },
               })}
