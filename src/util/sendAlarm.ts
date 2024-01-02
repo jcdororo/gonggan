@@ -2,7 +2,7 @@
 interface Templete {
   check: boolean, // 체크했는지
   content: string, // 알람 내용
-  receiver: string, // 받는사람 id ex) '65768fasl234uh2k3u4hk1j22'  
+  receiver: string, // 받는사람 id ex) '65768fasl234uh2ku4hk1j22'  
   link: string | "", // /, /mypage, or "" ""면 링크이동 안하는 내용만 있는 알람이 전송됨
   role: string // user에게 보낼것인지 admin에게 보낼것인지
 }
