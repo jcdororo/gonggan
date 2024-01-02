@@ -11,6 +11,7 @@ export const uploadImg = async (image:File | null) => {
     body: formData,
   })
 
+  
   const data = await response.json();
   return data.url
 
