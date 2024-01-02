@@ -3,8 +3,8 @@ import { useRef, useState } from "react";
 import { FaToggleOn } from "react-icons/fa";
 import Image from "next/image";
 import { useInputImg } from "../hooks/useInputImg";
-import { useUploadImg } from "../hooks/useUploadImg";
 import { useRouter } from "next/navigation";
+import { uploadImg } from "@/util/uploadImg";
 
 export default function ProfileForm({session}:any) {
   const [picture, setPicture] = useState(session.user.image)
@@ -55,7 +55,7 @@ export default function ProfileForm({session}:any) {
     let result = '';
     // 이미지가 변경되었다면
     if(image != null) {
-      url = await useUploadImg(image)
+      url = await uploadImg(image)
       result = await fetch(`/api/upload/image?_id=${session.user.id}&url=${url}`,{method: 'POST'})
       .then(r => r.json())
       

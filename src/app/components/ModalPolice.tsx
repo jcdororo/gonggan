@@ -1,4 +1,5 @@
 'use client'
+import { sendAlarm } from '@/util/sendAlarm';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react'
 
@@ -48,12 +49,11 @@ const ModalPolice = ({targetContent, handleWrite}:any) => {
     const temp2 = {
       check: false,
       content: '[admin] 신고내역 1건이 등록 되었습니다.',
-      date: new Date(),
       link: '/admin/police/list',
       receiver: '',
       role: 'admin'
     }
-    const sendAlarm = await fetch('/api/alarm/sendAlarm',{method:'POST',body:JSON.stringify(temp2)}).then(r => r.json());
+    await sendAlarm(temp2);
 
     setSendPolice(true);
 

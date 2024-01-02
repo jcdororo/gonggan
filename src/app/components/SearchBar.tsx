@@ -6,6 +6,7 @@ import { useDebounce } from '../hooks/useDebounce';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import { mapState } from '../atom';
+import kakaoSearchMap from '@/util/kakaoSearchMap';
 
 
 interface Result {
@@ -33,8 +34,6 @@ const SearchBar = () => {
   const [place, setPlace] = useState([]);
   const [placeInfo, setPlaceInfo] = useState<Result | null>(null);
   const [map, setMap] = useRecoilState(mapState);
-
-  const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -69,19 +68,17 @@ const SearchBar = () => {
       if(query.length > 0) {
         setPlaceInfo(null)
         let datas = [];
-        const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
         
         const place = await fetch(`/api/place/placeSearch?query=${searchQuery}`, { method: 'GET' })
-                                                                              .then(r => r.json())
-                                                                              // .then(r => datas.push(...r))
+        .then(r => r.json())
+        // .then(r => datas.push(...r))
         datas.push(...place)                  
         setPlace(place);                                    
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-            Authorization: `KakaoAK ${apiKey}`,
-          },
-        });
+
+        const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
+      
+
+        const response = await kakaoSearchMap(apiUrl);
   
         if (!response.ok) {
           throw new Error('네트워크 응답이 정상이 아닙니다');

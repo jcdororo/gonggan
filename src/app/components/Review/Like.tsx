@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { ReviewType } from "../../interface";
+import { sendAlarm } from "@/util/sendAlarm";
 
 interface LikeProps {
   review: ReviewType;
@@ -21,6 +22,7 @@ export default function Like({ review, nickname }: LikeProps) {
   const [countLike, setCountLike] = useState(review.like);
   const [like, setLike] = useState<ReviewLikeProps>();
   const [isLike, setIsLike] = useState<boolean>();
+
 
   useEffect(() => {
     const getLike = async () => {
@@ -74,15 +76,13 @@ export default function Like({ review, nickname }: LikeProps) {
           const temp = {
             check: false,
             content: `${nickname}님이 내 리뷰에 좋아요를 보냈습니다.`,
-            date: new Date(),
-            link: "",
-            receiver: review.writerid,
+            link: `/places/${review.placeid}`,
+            receiver: review.writerid.toString(),
             role: "user",
           };
-          const sendAlarm = await fetch("/api/alarm/sendAlarm", {
-            method: "POST",
-            body: JSON.stringify(temp),
-          }).then((r) => r.json());
+
+          await sendAlarm(temp);
+
         }
       }
     } catch (error) {

@@ -1,17 +1,17 @@
 interface ImgUploadProps {
   e: React.ChangeEvent<HTMLInputElement>;
-  image: File | null;
-  setImage: React.Dispatch<React.SetStateAction<File | null>>;
-  imagePreview: string | null;
+  image: File[];
+  setImage: React.Dispatch<React.SetStateAction<File>>;
+  imagePreview: string[];
   setImagePreview: React.Dispatch<React.SetStateAction<[]>>;  
 }
 
 export const useInputImgs = (
-                              e,
-                              image,
-                              setImage,
-                              imagePreview,
-                              setImagePreview
+  e: React.ChangeEvent<HTMLInputElement>,
+                              image: File[],
+                              setImage: React.Dispatch<React.SetStateAction<File[]>>,
+                              imagePreview: string[],
+                              setImagePreview: React.Dispatch<React.SetStateAction<string[]>>
                             ) => {
   if (!e.target.files || e.target.files.length === 0) {
     return;

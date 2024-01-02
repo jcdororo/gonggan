@@ -5,13 +5,14 @@ import { inputHoverFocus } from "../styles/styles";
 import { FaCamera, FaFlag, FaWindowClose } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useSendAlarm } from "../hooks/useSendAlarm";
 import { useRecoilState } from "recoil";
 import { mapState } from "../atom";
 import Map from "../components/Map";
 import Image from "next/image";
 import { useInputImgs } from "../hooks/useInputImgs";
-import { useUploadImg } from "../hooks/useUploadImg";
+import kakaoSearchMap from "@/util/kakaoSearchMap";
+import { uploadImg } from "@/util/uploadImg";
+import { sendAlarm } from "@/util/sendAlarm";
 
 interface Result {
   _id?: string,
@@ -39,7 +40,6 @@ const Propose = ({session}:any) => {
   const [results, setResults] = useState<Result[]>([]);
   const [placeInfo, setPlaceInfo] = useState<Result | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;  
   const router = useRouter()
   const [place, setPlace] = useState([]);
   const [map, setMap] = useRecoilState(mapState);
@@ -108,12 +108,8 @@ const Propose = ({session}:any) => {
                                                                               
         datas.push(...place)                  
         setPlace(place);                                                                  
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-            Authorization: `KakaoAK ${apiKey}`,
-          },
-        });
+        const response = await kakaoSearchMap(apiUrl);
+
   
         if (!response.ok) {
           throw new Error('네트워크 응답이 정상이 아닙니다');
@@ -189,8 +185,15 @@ const Propose = ({session}:any) => {
     
   };
 
-  const handleClick = () => {
-    useSendAlarm('[admin] 장소제안 1건이 등록 되었습니다.', '', '/admin/propose/list', 'admin')
+  const handleClick = async () => {
+    const temp = {
+      check: false,
+      content: '[admin] 장소제안 1건이 등록 되었습니다.',
+      link: '/admin/propose/list',
+      receiver: '',
+      role: 'admin'
+    }
+    await sendAlarm(temp)
   }
 
   const checkForm = () => {
@@ -278,7 +281,7 @@ const Propose = ({session}:any) => {
     
     const urls = [];
     for(const img of image) {
-      const result = await useUploadImg(img);
+      const result = await uploadImg(img);
       urls.push(result);
     }
     for(const url of urls) {
