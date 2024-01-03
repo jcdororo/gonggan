@@ -71,7 +71,7 @@ export default async function Header() {
   return (
     <div className="">
       <div className="fixed w-full h-20 top-0 opacity-80 z-9999"></div>
-      <div className="flex w-full h-20 fixed z-9999">
+      <div className="flex w-full h-20 fixed z-9999 shadow-md">
         <Link href={"/"}>
           <Image
             className="mx-1 ml-3 relative"

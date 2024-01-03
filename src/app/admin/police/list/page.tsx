@@ -27,7 +27,7 @@ export default async function PoliceList() {
                 <tr key={x._id.toString()} className="h-10">
                   <td className="py-2 ">
                     <Link
-                      href={`/admin/police/list/${x._id.toString()}`}
+                      href={`/admin/police/list/${x.placeid}`}
                       className="hover:underline cursor-pointer"
                     >
                       {x.placename}

@@ -205,7 +205,6 @@ const ProposeList = ({ session, params }: any) => {
         setPlace(place);
         const response = await kakaoSearchMap(apiUrl);
 
-
         if (!response.ok) {
           throw new Error("네트워크 응답이 정상이 아닙니다");
         }
@@ -273,16 +272,15 @@ const ProposeList = ({ session, params }: any) => {
   };
 
   const handleClick = async () => {
-   
     const temp = {
       check: false,
-      content: `[admin] 장소제안 [${query}] ${confirm} 되었습니다.`,
+      content: `[admin] 장소 제안 [${query}] ${confirm} 되었습니다.`,
       date: new Date(),
       link: "/admin/propose/list",
-      receiver: '',
-      role:  "admin"
-    }
-    await sendAlarm(temp)
+      receiver: "",
+      role: "admin",
+    };
+    await sendAlarm(temp);
   };
 
   const checkForm = () => {
@@ -350,7 +348,7 @@ const ProposeList = ({ session, params }: any) => {
   return (
     <div>
       <div className="text-center font-extrabold text-2xl my-4">
-        장소 제안하기
+        장소 제안 내용
       </div>
       <form
         action="/api/propose/proposeConfirm"

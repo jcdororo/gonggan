@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
 import { inputHoverFocus } from "../styles/styles";
@@ -15,117 +15,121 @@ import { uploadImg } from "@/util/uploadImg";
 import { sendAlarm } from "@/util/sendAlarm";
 
 interface Result {
-  _id?: string,
-  address_name : string,
-  category_group_code : string,
-  category_group_name : string,
-  category_name : string,
-  distance : string,
-  id : string,
-  phone : string,
-  place_name : string,
-  place_url : string,
-  road_address_name : string,
-  x : string,
-  y : string,
+  _id?: string;
+  address_name: string;
+  category_group_code: string;
+  category_group_name: string;
+  category_name: string;
+  distance: string;
+  id: string;
+  phone: string;
+  place_name: string;
+  place_url: string;
+  road_address_name: string;
+  x: string;
+  y: string;
 }
 
-
-const Propose = ({session}:any) => {
+const Propose = ({ session }: any) => {
   const [focus, setFocus] = useState(false);
-  const [query, setQuery] = useState('');
-  const [phoneValue, setPhoneValue] = useState('')
-  const [howtouseValue, setHowtouseValue] = useState('')
-  const [descValue, setdescValue] = useState('')
+  const [query, setQuery] = useState("");
+  const [phoneValue, setPhoneValue] = useState("");
+  const [howtouseValue, setHowtouseValue] = useState("");
+  const [descValue, setdescValue] = useState("");
   const [results, setResults] = useState<Result[]>([]);
   const [placeInfo, setPlaceInfo] = useState<Result | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter()
+  const router = useRouter();
   const [place, setPlace] = useState([]);
   const [map, setMap] = useRecoilState(mapState);
   const imageRef = useRef<HTMLInputElement>(null);
-  const [image, setImage] = useState<File[]>([])
-  const [imagePreview, setImagePreview] = useState<string[]>([])
-  const [openHour, setOpenHour] = useState('');
-  const [closeHour, setCloseHour] = useState('');
-  const [businessDay, setBusinessDay] = useState<string[]>([])
+  const [image, setImage] = useState<File[]>([]);
+  const [imagePreview, setImagePreview] = useState<string[]>([]);
+  const [openHour, setOpenHour] = useState("");
+  const [closeHour, setCloseHour] = useState("");
+  const [businessDay, setBusinessDay] = useState<string[]>([]);
 
-  
-
-  if(!session) {
+  if (!session) {
     setTimeout(() => {
-      router.push('/signin')
+      router.push("/signin");
     }, 500);
     return (
       <div className="h-96 flex flex-col justify-center items-center font-bold text-2xl text-sygnature-brown">
         <div>
-          로그인 후 진행 해 주세요 <br /><br />          
+          로그인 후 진행 해 주세요 <br />
+          <br />
         </div>
 
-      <div>잠시 후 <Link className="text-blue-500 hover:underline" href={'/signin'}> 로그인</Link> 페이지로 이동합니다.</div>
+        <div>
+          잠시 후{" "}
+          <Link className="text-blue-500 hover:underline" href={"/signin"}>
+            {" "}
+            로그인
+          </Link>{" "}
+          페이지로 이동합니다.
+        </div>
       </div>
-    )
+    );
   }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
-  
+
       // 클릭된 엘리먼트가 input 엘리먼트 혹은 그 자손인 경우에는
       // setFocus(false)를 호출하지 않음
       if (inputRef.current && inputRef.current.contains(target)) {
         return;
       }
-  
+
       // 다른 곳을 클릭한 경우 setFocus(false) 호출
-      
+
       setFocus(false);
     };
-  
+
     // document에 클릭 이벤트 리스너 추가
     document.addEventListener("click", handleClickOutside);
-  
+
     // 컴포넌트가 언마운트되면 이벤트 리스너 제거
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []); // useEffect는 한 번만 실행되도록 빈 배열을 전달
 
-
-  const handleSearch = async (searchQuery:string) => {
+  const handleSearch = async (searchQuery: string) => {
     try {
       // 검색어가 빈칸일땐 호출하지 않음
-      if(query.length > 0) {
-        if(!placeInfo) {
-          setPlaceInfo(null)
+      if (query.length > 0) {
+        if (!placeInfo) {
+          setPlaceInfo(null);
         }
         const datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
-        
-        const place = await fetch(`/api/place/placeSearch?query=${searchQuery}`, { method: 'GET' })
-                                                                              .then(r => r.json())
-                                                                              // .then(r => datas.push(...r))
-                                                                              
-        datas.push(...place)                  
-        setPlace(place);                                                                  
+
+        const place = await fetch(
+          `/api/place/placeSearch?query=${searchQuery}`,
+          { method: "GET" }
+        ).then((r) => r.json());
+        // .then(r => datas.push(...r))
+
+        datas.push(...place);
+        setPlace(place);
         const response = await kakaoSearchMap(apiUrl);
 
-  
         if (!response.ok) {
-          throw new Error('네트워크 응답이 정상이 아닙니다');
+          throw new Error("네트워크 응답이 정상이 아닙니다");
         }
-  
+
         const data = await response.json();
-        datas.push(...data.documents)
-        
+        datas.push(...data.documents);
+
         setResults(datas);
-        if(!placeInfo) {
-          setFocus(true)
+        if (!placeInfo) {
+          setFocus(true);
         }
-        
       }
     } catch (error) {
-      console.error('데이터를 불러오는 중 오류 발생:', error);
+      console.error("데이터를 불러오는 중 오류 발생:", error);
     }
   };
 
@@ -133,135 +137,128 @@ const Propose = ({session}:any) => {
   const debouncedQuery = useDebounce(query, 300);
   useEffect(() => {
     handleSearch(debouncedQuery);
-        
-  }, [debouncedQuery])
+  }, [debouncedQuery]);
 
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);    
-    
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
   };
 
-  const handlePhoneChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneValue(e.target.value);        
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneValue(e.target.value);
   };
 
-  const handleHowtouseChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
-    setHowtouseValue(e.target.value);        
+  const handleHowtouseChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setHowtouseValue(e.target.value);
   };
 
-  const handleDescChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
-    setdescValue(e.target.value);        
+  const handleDescChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setdescValue(e.target.value);
   };
 
   const handleFocus = () => {
     setFocus(true);
-  }
+  };
 
-  const handleResultClick = (result:Result) => {
+  const handleResultClick = (result: Result) => {
     // 클릭한 결과 정보를 출력
-    setQuery(result.place_name)
-    setPlaceInfo(result)
+    setQuery(result.place_name);
+    setPlaceInfo(result);
     setFocus(false);
 
-    // 이동할 위도 경도 위치를 생성합니다 
-    const moveLatLon = new window.kakao.maps.LatLng(result.y, result.x);      
+    // 이동할 위도 경도 위치를 생성합니다
+    const moveLatLon = new window.kakao.maps.LatLng(result.y, result.x);
     // 지도 중심을 이동 시킵니다
     map.setCenter(moveLatLon);
     const iwContent = `<div style="padding:10px;">${result.place_name}</div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-    iwPosition = new window.kakao.maps.LatLng(result.y, result.x), //인포윈도우 표시 위치입니다
-    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+      iwPosition = new window.kakao.maps.LatLng(result.y, result.x), //인포윈도우 표시 위치입니다
+      iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
     // 인포윈도우를 생성하고 지도에 표시합니다
     const infowindow = new window.kakao.maps.InfoWindow({
-        map: map, // 인포윈도우가 표시될 지도
-        position : iwPosition, 
-        content : iwContent,
-        removable : iwRemoveable
+      map: map, // 인포윈도우가 표시될 지도
+      position: iwPosition,
+      content: iwContent,
+      removable: iwRemoveable,
     });
-
-
-
-
-    
   };
 
   const handleClick = async () => {
     const temp = {
       check: false,
-      content: '[admin] 장소제안 1건이 등록 되었습니다.',
-      link: '/admin/propose/list',
-      receiver: '',
-      role: 'admin'
-    }
-    await sendAlarm(temp)
-  }
+      content: "[admin] 장소 제안 1건이 등록 되었습니다.",
+      link: "/admin/propose/list",
+      receiver: "",
+      role: "admin",
+    };
+    await sendAlarm(temp);
+  };
 
   const checkForm = () => {
-    let info = '';
-    query ? '' : info += '[위치] '
-    results.length ? '' : info += '[위치 선택] '
-    howtouseValue ? '' : info += '[이용방법] '
-    descValue ? '' : info += '[설명]'
-    
+    let info = "";
+    query ? "" : (info += "[위치] ");
+    results.length ? "" : (info += "[위치 선택] ");
+    howtouseValue ? "" : (info += "[이용방법] ");
+    descValue ? "" : (info += "[설명]");
 
-    info ? info += ' 을 작성 해 주세요' : info = ''
+    info ? (info += " 을 작성 해 주세요") : (info = "");
 
-    
-    return info
-  }
+    return info;
+  };
 
   // 사진첨부기능
-  const handleClose = (e:React.MouseEvent<HTMLElement>, i:number) => {
-    setImagePreview([...imagePreview.slice(0,i), ...imagePreview.slice(i+1,imagePreview.length)])
-    setImage([...image.slice(0,i), ...image.slice(i+1,image.length)])
-
-  }
+  const handleClose = (e: React.MouseEvent<HTMLElement>, i: number) => {
+    setImagePreview([
+      ...imagePreview.slice(0, i),
+      ...imagePreview.slice(i + 1, imagePreview.length),
+    ]);
+    setImage([...image.slice(0, i), ...image.slice(i + 1, image.length)]);
+  };
 
   const handleAttach = () => {
     imageRef.current?.click();
-  }
+  };
 
-  const handleAttachChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleAttachChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     useInputImgs(e, image, setImage, imagePreview, setImagePreview);
-
-  }
+  };
 
   // Openhour
-  const handleOpenHour = (e:React.ChangeEvent<HTMLSelectElement>) => {
-    setOpenHour(e.target.value)
-  }
+  const handleOpenHour = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setOpenHour(e.target.value);
+  };
   // Closehour
-  const handleCloseHour = (e:React.ChangeEvent<HTMLSelectElement>) => {
-    setCloseHour(e.target.value)
-  }
+  const handleCloseHour = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCloseHour(e.target.value);
+  };
 
   // 영업일
-  const handleBusinessDay = (e:React.ChangeEvent<HTMLInputElement>) => {
-    const order = ['월','화','수','목','금','토','일'];
-    if(businessDay.indexOf(e.target.value) == -1) {
-      setBusinessDay([...businessDay, e.target.value].sort((a, b) => {
-        return order.indexOf(a) - order.indexOf(b);
-      }))
+  const handleBusinessDay = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const order = ["월", "화", "수", "목", "금", "토", "일"];
+    if (businessDay.indexOf(e.target.value) == -1) {
+      setBusinessDay(
+        [...businessDay, e.target.value].sort((a, b) => {
+          return order.indexOf(a) - order.indexOf(b);
+        })
+      );
     } else {
-      setBusinessDay((businessDay.filter((x,i) => x != e.target.value)).sort((a, b) => {
-        return order.indexOf(a) - order.indexOf(b);
-      }))
-    }    
+      setBusinessDay(
+        businessDay
+          .filter((x, i) => x != e.target.value)
+          .sort((a, b) => {
+            return order.indexOf(a) - order.indexOf(b);
+          })
+      );
+    }
+  };
 
-
-
-  }
-  
-
-
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const temp = {
       location: query,
       openhour: openHour,
       closehour: closeHour,
       businessday: businessDay,
-      phone: [ phoneValue, placeInfo?.phone ],
+      phone: [phoneValue, placeInfo?.phone],
       howtouse: howtouseValue,
       desc: descValue,
       address_name: placeInfo?.address_name,
@@ -272,116 +269,125 @@ const Propose = ({session}:any) => {
       road_address_name: placeInfo?.address_name,
       x: placeInfo?.x,
       y: placeInfo?.y,
-      date: new Date().toLocaleDateString('ko-KR').toString(),
-      status: '진행중',
-      proposerId: ''
-    }
-    const place_id = await fetch("/api/propose/propose",{method:'POST',body:JSON.stringify(temp)})
-    .then(r => r.json())
-    
+      date: new Date().toLocaleDateString("ko-KR").toString(),
+      status: "진행중",
+      proposerId: "",
+    };
+    const place_id = await fetch("/api/propose/propose", {
+      method: "POST",
+      body: JSON.stringify(temp),
+    }).then((r) => r.json());
+
     const urls = [];
-    for(const img of image) {
+    for (const img of image) {
       const result = await uploadImg(img);
       urls.push(result);
     }
-    for(const url of urls) {
-      const response = await fetch('/api/place/picture',{method:'POST',body:JSON.stringify({place_id: place_id, url:url})}).then(r => r.json())
+    for (const url of urls) {
+      const response = await fetch("/api/place/picture", {
+        method: "POST",
+        body: JSON.stringify({ place_id: place_id, url: url }),
+      }).then((r) => r.json());
     }
-    router.push('/propose/complete')
-    
-    
-    
-  }
-
-
-
+    router.push("/propose/complete");
+  };
 
   return (
     <div>
-      <div className='text-center font-extrabold text-2xl my-4'>장소 제안하기</div>
+      <div className="text-center font-extrabold text-2xl my-4">
+        장소 제안 내용
+      </div>
       {/* action="/api/propose/propose" */}
-      <form action="/api/propose/propose" onSubmit={handleSubmit} method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
-
+      <form
+        action="/api/propose/propose"
+        onSubmit={handleSubmit}
+        method="POST"
+        className="mx-auto max-w-screen-sm p-5 mt-5"
+      >
         {/* 사진첨부 */}
         <div className="w-full p-5 bg-sygnature-beige my-2 min-h-[180px]">
           <div className="grid grid-cols-3 gap-4">
-            
-          {
-            imagePreview.map((x, i) => (
+            {imagePreview.map((x, i) => (
               <div key={i} className="relative">
                 <div className="h-[150px]">
-                  <Image 
+                  <Image
                     className="w-full h-full"
                     src={x}
                     width={110}
                     height={75}
                     alt="header"
                   />
-                  <FaWindowClose 
-                  className="absolute top-0 right-0 cursor-pointer text-sygnature-brown"  
-                  onClick={(e:React.MouseEvent<HTMLElement>) => handleClose(e,i)}
+                  <FaWindowClose
+                    className="absolute top-0 right-0 cursor-pointer text-sygnature-brown"
+                    onClick={(e: React.MouseEvent<HTMLElement>) =>
+                      handleClose(e, i)
+                    }
                   />
                 </div>
               </div>
-            ))
-          }
-            
-
-          </div>     
+            ))}
+          </div>
         </div>
 
-        <div 
+        <div
           className="my-4 h-14 flex flex-row justify-center items-center border-2 border-black border-dashed hover:bg-gray-100 cursor-pointer"
           onClick={handleAttach}
         >
-          <input 
-            type='file'
+          <input
+            type="file"
             ref={imageRef}
-            accept='image/*'
+            accept="image/*"
             multiple={false}
-            onChange={handleAttachChange}   
-            className='hidden' 
+            onChange={handleAttachChange}
+            className="hidden"
           />
-          <FaCamera className="mx-1"/> 사진 첨부하기
+          <FaCamera className="mx-1" /> 사진 첨부하기
         </div>
 
         {/* 위치 */}
-        <div className="font-semibold">위치<span className="text-red-500 font-bold">*</span></div>
-        <input 
-          className="px-2 my-2 border-gray-300 w-full hover:outline-none hover:ring hover:ring-sygnature-brown focus:outline-none focus:ring focus:ring-sygnature-brown" 
-          name="location" 
-          onFocus={handleFocus} 
+        <div className="font-semibold">
+          위치<span className="text-red-500 font-bold">*</span>
+        </div>
+        <input
+          className="px-2 my-2 border-gray-300 w-full hover:outline-none hover:ring hover:ring-sygnature-brown focus:outline-none focus:ring focus:ring-sygnature-brown"
+          name="location"
+          onFocus={handleFocus}
           value={query}
           onChange={handleChange}
           ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정
           autoComplete="off"
         />
-        <div 
-          className={`z-10 border absolute -translate-y-3 bg-white ${focus ? 'visible' : 'hidden'}`}
+        <div
+          className={`z-10 border absolute -translate-y-3 bg-white ${
+            focus ? "visible" : "hidden"
+          }`}
         >
           <ul>
-            {
-            results.map((result:Result,i) => (
-              <li 
-                className={`cursor-pointer p-1 m-1 hover:bg-gray-100 ${result._id? 'text-sygnature-brown': ''}`}
-                key={i} 
+            {results.map((result: Result, i) => (
+              <li
+                className={`cursor-pointer p-1 m-1 hover:bg-gray-100 ${
+                  result._id ? "text-sygnature-brown" : ""
+                }`}
+                key={i}
                 onClick={() => handleResultClick(result)}
               >
-                {result._id?<FaFlag className='inline' />:''}
+                {result._id ? <FaFlag className="inline" /> : ""}
                 <span className="font-bold"> {result.place_name}</span>
                 <span> [{result.address_name}],</span>
                 <span> [{result.road_address_name}]</span>
               </li>
             ))}
-         </ul>
+          </ul>
         </div>
         {/* 지도 */}
         <Map />
 
-        <div className="font-semibold mt-2">영업시간<span className="text-red-500 font-bold">*</span></div>
+        <div className="font-semibold mt-2">
+          영업시간<span className="text-red-500 font-bold">*</span>
+        </div>
         <div className="flex flex-row mt-2 mb-4 ">
-          <select 
-            className="w-24 text-center border border-gray-300 rounded-md cursor-pointer" 
+          <select
+            className="w-24 text-center border border-gray-300 rounded-md cursor-pointer"
             name="openhour"
             onChange={handleOpenHour}
           >
@@ -436,12 +442,12 @@ const Propose = ({session}:any) => {
             <option value="24:00">24 : 00</option>
           </select>
           <span className="flex items-center mx-4 font-bold text-lg"> ~ </span>
-          <select 
-            className="w-24 text-center border border-gray-300 rounded-md cursor-pointer" 
+          <select
+            className="w-24 text-center border border-gray-300 rounded-md cursor-pointer"
             name="closehour"
             onChange={handleCloseHour}
           >
-          <option value="00:00">00 : 00</option>
+            <option value="00:00">00 : 00</option>
             <option value="00:30">00 : 30</option>
             <option value="01:00">01 : 00</option>
             <option value="01:30">01 : 30</option>
@@ -496,69 +502,117 @@ const Propose = ({session}:any) => {
         {/* 영업 시간 */}
         <div className="font-semibold">영업일</div>
         <div className="flex flex-row items-center justify-center my-2">
-          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={'월'} className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`} />
+          <input
+            onChange={handleBusinessDay}
+            name="businessday"
+            type="checkbox"
+            value={"월"}
+            className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`}
+          />
           <span className="ml-2 mr-8 block">월</span>
-          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={'화'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input
+            onChange={handleBusinessDay}
+            name="businessday"
+            type="checkbox"
+            value={"화"}
+            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
+          />
           <span className="ml-2 mr-8 block">화</span>
-          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={'수'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input
+            onChange={handleBusinessDay}
+            name="businessday"
+            type="checkbox"
+            value={"수"}
+            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
+          />
           <span className="ml-2 mr-8 block">수</span>
-          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={'목'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input
+            onChange={handleBusinessDay}
+            name="businessday"
+            type="checkbox"
+            value={"목"}
+            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
+          />
           <span className="ml-2 mr-8 block">목</span>
-          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={'금'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input
+            onChange={handleBusinessDay}
+            name="businessday"
+            type="checkbox"
+            value={"금"}
+            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
+          />
           <span className="ml-2 mr-8 block">금</span>
-          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={'토'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input
+            onChange={handleBusinessDay}
+            name="businessday"
+            type="checkbox"
+            value={"토"}
+            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
+          />
           <span className="ml-2 mr-8 block">토</span>
-          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={'일'} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
+          <input
+            onChange={handleBusinessDay}
+            name="businessday"
+            type="checkbox"
+            value={"일"}
+            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
+          />
           <span className="ml-2 mr-4 block">일</span>
         </div>
-        
+
         {/* 전화번호 */}
-        <div className="font-semibold mt-4 mb-2 w-full">전화번호<span className="ml-1 text-sm text-red-500">( - 없이, 생략가능)</span></div>
-        <input 
-          maxLength={20} 
-          name="phone" 
-          className={`px-2 border-gray-300 w-full ${inputHoverFocus}`} 
+        <div className="font-semibold mt-4 mb-2 w-full">
+          전화번호
+          <span className="ml-1 text-sm text-red-500">( - 없이, 생략가능)</span>
+        </div>
+        <input
+          maxLength={20}
+          name="phone"
+          className={`px-2 border-gray-300 w-full ${inputHoverFocus}`}
           onChange={handlePhoneChange}
           value={phoneValue}
           autoComplete="off"
         />
 
         {/* 이용방법 */}
-        <div className="font-semibold my-2">이용방법<span className="text-red-500 font-bold">*</span></div>
-        <textarea 
-          maxLength={500} 
-          name="howtouse" 
-          className={`p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`} 
+        <div className="font-semibold my-2">
+          이용방법<span className="text-red-500 font-bold">*</span>
+        </div>
+        <textarea
+          maxLength={500}
+          name="howtouse"
+          className={`p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`}
           onChange={handleHowtouseChange}
           value={howtouseValue}
           autoComplete="off"
         />
 
         {/* 설명 */}
-        <div className="font-semibold my-2">설명<span className="text-red-500 font-bold">*</span></div>
-        <textarea 
-          maxLength={500} 
-          name="desc" 
-          className={`p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`} 
+        <div className="font-semibold my-2">
+          설명<span className="text-red-500 font-bold">*</span>
+        </div>
+        <textarea
+          maxLength={500}
+          name="desc"
+          className={`p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`}
           onChange={handleDescChange}
           value={descValue}
           autoComplete="off"
-        />        
+        />
 
-              <div className="my-5 flex flex-row justify-center">
-                {
-                  checkForm()
-                  ?
-                  checkForm()
-                  :
-                  <button 
-                    className='w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300' 
-                    type="submit"
-                    onClick={handleClick}
-                  >작성 완료
-                  </button>
-                }
-                </div>
+        <div className="my-5 flex flex-row justify-center">
+          {checkForm() ? (
+            checkForm()
+          ) : (
+            <button
+              className="w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300"
+              type="submit"
+              onClick={handleClick}
+            >
+              작성 완료
+            </button>
+          )}
+        </div>
 
         {/* <div className="hidden">
             {placeInfo?.address_name && <input name="address_name" value={placeInfo?.address_name} onChange={()=>{}} />}
@@ -576,18 +630,9 @@ const Propose = ({session}:any) => {
             {placeInfo?.y && <input name="date" value={new Date().toLocaleDateString('ko-KR').toString()} onChange={()=>{}} />}          
             {placeInfo?.y && <input name="status" value={'진행중'} onChange={()=>{}} />}          
         </div> */}
-
-
-        
-
-
-
       </form>
-
-
-
     </div>
-  )
-}
+  );
+};
 
-export default Propose
+export default Propose;
