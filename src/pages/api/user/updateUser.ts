@@ -23,7 +23,7 @@ export default async function PUT(request: any, response: any) {
       {
         _id: new ObjectId(_id),
       },
-      {
+      {햣
         $set: { reply, status: "완료" },
       }
     );

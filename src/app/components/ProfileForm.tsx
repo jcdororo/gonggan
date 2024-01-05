@@ -18,7 +18,7 @@ export default function ProfileForm({ session }: any) {
   const [infoVisable, setInfoVisable] = useState(false);
   const router = useRouter();
 
-  console.log(session.user);
+  console.log(session.user.mehtod);
 
   const handleCheck = async () => {
     if (nickname == "") return;
