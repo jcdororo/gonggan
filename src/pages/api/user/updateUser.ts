@@ -1,33 +1,52 @@
 import { connectDB } from "@/util/database";
 import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
+import bcrypt from 'bcryptjs';
 
 export default async function PUT(request: any, response: any) {
-
-  const { nickname, password, email } = request.body;
+  const { session, nickname, email, password } = request.body;
 
   try {
     const db = (await connectDB).db("gonggan");
 
-    if (nickname) {
-      await db.collection("contact").updateOne(
+    // oauth로 로그인한 유저일 경우
+    if (session.user.method == "oauth") {
+      await db.collection("users").updateOne(
         {
-          _id: new ObjectId(_id),
+          id: session.user.id,
         },
         {
-          $set: { reply, status: "완료" },
+          $set: { nickname, email },
         }
-    }
-
-    const result = await db.collection("contact").updateOne(
-      {
-        _id: new ObjectId(_id),
-      },
-      {햣
-        $set: { reply, status: "완료" },
+      );
+    } 
+    // credentials로 로그인한 유저일 경우
+    else {
+      // password 값이 있을 경우
+      if (password) {
+        const hashedPassword = await bcrypt.hash(password, 12);
+  
+        await db.collection("users").updateOne(
+          {
+            loginId: session.user.loginId,
+          },
+          {
+            $set: { nickname, email, password: hashedPassword },
+          }
+        );
+      } 
+      // password 값이 없을 경우
+      else {
+        await db.collection("users").updateOne(
+          {
+            loginId: session.user.loginId,
+          },
+          {
+            $set: { nickname, email },
+          }
+        );
       }
-    );
-    
+    }
     response.status(200).json("success");
   } catch (error) {
     response.status(500).json({ error: error });

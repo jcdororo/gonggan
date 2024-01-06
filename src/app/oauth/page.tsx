@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 export default async function SignUpForm() {
   const [session, setSession] = useState(null);
 
+  const router = useRouter();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,7 +40,6 @@ export default async function SignUpForm() {
   } = useForm({
     mode: "onBlur",
     defaultValues: {
-      loginId: "",
       nickname: "",
       email: "",
       alarm: "",
@@ -52,6 +53,7 @@ export default async function SignUpForm() {
         ...body,
         session,
       });
+      router.push("/");
     } catch (error) {
       console.log(error);
     }

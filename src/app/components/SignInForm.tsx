@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-export default function SignInForm({ session }) {
+export default function SignInForm({ session }:any) {
   const router = useRouter();
 
   useEffect(() => {

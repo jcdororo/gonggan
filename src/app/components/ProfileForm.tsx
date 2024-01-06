@@ -18,8 +18,6 @@ export default function ProfileForm({ session }: any) {
   const [infoVisable, setInfoVisable] = useState(false);
   const router = useRouter();
 
-  console.log(session.user.mehtod);
-
   const handleCheck = async () => {
     if (nickname == "") return;
     setCheckVisable(true);
@@ -61,7 +59,7 @@ export default function ProfileForm({ session }: any) {
   } = useForm({
     mode: "onBlur",
     defaultValues: {
-      loginId: session.user.id,
+      loginId: session.user.loginId || session.user.id,
       nickname: session.user.nickname as string,
       email: session.user.email as string,
       current_password: "",
@@ -87,13 +85,12 @@ export default function ProfileForm({ session }: any) {
     }
 
     console.log("result", result);
-
     console.log("submit done !!!");
 
     try {
       const { data } = await axios.put("/api/user/updateUser", {
         ...body,
-        userId: session.user.id
+        session
       });
     } catch (error) {
       console.log(error);
@@ -195,22 +192,20 @@ export default function ProfileForm({ session }: any) {
               </label>
               <input
                 {...register("current_password", {
-                  required: "현재 비밀번호를 입력해주세요.",
                   minLength: {
                     value: 5,
                     message: "다섯 글자 이상 입력해주세요.",
                   },
                   validate: async (val: string) => {
+                    if (val == "") return;
                     try {
                       const res = await axios.post("/api/user/passwordCheck", {
-                        id: session.user.id,
+                        id: session.user.loginId,
                         current_password: val,
                       });
-                      if (res.data == "check") {
-                        return;
-                      } else {
+                      if (res.data != "check") {
                         return "비밀번호가 맞지 않습니다.";
-                      }
+                      } 
                     } catch (error) {
                       console.log(error);
                     }
@@ -231,7 +226,6 @@ export default function ProfileForm({ session }: any) {
               </label>
               <input
                 {...register("password", {
-                  required: "비밀번호를 입력해주세요.",
                   minLength: {
                     value: 8,
                     message: "여덟 글자 이상 입력해주세요.",
@@ -252,7 +246,6 @@ export default function ProfileForm({ session }: any) {
               </label>
               <input
                 {...register("password_confirm", {
-                  required: "비밀번호 확인을 입력해주세요.",
                   validate: (val: string) => {
                     if (watch("password") != val) {
                       return "입력하신 비밀번호와 일치하지 않습니다.";

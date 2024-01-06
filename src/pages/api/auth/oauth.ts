@@ -19,11 +19,9 @@ export default async function handler(
     const dbColumn = {
       ...user,
       ...session.user,
-      nickname: "",
       password: "",
       alarm: false,
       role: "",
-      method: "oauth",
     };
     
     await db
@@ -35,18 +33,17 @@ export default async function handler(
       nickname: nickname,
       alarm: alarm,
       role: "user",
+      method: "oauth",
     };
     
-    console.log("update", update)
-
     const result = await db
       .collection("users")
       .updateOne({ _id: new ObjectId(dbColumn._id) }, { $set: update });
 
     if (result) {
-      response.redirect(301, "/");
+      return response.status(200).json("success");
     } else {
-      response.status(500).json("카카오 로그인 실패");
+      return response.status(500).json("카카오 로그인 실패");
     }
   }
 }

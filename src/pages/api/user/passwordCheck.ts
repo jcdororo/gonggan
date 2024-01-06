@@ -11,7 +11,6 @@ export default async function POST(request: any, response: any) {
     .collection("users")
     .findOne({ loginId: id });
 
-
   const isCorrectPassword = await bcrypt.compare(
     current_password,
     user?.password

@@ -69,8 +69,6 @@ export const authOptions:any = {
     },
     async jwt({ token, user, account, profile, isNewUser }: any) {      
       if (user) {
-        console.log(user);
-        console.log(user.loginId);
         token.user = {};
         token.user.name  = user.name;
         token.user.email = user.email;
@@ -78,9 +76,10 @@ export const authOptions:any = {
         token.user.nickname = user.nickname;
         token.user.id = user.id;
         token.user.loginId = user.loginId;
-        token.emailVerified = user.emailVerified;
-        token.alarm = user.alarm;
-        token.role = user.role;
+        token.user.emailVerified = user.emailVerified;
+        token.user.alarm = user.alarm;
+        token.user.role = user.role;
+        token.user.method = user.method
       }
       return token;
     },
