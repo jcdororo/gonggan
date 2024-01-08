@@ -52,7 +52,7 @@ const Propose = ({ session }: any) => {
   if (!session) {
     setTimeout(() => {
       router.push("/signin");
-    }, 500);
+    }, 1500);
     return (
       <div className="h-96 flex flex-col justify-center items-center font-bold text-2xl text-sygnature-brown">
         <div>

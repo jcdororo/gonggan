@@ -17,7 +17,7 @@ export default async function PUT(request: any, response: any) {
         {
           $set: { reply, status: "완료" },
         }
-    }
+    )}
 
     const result = await db.collection("contact").updateOne(
       {

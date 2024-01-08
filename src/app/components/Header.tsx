@@ -74,7 +74,7 @@ export default async function Header() {
       <div className="flex w-full h-20 fixed z-9999 shadow-md">
         <Link href={"/"}>
           <Image
-            className="mx-1 ml-3 relative"
+            className="mx-1 ml-3 relative hover:opacity-80"
             src={header}
             width={110}
             height={75}

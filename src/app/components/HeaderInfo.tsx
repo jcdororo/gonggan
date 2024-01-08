@@ -144,7 +144,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             <div ref={alarmRef}>
               <FaBell
                 className={`block mx-4 mr-6 text-sygnature-brown cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${
-                  isAlarmOpen ? "text-red-400" : ""
+                  isAlarmOpen ? "text-red-400" : "" 
                 }`}
                 onClick={handleAlarm}
                 size="30"
@@ -264,14 +264,14 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
         <div className="absolute right-0 top-4 flex items-center px-7 py-3">
           <div className="right-1 flex justify-center items-center text-sygnature-beige font-bold">
             <div
-              className="mx-5 cursor-pointer text-sygnature-brown text-lg"
+              className="mx-5 cursor-pointer text-sygnature-brown text-lg hover:opacity-80"
               onClick={() => signIn()}
             >
               로그인
             </div>
             <Link
               href={"/signup"}
-              className="mx-5 text-sygnature-brown text-lg"
+              className="mx-5 text-sygnature-brown text-lg hover:opacity-80"
             >
               회원가입
             </Link>
