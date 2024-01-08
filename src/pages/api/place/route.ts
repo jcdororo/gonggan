@@ -1,8 +1,6 @@
 // 장소 가져오기
 import { connectDB } from "@/util/database";
 import { ObjectId } from "mongodb";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
 
 export default async function GET(request: any, response: any) {
   const { _id } = request.query;

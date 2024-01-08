@@ -71,13 +71,13 @@ export default async function MyPage() {
           </div>
           <div className="flex">
             <Link
-              className="w-32 h-8 font-bold mx-1 text-xs text-white bg-sygnature-brown border rounded-md flex flex-col text-center justify-center"
+              className="w-32 h-8 font-bold mx-1 text-xs text-white bg-sygnature-brown border rounded-md flex flex-col text-center justify-center hover:opacity-80 focus:opacity-80"
               href={"/contact"}
             >
               문의 하기
             </Link>
             <Link
-              className="w-32 h-8 font-bold mx-1 text-xs text-white bg-sygnature-brown border rounded-md flex flex-col text-center justify-center"
+              className="w-32 h-8 font-bold mx-1 text-xs text-white bg-sygnature-brown border rounded-md flex flex-col text-center justify-center hover:opacity-80 focus:opacity-80"
               href={"/mypage/profile"}
             >
               프로필 설정

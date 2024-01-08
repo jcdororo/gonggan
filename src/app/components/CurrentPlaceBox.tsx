@@ -28,7 +28,7 @@ export default function CurrentPlaceBox() {
                   <div className="text-sm">{place?.category_group_name}</div>
                 </div>
               </div>
-              <div className="cursor-pointer" onClick={() => setPlace(null)}>
+              <div className="cursor-pointer hover:opacity-80" onClick={() => setPlace(null)}>
                 <AiOutlineClose />
               </div>
             </div>
@@ -44,7 +44,7 @@ export default function CurrentPlaceBox() {
             </div>
             <div
               onClick={() => router.push(`/places/${place._id}`)}
-              className="w-full bg-sygnature-brown py-3 text-white font-semibold text-center rounded-md cursor-pointer"
+              className="w-full bg-sygnature-brown py-3 text-white font-semibold text-center rounded-md cursor-pointer hover:opacity-80"
             >
               상세보기
             </div>

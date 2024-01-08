@@ -12,7 +12,7 @@ const page = async ({ params }: { params: { id: string } }) => {
       <div className="mx-auto max-w-screen-sm p-5 mt-5 bg-sygnature-beige flex flex-col gap-4">
         <div className="font-bold">장소</div>
         <div>
-          <Link href={`/places/${params.id}`} className="hover:underline">
+          <Link href={`/places/${params.id}`} className="hover:underline text-blue-600">
             {result?.placename}
           </Link>
         </div>

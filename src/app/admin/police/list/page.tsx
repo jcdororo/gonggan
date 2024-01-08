@@ -33,7 +33,7 @@ export default async function PoliceList() {
                       {x.placename}
                     </Link>
                   </td>
-                  <td className="py-2 hover:underline cursor-pointer">
+                  <td className="py-2">
                     {x.writerid}
                   </td>
                   <td className="py-2">{x.reporter}</td>
