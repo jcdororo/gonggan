@@ -104,7 +104,7 @@ export default function ProfileForm({ session }: any) {
         {/* <div className="bg-black w-[100px] h-[100px] rounded-full"></div> */}
         <Image
           className="rounded-full w-[100px] h-[100px] overflow-hidden"
-          src={session.user.image ? picture : "/logo2.png"}
+          src={picture ? picture : "/logo2.png"}
           width={640}
           height={640}
           alt="아이콘"
