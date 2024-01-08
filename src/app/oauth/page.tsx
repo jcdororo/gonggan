@@ -1,9 +1,5 @@
 "use client";
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../pages/api/auth/[...nextauth]";
-import { connectDB } from "@/util/database";
-import { ObjectId } from "mongodb";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -11,8 +7,12 @@ import { useEffect, useState } from "react";
 
 export default async function SignUpForm() {
   const [session, setSession] = useState(null);
-
   const router = useRouter();
+
+  if(session) {
+    router.push("/");
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {

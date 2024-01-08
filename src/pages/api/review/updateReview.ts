@@ -9,17 +9,17 @@ export default async function handler(
   if (request.method == "POST") {
     try {
       const db = (await connectDB).db("gonggan");
+      const body = JSON.parse(request.body);
+      console.log("body", body);
 
-      console.log("request.body", request.body);
-
-      if (request.body.like != undefined) {
+      if (body.like != undefined) {
         // 좋아요만 수정
         const result = await db.collection("review").updateOne(
           {
-            _id: new ObjectId(request.body.reviewid),
+            _id: new ObjectId(body.reviewid),
           },
           {
-            $set: { like: request.body.like },
+            $set: { like: body.like },
           }
         );
       } else {
@@ -28,13 +28,15 @@ export default async function handler(
           {
             // placeid : new ObjectId(request.body.placeid),
             // writerid: new ObjectId(request.body.writerid)
-            _id: new ObjectId(request.body.reviewid),
+            _id: new ObjectId(body.reviewid),
           },
           {
-            $set: { content: request.body.newContent, star: request.body.star },
+            $set: { content: body.newContent, star: body.star },
           }
         );
+        console.log('result@@@',result)
       }
+
 
       response.status(200).json("success");
     } catch (error) {

@@ -30,6 +30,8 @@ interface AlarmsContents {
 export default async function Header() {
   const session: any = await getServerSession(authOptions);
 
+  console.log('session@@@@@@@@@@',session)
+
   let alarms: AlarmsContents[] = [];
   if (session) {
     const db = (await connectDB).db("gonggan");

@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { mapState } from "../atom";
 import Link from "next/link";
@@ -87,8 +87,7 @@ const ProposeList = ({ session, params }: any) => {
     );
   }
 
-  // 정보 가져오기
-  useEffect(() => {
+  useLayoutEffect(() => {
     // 사진 가져오기
     const pitures = async () => {
       const response = await fetch(`/api/propose/getPictures?id=${params.id}`, {
@@ -137,9 +136,10 @@ const ProposeList = ({ session, params }: any) => {
         });
     };
     infos();
-  }, []);
+  }, [])
 
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     const openHourEl = document.getElementById("openhour") as HTMLSelectElement;
 
     for (let i = 0; i < openHourEl.options.length; i++) {

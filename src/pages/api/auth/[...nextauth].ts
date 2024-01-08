@@ -86,7 +86,7 @@ export const authOptions:any = {
     //5. 유저 세션이 조회될 때 마다 실행되는 코드
     async session({ session, token }: any) {
       session.user = token.user;
-      session.user.role = token.role ? token.role : 'user'
+      session.user.role = token.user.role ? token.user.role : 'user'
       return session;
     },
   },

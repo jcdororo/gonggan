@@ -4,6 +4,7 @@
 import Script from "next/script";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { locationState, mapState } from "../atom"
+import { memo } from "react";
 
 declare global {
   interface Window {
@@ -17,7 +18,7 @@ interface MapProps {
   zoom?: number;
 }
 
-export default function Map({ lat, lng, zoom }: MapProps) {
+export default memo(function Map({ lat, lng, zoom }: MapProps) {
   const [map, setMap] = useRecoilState(mapState);
   const location = useRecoilValue(locationState);
 
@@ -47,4 +48,4 @@ export default function Map({ lat, lng, zoom }: MapProps) {
       <div id="map" className="w-full h-[700px] rounded-lg sm:w-[170%] sm:h-[500px] md:w-full"></div>
     </>
   )
-}
+})

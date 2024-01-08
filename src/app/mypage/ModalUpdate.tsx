@@ -23,13 +23,28 @@ const ModalUpdate = ({handleUpdate, targetContent}:any) => {
     const numberOfSpans = childSpans.length;
     setStar(5 - numberOfSpans);
   }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const body = {
+      newContent : value,
+      reviewid: targetContent._id,
+      placeid: targetContent.placeid,
+      writerid: targetContent.writerid,
+      star: star
+    }
+    const result = await fetch("/api/review/updateReview",{method:'POST',body:JSON.stringify(body)}).then(r=>r.json())    .then(r => window.location.reload())
+
+
+  }
   
   
   return (
     <div>
       <form 
-        action="/api/review/updateReview"
-        method='POST'
+        // action="/api/review/updateReview"
+        // method='POST'
+        onSubmit={handleSubmit}
         className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       >
           <div className="bg-white py-4 px-5 mx-2 rounded-lg w-96">

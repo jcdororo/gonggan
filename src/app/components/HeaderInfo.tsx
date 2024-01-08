@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { FaBell, FaWindowClose } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
 import clsx from "clsx";
 import Link from "next/link";
 import { signIn, signOut } from "next-auth/react";
@@ -19,6 +19,7 @@ interface HeaderInfoProps {
   session: any;
   alarms: AlarmsContents[];
 }
+
 
 const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
   const [isDropboxOpen, setIsDropboxOpen] = useState(false);
