@@ -7,8 +7,11 @@ import { useRouter } from "next/navigation";
 import { uploadImg } from "@/util/uploadImg";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 export default function ProfileForm({ session }: any) {
+  const { update } = useSession();
+
   const [picture, setPicture] = useState(session.user.image);
   const [nickname, setNickname] = useState(session.user.nickname);
   const [newNickname, setNewNickname] = useState<string | null>(null);
@@ -88,10 +91,17 @@ export default function ProfileForm({ session }: any) {
     console.log("submit done !!!");
 
     try {
-      const { data } = await axios.put("/api/user/updateUser", {
-        ...body,
-        session
-      });
+      await axios
+        .put("/api/user/updateUser", {
+          ...body,
+          session,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            // 토큰 업데이트 호출
+            update({ nickname: body.nickname, email: body.email });
+          }
+        });
     } catch (error) {
       console.log(error);
     }
@@ -205,7 +215,7 @@ export default function ProfileForm({ session }: any) {
                       });
                       if (res.data != "check") {
                         return "비밀번호가 맞지 않습니다.";
-                      } 
+                      }
                     } catch (error) {
                       console.log(error);
                     }
