@@ -8,13 +8,14 @@ const queryClient = new QueryClient();
 
 interface Props {
   children?: React.ReactNode;
+  session: any
 }
 
-export const NextProvider = ({ children }: Props) => {
+export const NextProvider = ({ children, session }: Props) => {
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider session={session}>{children}</SessionProvider>
       </QueryClientProvider>
     </RecoilRoot>
   );

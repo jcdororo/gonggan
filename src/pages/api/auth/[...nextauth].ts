@@ -6,43 +6,44 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { RequestInternal } from "next-auth";
 
-
-
-export const authOptions:any = {
+export const authOptions: any = {
   providers: [
     KakaoProvider({
       clientId: process.env.KAKAO_CLIENT_ID as string,
       clientSecret: process.env.KAKAO_CLIENT_SECRET as string,
     }),
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
-        loginId: { label: 'loginId', type: 'text' },
-        password: { label: 'password', type: 'password' },
+        loginId: { label: "loginId", type: "text" },
+        password: { label: "password", type: "password" },
       },
-      async authorize(credentials: Record<"loginId" | "password", string> | undefined, req: Pick<RequestInternal, "body" | "query" | "headers" | "method">): Promise<any> {
-
-        if(!credentials?.loginId || !credentials?.password) {
-          throw new Error('Invalid credentials');
+      async authorize(
+        credentials: Record<"loginId" | "password", string> | undefined,
+        req: Pick<RequestInternal, "body" | "query" | "headers" | "method">
+      ): Promise<any> {
+        if (!credentials?.loginId || !credentials?.password) {
+          throw new Error("Invalid credentials");
         }
         const db = (await connectDB).db("gonggan");
-        const user = await db.collection("users").findOne({ loginId: credentials.loginId } );
+        const user = await db
+          .collection("users")
+          .findOne({ loginId: credentials.loginId });
 
-        if(!user || !user?.password) {
-          throw new Error('Invalid credentials');
+        if (!user || !user?.password) {
+          throw new Error("Invalid credentials");
         }
 
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
           user.password
-        )
+        );
 
-        if(!isCorrectPassword) {
-          throw new Error('Invalid credentials');
+        if (!isCorrectPassword) {
+          throw new Error("Invalid credentials");
         }
 
         return user;
-        
       },
     }),
   ],
@@ -56,21 +57,21 @@ export const authOptions:any = {
   secret: process.env.MONGODB_PASSWORD,
   adapter: MongoDBAdapter(connectDB),
   session: {
-    strategy: 'jwt',
-    maxAge: 30 * 24 * 60 * 60 //30일
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, //30일
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }: any) {
-    // async signIn() {
+      // async signIn() {
       return true;
     },
     async redirect({ url, baseUrl }: any) {
       return baseUrl;
     },
-    async jwt({ token, user, account, profile, isNewUser }: any) {      
+    async jwt({ token, user, trigger, session }: any) {
       if (user) {
         token.user = {};
-        token.user.name  = user.name;
+        token.user.name = user.name;
         token.user.email = user.email;
         token.user.image = user.image;
         token.user.nickname = user.nickname;
@@ -79,14 +80,19 @@ export const authOptions:any = {
         token.user.emailVerified = user.emailVerified;
         token.user.alarm = user.alarm;
         token.user.role = user.role;
-        token.user.method = user.method
+        token.user.method = user.method;
+      }
+      // 업데이트 함수 호출 시 토큰 업데이트
+      if (trigger === "update") {
+        token.user.nickname = session.nickname;
+        token.user.email = session.email;
       }
       return token;
     },
     //5. 유저 세션이 조회될 때 마다 실행되는 코드
     async session({ session, token }: any) {
       session.user = token.user;
-      session.user.role = token.role ? token.role : 'user'
+      session.user.role = token.role ? token.role : "user";
       return session;
     },
   },
