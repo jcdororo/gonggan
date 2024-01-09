@@ -14,7 +14,7 @@ export default function CurrentPlaceBox() {
     <div className="">
       {place && (
         <>
-          <div className="p-4 mt-[-230px] relative mx-auto rounded-lg shadow-lg max-w-sm md:max-w-xl z-10 w-[80%] bg-white">
+          <div className="darkMode p-4 mt-[-230px] relative mx-auto rounded-lg shadow-lg max-w-sm md:max-w-xl z-10 w-[80%] bg-white">
             <div className="flex justify-between items-start">
               <div className="flex gap-4 items-center">
                 <Image

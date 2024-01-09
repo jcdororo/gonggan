@@ -148,7 +148,7 @@ const SearchBar = () => {
   return (
     <div className="p-3 h-30 z-0 flex flex-col items-center">
       <div className='relative w-128 flex flex-row justify-center items-center border-2 rounded-3xl overflow-hidden border-sygnature-brown hover:shadow-lg'>
-        <span className='bg-white text-2xl h-8 -mr-1 z-10 font-bold text-sygnature-brown mx-3 cursor-pointer'>工</span>
+        <span className='darkMode bg-white text-2xl h-8 -mr-1 z-10 font-bold text-sygnature-brown mx-3 cursor-pointer'>工</span>
         <input 
             className="px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none " 
             name="location" 
@@ -164,13 +164,13 @@ const SearchBar = () => {
           onClick={handleclick}
         >X</div>
       </div>
-      <div className={`z-50 border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 -translate-y-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
+      <div className={`darkMode z-50 border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 -translate-y-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
         <ul>
           {
             
             results.map((result:Result,i) => (
               <li 
-                className={`cursor-pointer p-1 m-1 hover:bg-gray-100 ${result._id? 'text-sygnature-brown': ''}`}
+                className={`darkMode cursor-pointer p-1 m-1 hover:bg-gray-100 ${result._id? 'text-sygnature-brown': ''}`}
                 key={i} 
                 onClick={() => handleResultClick(result)}
               >
@@ -186,7 +186,7 @@ const SearchBar = () => {
             ?
             ''
             :
-            <li>
+            <li className='darkMode'>
                 <div className='w-128 h-24 flex flex-col justify-center items-center overflow-hidden'>
                   <div className='p-3 text-2xl font-bold'>&quot;{query}&quot; 검색 결과 없음</div>
                   <div 

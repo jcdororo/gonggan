@@ -4,6 +4,7 @@ import { FaBell } from "react-icons/fa";
 import clsx from "clsx";
 import Link from "next/link";
 import { signIn, signOut } from "next-auth/react";
+import DarkMode from "./DarkMode";
 
 interface AlarmsContents {
   _id: string;
@@ -19,7 +20,6 @@ interface HeaderInfoProps {
   session: any;
   alarms: AlarmsContents[];
 }
-
 
 const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
   const [isDropboxOpen, setIsDropboxOpen] = useState(false);
@@ -142,10 +142,13 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                     .length
                 : ""}
             </div>
+            <div className="px-3">
+              <DarkMode />
+            </div>
             <div ref={alarmRef}>
               <FaBell
                 className={`block mx-4 mr-6 text-sygnature-brown cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${
-                  isAlarmOpen ? "text-red-400" : "" 
+                  isAlarmOpen ? "text-red-400" : ""
                 }`}
                 onClick={handleAlarm}
                 size="30"
@@ -164,7 +167,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             {/* 알람 아이콘 클릭시 나오는 드랍박스 */}
             <div
               className={clsx(
-                "bg-sygnature-beige top-20 w-96 h-80 overflow-scroll font-bold absolute rounded-md text-center transform -translate-x-24 py-3 z-10",
+                "darkMode bg-sygnature-beige top-20 w-96 h-80 overflow-scroll font-bold absolute rounded-md text-center transform -translate-x-24 py-3 z-10",
                 {
                   visible: isAlarmOpen === true,
                   hidden: isAlarmOpen === false,
@@ -213,7 +216,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             {/* 유저 아이콘 클릭시 나오는 드랍박스 */}
             <div
               className={clsx(
-                "bg-sygnature-beige top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top",
+                "darkMode bg-sygnature-beige top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top",
                 {
                   visible: isDropboxOpen === true,
                   invisible: isDropboxOpen === false,
@@ -264,6 +267,9 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
         // 비 로그인 상태일 때
         <div className="absolute right-0 top-4 flex items-center px-7 py-3">
           <div className="right-1 flex justify-center items-center text-sygnature-beige font-bold">
+            <div className="px-3">
+              <DarkMode />
+            </div>
             <div
               className="mx-5 cursor-pointer text-sygnature-brown text-lg hover:opacity-80"
               onClick={() => signIn()}

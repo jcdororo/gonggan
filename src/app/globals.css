@@ -6,7 +6,6 @@ header {
   z-index: 9999;
 }
 
-
 button {
   background-color: #998373;
   color: #fff;
@@ -24,8 +23,27 @@ input {
   border-radius: 5px;
 }
 
+/* 다크 모드 */
+body[data-theme="dark"] {
+  @apply bg-[#292929] text-[#fff] border-white z-10;
+}
+
+body[data-theme="dark"] .in {
+  @apply bg-[#292929] z-10
+}
+
+body[data-theme="dark"] input {
+  @apply bg-[#292929] z-10
+}
+
+body[data-theme="dark"] .darkMode {
+  @apply bg-[#292929] z-10
+}
+
+
+
 .in {
-  @apply h-[48px] text-sm p-4 rounded-md border-solid border-gray-300 w-full max-w-[680px]
+  @apply h-[48px] text-sm p-4 rounded-md border-solid border-gray-300 w-full max-w-[680px];
 }
 
 form .form__block {
@@ -37,22 +55,17 @@ form .form__block {
 }
 
 form .form__btn--submit {
-  @apply w-full h-[48px] font-bold p-[10px] float-right cursor-pointer my-[30px] mx-auto text-base bg-[#998373] text-white border-inherit;
+  @apply w-full h-[48px] font-bold p-[10px] float-right cursor-pointer my-[30px] mx-auto text-base bg-[#998373] text-white border-transparent;
 }
 
 form .form__btn--submit:hover,
 form .form__btn--submit:focus {
-  @apply bg-[#5f544d]
+  @apply bg-[#5f544d];
 }
 
 .infowindow {
-  @apply bg-[#998373] text-white block text-sm text-center h-6 rounded-md px-2 leading-6
+  @apply bg-[#998373] text-white block text-sm text-center h-6 rounded-md px-2 leading-6;
 }
-
-
-
-
-
 
 /* 스크롤바의 너비 및 스타일 지정 */
 ::-webkit-scrollbar {
@@ -67,7 +80,7 @@ form .form__btn--submit:focus {
 
 /* 스크롤바의 트랙(배경) 색상 지정 */
 ::-webkit-scrollbar-track {
-  background-color: #F4F1EA;
+  background-color: #f4f1ea;
 }
 
 /* 선택된 스크롤바의 모서리 반경 지정 */

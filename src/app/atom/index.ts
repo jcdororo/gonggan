@@ -24,3 +24,16 @@ export const locationState = atom<LocationType>({
     zoom: DEFAULT_ZOOM,
   }
 });
+
+export type ThemeState = {
+  value: string
+};
+
+export const initialThemeState: ThemeState = {
+  value: 'light'
+};
+
+export const themeState = atom({
+  key: 'themeState',
+  default: initialThemeState
+});
