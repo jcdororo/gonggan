@@ -4,8 +4,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Image from "next/image";
 import { ObjectId } from "mongodb";
-import Link from "next/link";
 import { LikePlace, PlaceType, ReviewType } from "../interface";
+import Link from "next/link";
+
 
 export default async function MyPage() {
   const session: any = await getServerSession(authOptions);

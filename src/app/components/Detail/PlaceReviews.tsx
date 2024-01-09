@@ -116,14 +116,14 @@ export default function PlaceReviews({ _id }: PlaceProps) {
                   <div
                     id="modify"
                     onClick={(e) => onClick(e, review)}
-                    className="flex justify-end cursor-pointer"
+                    className="flex justify-end cursor-pointer hover:opacity-80"
                   >
                     수정하기
                   </div>
                   <div
                     id="delete"
                     onClick={(e) => onClick(e, review)}
-                    className="flex justify-end cursor-pointer"
+                    className="flex justify-end cursor-pointer hover:opacity-80"
                   >
                     삭제하기
                   </div>
@@ -132,7 +132,7 @@ export default function PlaceReviews({ _id }: PlaceProps) {
                 <div
                   id="police"
                   onClick={(e) => onClick(e, review)}
-                  className="flex justify-end text-xs cursor-pointer"
+                  className="flex justify-end text-xs cursor-pointer hover:opacity-80"
                 >
                   신고하기
                 </div>
