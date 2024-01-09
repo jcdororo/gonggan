@@ -1,5 +1,4 @@
 import { connectDB } from "@/util/database";
-import { Db, ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(

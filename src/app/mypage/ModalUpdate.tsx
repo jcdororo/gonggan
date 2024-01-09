@@ -33,7 +33,7 @@ const ModalUpdate = ({handleUpdate, targetContent}:any) => {
       writerid: targetContent.writerid,
       star: star
     }
-    const result = await fetch("/api/review/updateReview",{method:'POST',body:JSON.stringify(body)}).then(r=>r.json())    .then(r => window.location.reload())
+    const result = await fetch("/api/review/updateReview",{method:'POST',body:JSON.stringify(body)}).then(r=>r.json()).then(r => window.location.reload())
 
 
   }
@@ -101,12 +101,12 @@ const ModalUpdate = ({handleUpdate, targetContent}:any) => {
            
 
             <div className='flex items-center justify-center text-sm font-bold'>
-              <div className='cursor-pointer px-8 py-1 m-3 border-2 border-sygnature-brown text-sygnature-brown rounded-md ' onClick={handleUpdate}>
+              <div className='cursor-pointer px-8 py-1 m-3 border-2 border-sygnature-brown text-sygnature-brown rounded-md hover:opacity-80' onClick={handleUpdate}>
                 취소하기
               </div>
               <button
                 type='submit'
-                className='w-32 h-8 font-bold mx-1 text-white bg-sygnature-brown border rounded-md align-middle text-base'
+                className='w-32 h-8 font-bold mx-1 text-white bg-sygnature-brown border rounded-md align-middle text-base hover:opacity-80'
               >
                 수정하기
               </button>
