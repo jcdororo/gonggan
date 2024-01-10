@@ -26,12 +26,12 @@ const ModalLikeDelete = ({handleDelete, targetContent}:any) => {
 
             <div className='flex items-center justify-center mt-5 text-sm font-bold'>
               <div 
-                className='cursor-pointer px-8 py-1 m-3 border-2 border-sygnature-brown text-sygnature-brown rounded-md ' 
+                className='cursor-pointer px-8 py-1 m-3 border-2 border-sygnature-brown text-sygnature-brown rounded-md hover:opacity-80' 
                 onClick={handleDelete}>
                 취소하기
               </div>
               <div 
-                className='cursor-pointer px-8 py-1 m-3 bg-sygnature-brown border border-sygnature-brown text-white rounded-md '
+                className='cursor-pointer px-8 py-1 m-3 bg-sygnature-brown border border-sygnature-brown text-white rounded-md hover:opacity-80'
                 onClick={handlerClick}
               >
 
