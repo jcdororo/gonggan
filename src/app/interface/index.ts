@@ -12,6 +12,7 @@ export interface UserInfoType {
   nickname: string;
   password: string;
   email: string;
+  method?: string;
 }
 
 export interface PlaceType {

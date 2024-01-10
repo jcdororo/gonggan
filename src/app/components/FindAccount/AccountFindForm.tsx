@@ -21,12 +21,13 @@ export default function AccountFindForm() {
 
   const [isNicknameModalOpen, setNicknameModalOpen] = useState(false);
   const [isPwdModalOpen, setPwdModalOpen] = useState(false);
+  const [isOauthOpen, setOauthOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfoType>();
 
   const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-
     const { id } = e.currentTarget;
+
     // 아이디 찾기 버튼을 눌렀을 때
     if (id === "findId") {
       setNicknameModalOpen(!isNicknameModalOpen);
@@ -53,7 +54,11 @@ export default function AccountFindForm() {
       setNicknameModalOpen(true);
     }
 
-    if (buttonValue === "비밀번호 변경 메일 전송하기") {
+    if (buttonValue === "비밀번호 변경 메일 전송하기" && userInfo?.method === "oauth") {
+      setPwdModalOpen(true);
+    }
+
+    if (buttonValue === "비밀번호 변경 메일 전송하기" && userInfo?.method !== "oauth") {
       try {
         const message =
           "이 주소로 접속하여 비밀번호를 변경해주십시오. \n" +
@@ -148,7 +153,7 @@ export default function AccountFindForm() {
         <MessageModal type="findId" userInfo={userInfo} onClick={onClick} />
       )}
       {isPwdModalOpen && (
-        <MessageModal type="findPwd" onClick={onClick} />
+        <MessageModal type="findPwd" userInfo={userInfo} onClick={onClick} />
       )}
     </div>
   );
