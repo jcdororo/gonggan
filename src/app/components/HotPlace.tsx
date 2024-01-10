@@ -1,7 +1,6 @@
 import { connectDB } from "@/util/database";
 import Place from "./Place";
 import { PlaceProps } from "./Place"
-import { ObjectId } from "mongodb";
 
 
 
@@ -17,7 +16,7 @@ export default async function HotPlace() {
     result2 = await db.collection('like_place').find().toArray();    
     // 각 place의 like 갯수 찾기
     for(let i = 0; i< result.length; i++) {
-      result3 = await db.collection('like_place').find({place_id: new ObjectId(result[i]._id)}).toArray();    
+      result3 = await db.collection('like_place').find({place_id: result[i]._id.toString()}).toArray();    
       result[i].like = result3.length;
     }
     result.sort((a, b) => b.like! - a.like! )
@@ -33,7 +32,7 @@ export default async function HotPlace() {
     <div className="left-96 absolute w-90 h-80">
       <div className="text-2xl font-bold mb-2">핫한 공간</div>
       <div className="border-2 border-sygnature-brown rounded-lg h-auto">
-        <Place result={result}/>
+        <Place result={JSON.parse(JSON.stringify(result))}/>
       </div>
     </div>
   )

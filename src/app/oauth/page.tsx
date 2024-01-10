@@ -3,7 +3,7 @@
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 export default async function SignUpForm() {
   const [session, setSession] = useState(null);
@@ -14,7 +14,7 @@ export default async function SignUpForm() {
   }
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("/api/session/getSession");
