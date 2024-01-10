@@ -1,15 +1,14 @@
-"use client"
+"use client";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Title from "../Title";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
-
+import CryptoJS from "crypto-js";
 interface ChangePwdProps {
   id: string;
 }
 
 export default function ChangePwdForm({ id }: ChangePwdProps) {
-
   const router = useRouter();
 
   const {
@@ -25,11 +24,21 @@ export default function ChangePwdForm({ id }: ChangePwdProps) {
     },
   });
 
+  // 암호화 했던 id 복호화
+  const secretKey = process.env.NEXT_PUBLIC_CRYPTO_KEY as string;
+  const urlSafeDecrypted = id.replace(/--/g, '/');
+  const decrypted = CryptoJS.AES.decrypt(
+    urlSafeDecrypted,
+    secretKey
+  ).toString(CryptoJS.enc.Utf8);
+
+  const decryptedId = decrypted.slice(1,25);
+
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
     try {
       const { data } = await axios.put("/api/accountFind/changePwd", {
         ...body,
-        id
+        id: decryptedId
       });
       router.push("/signin");
     } catch (error) {

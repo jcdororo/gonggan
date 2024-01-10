@@ -6,6 +6,7 @@ import emailjs from "@emailjs/browser";
 import { useState } from "react";
 import { UserInfoType } from "@/app/interface";
 import MessageModal from "./MessageModal";
+import CryptoJS from "crypto-js";
 
 export default function AccountFindForm() {
   const {
@@ -54,18 +55,36 @@ export default function AccountFindForm() {
       setNicknameModalOpen(true);
     }
 
-    if (buttonValue === "비밀번호 변경 메일 전송하기" && userInfo?.method === "oauth") {
+    if (
+      buttonValue === "비밀번호 변경 메일 전송하기" &&
+      userInfo?.method === "oauth"
+    ) {
       setPwdModalOpen(true);
     }
 
-    if (buttonValue === "비밀번호 변경 메일 전송하기" && userInfo?.method !== "oauth") {
+
+    // 비밀 번호 변경 버튼이고 oauth 로그인이 아닐 경우 메일 전송
+    if (
+      buttonValue === "비밀번호 변경 메일 전송하기" &&
+      userInfo?.method !== "oauth"
+    ) {
       try {
+        // 유저 _id 암호화
+        const secretKey = process.env.NEXT_PUBLIC_CRYPTO_KEY as string;
+        const encryptedId = CryptoJS.AES.encrypt(
+          JSON.stringify(userInfo?._id),
+          secretKey
+        ).toString();
+        const urlSafeEncrypted = encryptedId.replace(/\//g, '--')
+
+        // 메일 메시지
         const message =
           "이 주소로 접속하여 비밀번호를 변경해주십시오. \n" +
           process.env.NEXT_PUBLIC_URL +
           "/accountfind/" +
-          userInfo?._id;
+          urlSafeEncrypted;
 
+        // emailjs
         const emailValue = {
           from_name: "gongganstudy",
           to_name: userInfo?.nickname,
@@ -79,6 +98,8 @@ export default function AccountFindForm() {
           emailValue,
           process.env.NEXT_PUBLIC_MAILJS_API_KEY
         );
+
+        // 메일 전송 확인 모달
         setPwdModalOpen(true);
       } catch (error) {
         console.log(error);
@@ -108,7 +129,7 @@ export default function AccountFindForm() {
               required: "이메일을 입력해주세요.",
               pattern: {
                 value:
-                  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+                  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/,
                 message: "이메일형식으로 기입해주세요.",
               },
               validate: {

@@ -8,6 +8,9 @@ export default async function put(
   response: NextApiResponse
 ) {
   const { password, id } = request.body;
+
+  console.log("asdfasdfasdf", id);
+  console.log(new ObjectId(id));
   try {
     const db = (await connectDB).db("gonggan");
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -20,6 +23,8 @@ export default async function put(
         $set: { password: hashedPassword },
       }
     );
+
+    
     response.status(200).json("success");
   } catch (error) {
     response.status(500).json({ error: error });
