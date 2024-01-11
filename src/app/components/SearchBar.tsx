@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
-import { FaFlag, FaMapMarkerAlt  } from "react-icons/fa";
+import { FaFlag, FaMapMarkerAlt, FaSearch  } from "react-icons/fa";
 import { useDebounce } from '../hooks/useDebounce';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
@@ -148,7 +148,7 @@ const SearchBar = () => {
   return (
     <div className="p-3 h-30 z-0 flex flex-col items-center">
       <div className='relative w-128 flex flex-row justify-center items-center border-2 rounded-3xl overflow-hidden border-sygnature-brown hover:shadow-lg'>
-        <span className='darkMode bg-white text-2xl h-8 -mr-1 z-10 font-bold text-sygnature-brown mx-3 cursor-pointer'>工</span>
+        <span className='darkMode bg-white text-2xl h-8 -mr-1 z-10 font-bold text-sygnature-brown mx-3 cursor-pointer translate-y-1'><FaSearch /></span>
         <input 
             className="px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none " 
             name="location" 

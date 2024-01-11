@@ -7,6 +7,7 @@ import Marker from "./components/Markers";
 import { PlaceType } from "./interface";
 import axios from "axios";
 import CurrentPlaceBox from "./components/CurrentPlaceBox";
+import MainInfo1 from "./components/MainInfo1";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -36,7 +37,9 @@ export default async function Home() {
         </div>
       </div>
       {/* 핫한공간 */}
-      <HotPlace />
+      {/* <HotPlace /> */}
+      {/* 내 집 근처에서 편하게 공부할 수 있는 공간. */}
+      <MainInfo1 />
     </div>
   );
 }

@@ -45,6 +45,12 @@ const config: Config = {
         '120' : '36rem',
         '124' : '38rem',
         '128' : '40rem',
+      },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
       }
     },
   },
