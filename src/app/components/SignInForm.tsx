@@ -19,6 +19,7 @@ export default function SignInForm({ session }:any) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
@@ -79,6 +80,20 @@ export default function SignInForm({ session }:any) {
           <input
             {...register("password", {
               required: "비밀번호를 입력해주세요.",
+              validate: async (val: string) => {
+                if (val == "") return;
+                try {
+                  const res = await axios.post("/api/user/passwordCheck", {
+                    id: watch("loginId"),
+                    current_password: val,
+                  });
+                  if (res.data != "check") {
+                    return "비밀번호가 맞지 않습니다.";
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+              },
             })}
             className="in"
             type="password"
