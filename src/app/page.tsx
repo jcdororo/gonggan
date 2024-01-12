@@ -8,6 +8,8 @@ import { PlaceType } from "./interface";
 import axios from "axios";
 import CurrentPlaceBox from "./components/CurrentPlaceBox";
 import MainInfo1 from "./components/MainInfo1";
+import Image from "next/image";
+import MainInfo3 from "./components/MainInfo3";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -21,25 +23,33 @@ export default async function Home() {
   const places: PlaceType[] = await getData();
 
   return (
-    <div className={`${roboto.className} `}>
+    <div className={`${roboto.className} `}>      
       {/* Search Bar */}
-      <SearchBar />
-      <div className="m-12 h-screen">
-        <div className="flex gap-10 sm:flex-col md:flex-row">
-          <div className="w-3/5 h-vh">
-            <Map />
-            <Marker places={places} />
-            <CurrentPlaceBox />
-          </div>
-          <div className="w-2/5">
-            <Space category="주변" places={places} />
+      <div className="bg-white -mt-8 pt-8 darkMode">
+        <SearchBar />
+      </div>
+      <div className="bg-white pt-1 z-10 darkMode">
+        <div className="m-12 h-screen">
+          <div className="flex gap-10 sm:flex-col md:flex-row">
+            <div className="w-3/5 h-vh">
+              <Map />
+              <Marker places={places} />
+              <CurrentPlaceBox />
+            </div>
+            <div className="w-2/5">
+              <Space category="주변" places={places} />
+            </div>
           </div>
         </div>
       </div>
+
       {/* 핫한공간 */}
       {/* <HotPlace /> */}
-      {/* 내 집 근처에서 편하게 공부할 수 있는 공간. */}
+      {/* 내 집 근처에서 편하게 공부할 수 있는 공간. */}      
       <MainInfo1 />
+
+      {/* 스터디 장소를 공유할 수 있어요. */}
+      <MainInfo3 />
     </div>
   );
 }

@@ -295,7 +295,7 @@ const Propose = ({ session }: any) => {
   return (
     <div>
       <div className="text-center font-extrabold text-2xl my-4">
-        장소 제안 내용
+        장소 제안 하기
       </div>
       {/* action="/api/propose/propose" */}
       <form
@@ -356,6 +356,7 @@ const Propose = ({ session }: any) => {
           onChange={handleChange}
           ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정
           autoComplete="off"
+          spellCheck='false'
         />
         <div
           className={`z-10 border absolute -translate-y-3 bg-white ${

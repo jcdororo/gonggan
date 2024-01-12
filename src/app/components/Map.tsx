@@ -45,7 +45,7 @@ export default memo(function Map({ lat, lng, zoom }: MapProps) {
         src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_CLIENT}&autoload=false`}
         onReady={loadKakaoMap}
       />
-      <div id="map" className="w-full h-[700px] rounded-lg sm:w-[170%] sm:h-[500px] md:w-full"></div>
+      <div id="map" className="w-full h-[700px] rounded-lg sm:h-[500px] md:w-full"></div>
     </>
   )
 })

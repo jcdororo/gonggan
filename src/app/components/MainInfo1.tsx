@@ -9,22 +9,22 @@ const inter = Inter({ subsets: ['latin'] })
 
 const MainInfo1 = () => {
   return (
-    <div className={`h-screen ${inter.className}`}>
+    <div className={`sm:h-[90vh] h-screen ${inter.className} relative z-0 bg-[url('/main/studycafe1.jpg')] bg-no-repeat bg-fixed bg-contain bg-center sm:bg-cover bg-white`}>
       {/* 내 집 근처에서 편하게 공부할 수 있는 공간. */}
-      <div className='absolute w-full text-center translate-y-44'>
-        <span className='text-4xl font-bold'>내 집 근처에서 편하게 공부할 수 있는 공간.</span>
+      <div className='absolute w-full text-center translate-y-12'>
+        <span className='text-4xl font-bold text-white'>내 집 근처에서 편하게 공부할 수 있는 공간.</span>
       </div>
-      <div className='absolute w-full text-center translate-y-60'>
-        <span className='text-xl opacity-60'>지도에서 한눈에 찾아보세요 !</span>
+      <div className='absolute w-full text-center translate-y-28'>
+        <span className='text-xl text-white opacity-80'>지도에서 한눈에 찾아보세요 !</span>
       </div>
       {/* 지도사진 */}
-      <div className='absolute w-full flex justify-center translate-y-80'>
-        <Image 
-          src={'/main/cafes.png'} 
-          width={700}
-          height={700}
-          alt='cafes' 
-          />     
+      <div className='absolute w-full flex justify-center translate-y-44'>
+          <Image 
+            src={'/main/cafes.png'} 
+            width={700}
+            height={700}
+            alt='cafes' 
+          />    
           {/* 더카페 */}
           <div className='absolute scale-150 flex flex-col justify-center items-center gap-1 translate-y-24 translate-x-16'>
             <Image 
@@ -59,7 +59,7 @@ const MainInfo1 = () => {
             <IoMdPin className='scale-125 text-2xl text-sygnature-brown'/>
           </div> 
           {/* 도서관 */}
-          <div className='absolute scale-150 flex flex-col justify-center items-center gap-1 -translate-x-7 translate-y-80'>
+          <div className='absolute scale-150 flex flex-col justify-center items-center gap-1 -translate-x-20 translate-y-96'>
             <Image 
               src={'/main/library.png'}
               width={100}

@@ -158,6 +158,7 @@ const SearchBar = () => {
             ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정
             autoComplete="off"
             placeholder='동네 이름, 매장 이름'
+            spellCheck="false"
         />
         <div 
           className='w-10 text-2xl text-sygnature-brown cursor-pointer hover:font-bold'
