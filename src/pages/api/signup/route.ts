@@ -22,8 +22,13 @@ export default async function POST(request: any, response: any) {
       loginId,
       nickname,
       password: hashedPassword,
-      email
-    });
+      id: "",
+      email,
+      role: "admin",
+      method: "credentials",
+      image: "",
+      emailVerified: "",
+    })
   
     response.status(200).json("success");
     return NextResponse.json(user, { status: 200 });

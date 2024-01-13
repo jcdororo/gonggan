@@ -37,9 +37,7 @@ export default function SignUpForm({ session }: any) {
 
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
     try {
-      console.log(body);
       const { data } = await axios.post("/api/signup/route", body);
-      console.log(data);
       router.push("/signin");
     } catch (error) {
       console.log(error);
