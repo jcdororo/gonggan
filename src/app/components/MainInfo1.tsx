@@ -9,13 +9,13 @@ const inter = Inter({ subsets: ['latin'] })
 
 const MainInfo1 = () => {
   return (
-    <div className={`sm:h-[90vh] h-screen ${inter.className} relative z-0 bg-[url('/main/studycafe1.jpg')] bg-no-repeat bg-fixed bg-contain bg-center sm:bg-cover bg-white`}>
+    <div className={`sm:h-[100vh] h-screen ${inter.className} relative z-0 bg-[url('/main/studycafe1.jpg')] bg-no-repeat bg-fixed bg-contain bg-center sm:bg-cover bg-white opacity-90`}>
       {/* 내 집 근처에서 편하게 공부할 수 있는 공간. */}
       <div className='absolute w-full text-center translate-y-12'>
-        <span className='text-4xl font-bold text-white'>내 집 근처에서 편하게 공부할 수 있는 공간.</span>
+        <span className='text-4xl font-extrabold text-white'>내 집 근처에서 편하게 공부할 수 있는 공간.</span>
       </div>
       <div className='absolute w-full text-center translate-y-28'>
-        <span className='text-xl text-white opacity-80'>지도에서 한눈에 찾아보세요 !</span>
+        <span className='text-xl font-bold text-white'>지도에서 한눈에 찾아보세요 !</span>
       </div>
       {/* 지도사진 */}
       <div className='absolute w-full flex justify-center translate-y-44'>
