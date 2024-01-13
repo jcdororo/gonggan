@@ -190,16 +190,7 @@ export default function SignUpForm({ session }: any) {
               </p>
             )}
           </div>
-          <div className="form_block flex">
-            <input
-              type="checkbox"
-              name="xxx"
-              value="yyy"
-              checked
-              className="w-5 h-5 mt-5 mr-2 accent-yellow-900"
-            />
-            <p className="mt-5">댓글 및 공(工)간의 정보 알림 받기</p>
-          </div>
+          
           <div className="form__block">
             <input
               type="submit"

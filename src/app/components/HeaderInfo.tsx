@@ -135,17 +135,18 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
         // 로그인 상태일 때
         <div className="absolute right-0 flex items-center px-7 py-3">
           <div className="right-1 flex justify-center items-center">
-            <div className="absolute w-5 top-5 left-14 font-bold text-sm text-center rounded-2xl bg-red-600 text-white">
-              {alarmsContens.filter((x: AlarmsContents) => x.check == false)
-                .length
-                ? alarmsContens.filter((x: AlarmsContents) => x.check == false)
-                    .length
-                : ""}
-            </div>
             <div className="px-3">
               <DarkMode />
             </div>
-            <div ref={alarmRef}>
+            <div ref={alarmRef} className="relative">
+              <div className="absolute w-5 top-[-10px] left-8 font-bold text-sm text-center rounded-2xl bg-red-600 text-white">
+                {alarmsContens.filter((x: AlarmsContents) => x.check == false)
+                  .length
+                  ? alarmsContens.filter(
+                      (x: AlarmsContents) => x.check == false
+                    ).length
+                  : ""}
+              </div>
               <FaBell
                 className={`block mx-4 mr-6 text-sygnature-brown cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${
                   isAlarmOpen ? "text-red-400" : ""

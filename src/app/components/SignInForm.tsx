@@ -119,7 +119,7 @@ export default function SignInForm({ session }:any) {
         </div>
       </form>
       <div className="inline-flex px-11 w-full justify-center text-sm">
-        <Link href="/">
+        <Link href="/accountfind">
           <p className="mr-2">아이디 및 비밀번호 찾기</p>
         </Link>
         <p className="mr-2">|</p>
