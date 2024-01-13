@@ -49,25 +49,25 @@ export default function ContactDetail({ id }: DetailProps) {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="w-1/2 m-auto">
-          <div className="flex p-5">
-            <div className="text-xl w-[100px]">제목</div>
+          <div className="flex p-4 border-b-2">
+            <div className="w-[100px] font-bold">제목</div>
             <div className="">{contact?.title}</div>
           </div>
-          <div className="flex p-5">
-            <div className="text-xl w-[100px]">이메일</div>
+          <div className="flex p-4 border-b-2">
+            <div className="w-[100px] font-bold">이메일</div>
             <div className="">{contact?.email}</div>
           </div>
-          <div className="flex p-5">
-            <div className="text-xl w-[100px]">내용</div>
+          <div className="flex p-4 border-b-2">
+            <div className="w-[100px] font-bold">내용</div>
             <div className="">{contact?.content}</div>
           </div>
-          <div className="flex p-5">
-            <div className="text-xl w-[100px]">답변</div>
+          <div className="flex p-4">
+            <div className="w-[100px] font-bold">답변</div>
             <textarea
               {...register("reply", {
                 required: "답변을 입력해주세요.",
               })}
-              className="h-[250px] w-full text-sm p-4 rounded-md max-w-[680px] border border-solid border-gray-300"
+              className="darkMode h-[250px] w-full text-sm p-4 rounded-md max-w-[680px] border border-solid border-gray-300"
             />
           </div>
           <div className="w-[100px] form__block">

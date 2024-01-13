@@ -74,7 +74,7 @@ export default function ContactForm() {
               {...register("content", {
                 required: "내용을 입력해주세요.",
               })}
-              className="h-[250px] w-full text-sm p-4 rounded-md max-w-[680px] border border-solid border-gray-300"
+              className="darkMode h-[250px] w-full text-sm p-4 rounded-md max-w-[680px] border border-solid border-gray-300"
             />
         </div>
         <div className="form__block">

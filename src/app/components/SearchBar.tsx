@@ -150,7 +150,7 @@ const SearchBar = () => {
       <div className='relative w-128 flex flex-row justify-center items-center border-2 rounded-3xl overflow-hidden border-sygnature-brown hover:shadow-lg'>
         <span className='darkMode bg-white text-2xl h-8 -mr-1 z-10 font-bold text-sygnature-brown mx-3 cursor-pointer'>工</span>
         <input 
-            className="px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none " 
+            className="darkMode px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none " 
             name="location" 
             onFocus={handleFocus} 
             value={query}

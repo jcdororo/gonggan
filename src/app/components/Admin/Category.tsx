@@ -16,7 +16,7 @@ export default function Category({ category }: Props) {
     <>
       <div className="">
         <div className="flex justify-center p-4 h-1/3">
-          <p className="text-black text-2xl font-bold">{title}</p>
+          <div className="text-2xl font-bold">{title}</div>
         </div>
         <div className="p-4 h-1/3 flex justify-center">
           <div className="gap-4 flex">
@@ -25,7 +25,7 @@ export default function Category({ category }: Props) {
           </div>
         </div>
         <div className="flex h-1/3 justify-center items-end p-4 cursor-pointer">
-          <div className="flex justify-center w-[150px] p-2 bg-black/10 rounded-2xl">
+          <div className="flex justify-center w-[150px] text-white p-2 bg-sygnature-brown rounded-2xl">
             <Link href={`/admin/${category}/list`}>목록 보기 &nbsp; &gt;</Link>
           </div>
         </div>

@@ -32,12 +32,8 @@ body[data-theme="dark"] .in {
   @apply bg-[#292929] z-10
 }
 
-body[data-theme="dark"] input {
-  @apply bg-[#292929] z-10
-}
-
 body[data-theme="dark"] .darkMode {
-  @apply bg-[#292929] z-10
+  @apply bg-[#292929] text-white z-10
 }
 
 

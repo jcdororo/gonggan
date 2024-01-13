@@ -102,6 +102,8 @@ export default function ProfileForm({ session }: any) {
             update({ nickname: body.nickname, email: body.email });
           }
         });
+      router.refresh();
+      router.push("/mypage");
     } catch (error) {
       console.log(error);
     }
@@ -141,23 +143,21 @@ export default function ProfileForm({ session }: any) {
         method="POST"
         className="m-auto p-11"
       >
-        <div className="form__block">
-          <div className="flex justify-between mr-2">
-            <p className="font-bold text-xl">알림 받기</p>
-            <FaToggleOn size="30" color="#998373" />
+        {session.user.method != "oauth" ? (
+          <div className="form__block">
+            <label className="lab" htmlFor="id">
+              아이디
+            </label>
+            <input
+              {...register("loginId")}
+              className="in bg-sygnature-beige"
+              type="text"
+              disabled
+            />
           </div>
-        </div>
-        <div className="form__block">
-          <label className="lab" htmlFor="id">
-            아이디
-          </label>
-          <input
-            {...register("loginId")}
-            className="in bg-sygnature-beige"
-            type="text"
-            disabled
-          />
-        </div>
+        ) : (
+          ""
+        )}
         <div className="form__block">
           <label className="lab" htmlFor="nickname">
             닉네임
