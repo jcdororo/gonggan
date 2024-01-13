@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
-import { FaFlag, FaMapMarkerAlt  } from "react-icons/fa";
+import { FaFlag, FaMapMarkerAlt, FaSearch  } from "react-icons/fa";
 import { useDebounce } from '../hooks/useDebounce';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
@@ -148,7 +148,7 @@ const SearchBar = () => {
   return (
     <div className="p-3 h-30 z-0 flex flex-col items-center">
       <div className='relative w-128 flex flex-row justify-center items-center border-2 rounded-3xl overflow-hidden border-sygnature-brown hover:shadow-lg'>
-        <span className='darkMode bg-white text-2xl h-8 -mr-1 z-10 font-bold text-sygnature-brown mx-3 cursor-pointer'>工</span>
+        <span className='darkMode bg-white text-2xl h-8 -mr-1 z-10 font-bold text-sygnature-brown mx-3 cursor-pointer translate-y-1'><FaSearch /></span>
         <input 
             className="darkMode px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none " 
             name="location" 
@@ -158,13 +158,14 @@ const SearchBar = () => {
             ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정
             autoComplete="off"
             placeholder='동네 이름, 매장 이름'
+            spellCheck="false"
         />
         <div 
           className='w-10 text-2xl text-sygnature-brown cursor-pointer hover:font-bold'
           onClick={handleclick}
         >X</div>
       </div>
-      <div className={`darkMode z-50 border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 -translate-y-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
+      <div className={`darkMode z-50 border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 translate-y-6 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'}`}>
         <ul>
           {
             

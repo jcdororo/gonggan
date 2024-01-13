@@ -71,12 +71,12 @@ export default async function Header() {
   }
 
   return (
-    <div className="">
-      <div className="fixed w-full h-20 top-0 opacity-80 z-9999"></div>
+    <div className="mb-8">
+      <div className="fixed w-full h-20 top-0 z-9999 darkMode bg-white"></div>
       <div className="flex w-full h-20 fixed z-9999 shadow-md">
         <Link href={"/"}>
           <Image
-            className="mx-1 ml-3 relative hover:opacity-80"
+            className="mx-1 ml-3 relative hover:opacity-80 scale-75"
             src={header}
             width={110}
             height={75}
