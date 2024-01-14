@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ReviewType } from "../../interface";
 import { useQuery } from "react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import ReviewShape from "../Review/ReviewShape";
 import { useSession } from "next-auth/react";
@@ -18,20 +18,23 @@ export default function PlaceReviews({ _id }: PlaceProps) {
   // 사용자 정보
   const { data: userData, status }: any = useSession();
 
+  console.log("userData", userData);
+
   const getReviews = async () => {
     const { data } = await axios.get(`/api/reviews/findReviews?_id=${_id}`);
     return data as ReviewType[];
   };
 
-  const {
-    data: reviews,
-    isFetching,
-    isSuccess,
-    isError,
-  } = useQuery<ReviewType[]>(`review-${_id}`, getReviews, {
-    enabled: !!_id,
-    refetchOnWindowFocus: false,
-  });
+  const { data: reviews } = useQuery<ReviewType[]>(
+    `review-${_id}`,
+    getReviews,
+    {
+      enabled: !!_id,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  console.log(reviews);
 
   const [limit, setLimit] = useState(5);
 
@@ -43,9 +46,17 @@ export default function PlaceReviews({ _id }: PlaceProps) {
   const [reviewModify, setReviewModify] = useState(false);
   const [reviewDelete, setReviewDelete] = useState(false);
   const [review, setReview] = useState<ReviewType>();
-  const [like, setLike] = useState(false);
-
   const [policeWrite, setPoliceWrite] = useState(false);
+  
+  // const [reviews, setReviews] = useState<ReviewType[]>();
+  // useEffect(() => {
+  //   const getReviews = async () => {
+  //     const { data } = await axios.get(`/api/reviews/findReviews?_id=${_id}`);
+  //     setReviews(data);
+  //     console.log(reviews);
+  //   };
+  //   getReviews();
+  // }, []);
 
   // 리뷰 모달
   const onClick = (
@@ -88,7 +99,16 @@ export default function PlaceReviews({ _id }: PlaceProps) {
             id="write"
             onClick={(e) => onClick(e)}
           >
-            리뷰 작성하기
+            {/* 리뷰를 작성한 이력이 있으면 작성하기 버튼 안 보임 */}
+            {
+              reviews?.map((review) =>
+                review.writerid == userData.user?._id 
+                  ? "" 
+                  : "리뷰 작성하기")
+            }
+            {
+              reviews?.length == 0 ? "리뷰 작성하기" : ""
+            }
           </div>
         )}
       </div>
@@ -104,14 +124,14 @@ export default function PlaceReviews({ _id }: PlaceProps) {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <Like review={review} nickname={userData?.user?.nickname} />
+                  <Like review={review} user={userData.user} />
                 </div>
               </div>
               <div className="mb-3">
                 <Star star={review.star} />
               </div>
               <div className="mb-3">{review.content}</div>
-              {userData && userData.user?.nickname == review.writernickname ? (
+              {userData && userData.user?._id == review.writerid ? (
                 <div className="flex justify-end gap-2 text-xs">
                   <div
                     id="modify"

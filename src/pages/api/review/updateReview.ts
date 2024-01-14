@@ -9,8 +9,7 @@ export default async function handler(
   if (request.method == "POST") {
     try {
       const db = (await connectDB).db("gonggan");
-      const body = JSON.parse(request.body);
-      console.log("body", body);
+      const body = request.body;
 
       if (body.like != undefined) {
         // 좋아요만 수정
@@ -22,7 +21,9 @@ export default async function handler(
             $set: { like: body.like },
           }
         );
-      } else {
+      } 
+      
+      if(body.content != undefined) {
         // 내용, 평점 수정
         const result = await db.collection("review").updateOne(
           {
@@ -37,6 +38,18 @@ export default async function handler(
         console.log('result@@@',result)
       }
 
+      // 닉네임이 변경되었을 경우
+      // 그동안 썼던 리뷰들의 닉네임 변경
+      if(body.updateId != undefined) {
+        await db.collection("review").updateOne(
+          {
+            writerid: new ObjectId(body.updateId),
+          },
+          {
+            $set: { writernickname: body.nickname}
+          }
+        )
+      }
 
       response.status(200).json("success");
     } catch (error) {

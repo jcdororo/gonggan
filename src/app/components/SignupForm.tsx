@@ -154,9 +154,9 @@ export default function SignUpForm({ session }: any) {
             <input
               {...register("password", {
                 required: "비밀번호를 입력해주세요.",
-                minLength: {
-                  value: 8,
-                  message: "여덟 글자 이상 입력해주세요.",
+                pattern: {
+                  value: /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,}$/,
+                  message: "영문, 숫자, 특수기호를 조합해서 8글자 이상으로 만들어 주세요. ",
                 },
               })}
               className="in"

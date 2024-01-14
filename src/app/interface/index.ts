@@ -7,12 +7,16 @@ export interface LocationType {
 }
 
 export interface UserInfoType {
-  _id: ObjectId;
+  _id?: ObjectId;
   loginId?: string;
   nickname: string;
   password: string;
   email: string;
   method?: string;
+  id?: string;
+  image?: string;
+  emailVerified?: string;
+  role?: string;
 }
 
 export interface PlaceType {

@@ -1,6 +1,8 @@
 import { connectDB } from "@/util/database";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { UserInfoType } from "@/app/interface";
+import { ObjectId } from "mongodb";
 
 export default async function POST(request: any, response: any) {
   
@@ -22,13 +24,14 @@ export default async function POST(request: any, response: any) {
       loginId,
       nickname,
       password: hashedPassword,
-      id: "",
+      id: new ObjectId().toString(),
       email,
-      role: "admin",
+      role: "user",
       method: "credentials",
       image: "",
       emailVerified: "",
     })
+
   
     response.status(200).json("success");
     return NextResponse.json(user, { status: 200 });

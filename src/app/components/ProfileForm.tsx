@@ -102,6 +102,13 @@ export default function ProfileForm({ session }: any) {
             update({ nickname: body.nickname, email: body.email });
           }
         });
+
+      console.log(session.user._id, body.nickname)
+      const res = await axios.post("/api/review/updateReview", {
+        updateId: session.user._id,
+        nickname: body.nickname,
+      })
+      console.log(res);
       router.refresh();
       router.push("/mypage");
     } catch (error) {

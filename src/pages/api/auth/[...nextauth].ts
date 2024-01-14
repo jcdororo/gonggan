@@ -17,9 +17,10 @@ export const authOptions: any = {
       credentials: {
         loginId: { label: "loginId", type: "text" },
         password: { label: "password", type: "password" },
+        auto: { label: "auto", type: "checkbox" },
       },
       async authorize(
-        credentials: Record<"loginId" | "password", string> | undefined,
+        credentials: Record<"loginId" | "password" | "auto", string> | undefined,
         req: Pick<RequestInternal, "body" | "query" | "headers" | "method">
       ): Promise<any> {
         if (!credentials?.loginId || !credentials?.password) {
@@ -42,7 +43,7 @@ export const authOptions: any = {
         if (!isCorrectPassword) {
           throw new Error("Invalid credentials");
         }
-
+        console.log(credentials.auto);
         return user;
       },
     }),
@@ -81,6 +82,7 @@ export const authOptions: any = {
         token.user.alarm = user.alarm;
         token.user.role = user.role;
         token.user.method = user.method;
+        token.user._id = user._id;
       }
       // 업데이트 함수 호출 시 토큰 업데이트
       if (trigger === "update") {

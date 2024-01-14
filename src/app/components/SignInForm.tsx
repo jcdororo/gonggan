@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-export default function SignInForm({ session }:any) {
+export default function SignInForm({ session }: any) {
   const router = useRouter();
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export default function SignInForm({ session }:any) {
     defaultValues: {
       loginId: "",
       password: "",
+      auto: "",
     },
   });
 
@@ -106,10 +107,8 @@ export default function SignInForm({ session }:any) {
         </div>
         <div className="form_block flex">
           <input
+            {...register("auto")}
             type="checkbox"
-            name="xxx"
-            value="yyy"
-            checked
             className="w-5 h-5 mt-5 mr-2 accent-yellow-900"
           />
           <p className="mt-5">로그인 상태 유지</p>
