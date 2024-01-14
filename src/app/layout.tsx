@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import { NextProvider } from "./providers";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NextProvider>
+        <NextProvider session={undefined}>
           <header>
             <Header />
           </header>

@@ -348,7 +348,7 @@ const ProposeList = ({ session, params }: any) => {
   return (
     <div>
       <div className="text-center font-extrabold text-2xl my-4">
-        장소 제안 내용
+        장소 제안 하기
       </div>
       <form
         action="/api/propose/proposeConfirm"
@@ -407,6 +407,7 @@ const ProposeList = ({ session, params }: any) => {
           onChange={handleChange}
           ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정
           autoComplete="off"
+          spellCheck='false'
         />
         <div
           className={`z-10 border absolute -translate-y-3 bg-white ${
@@ -431,7 +432,9 @@ const ProposeList = ({ session, params }: any) => {
           </ul>
         </div>
         {/* 지도 */}
-        <Map />
+        <div className="sm:-translate-x-7">
+          <Map />
+        </div>
 
         <div className="font-semibold mt-2">
           영업시간<span className="text-red-500 font-bold">*</span>
