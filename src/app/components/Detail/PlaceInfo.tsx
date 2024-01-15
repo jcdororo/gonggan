@@ -1,10 +1,12 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiLike } from "react-icons/bi";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoMdTime } from "react-icons/io";
 import { useQuery } from "react-query";
 import { PlaceType } from "../../interface";
+import Image from "next/image";
+import PlaceLike from "../PlaceLike";
 
 interface PlaceProps {
   _id: string;
@@ -16,28 +18,36 @@ export default function PlaceInfo({ _id }: PlaceProps) {
     return data as PlaceType;
   };
 
-  const {
-    data: place,
-    isFetching,
-    isSuccess,
-    isError,
-  } = useQuery<PlaceType>(`place-${_id}`, getPlace, {
+  const { data: place } = useQuery<PlaceType>(`place-${_id}`, getPlace, {
     enabled: !!_id,
     refetchOnWindowFocus: false,
   });
 
+  console.log(place);
+  const [pictureUrl, setPictureUrl] = useState();
+
+  useEffect(() => {
+    const getPlace = async () => {
+      const { data } = await axios.get(`/api/place/getPicture?_id=${_id}`);
+      setPictureUrl(data.url);
+    };
+    getPlace();
+  }, []);
+
   return (
     <>
-      <div className="flex px-8 pb-3 text-2xl font-bold">
-        {place?.place_name}
+      <div className="relative top-[-42px] w-full h-[350px] bg-gray-500 overflow-hidden">
+        {pictureUrl && (
+          <Image src={pictureUrl} width={620} height={350} alt="장소 이미지" />
+        )}
       </div>
-      <div className="flex gap-5 px-8 pb-5">
-        <div className="">★★★★☆ 4.5</div>
-      </div>
-      <div className="flex gap-2 px-8 pb-5">
-        <BiLike size="24" />
-        {/* <BiSolidLike /> */}
-        <div className="">15</div>
+      <div className="flex justify-between mb-10">
+        <div className="flex px-8 text-2xl font-bold">
+          {place?.place_name}
+        </div>
+        <div className="flex items-center pr-10">
+          <PlaceLike _id={_id} />
+        </div>
       </div>
       <div className="flex gap-2 px-8 pb-5">
         <FaMapMarkerAlt size="24" />
@@ -45,7 +55,12 @@ export default function PlaceInfo({ _id }: PlaceProps) {
       </div>
       <div className="flex gap-2 px-8 pb-5">
         <IoMdTime size="24" />
-        <div className="">월 12:00 ~ 22:00</div>
+        <div>
+          <div className="">
+            {place?.businessday?.map(String).join(", ")} &nbsp;
+            {place?.openhour} ~ {place?.closehour}
+          </div>
+        </div>
       </div>
     </>
   );

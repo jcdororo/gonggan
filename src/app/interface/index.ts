@@ -40,6 +40,8 @@ export interface PlaceType {
   y?: string | null;
   status?: string | null;
   date: string;
+  url?: string;
+  like?: number;
 }
 
 export interface ReviewType {

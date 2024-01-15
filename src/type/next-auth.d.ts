@@ -13,6 +13,7 @@ declare module "next-auth" {
       alarm?: boolean;
       role: string;
       method?: string;
+      _id?: string;
     } & DefaultSession["user"];
   }
 }

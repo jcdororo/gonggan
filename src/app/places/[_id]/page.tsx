@@ -10,7 +10,6 @@ export default function PlacePage({ params }: { params: { _id: string } }) {
     <>
       <div>
         <div className="darkMode m-auto mt-[40px] w-[50%] max-w-2xl h-screen bg-white max-h-[100vh]">
-          <div className="relative top-[-42px] w-full h-[350px] bg-gray-500"></div>
           <PlaceInfo _id={_id} />
           <PlaceReviews _id={_id} />
         </div>
