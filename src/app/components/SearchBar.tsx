@@ -36,6 +36,20 @@ const SearchBar = () => {
   const [map, setMap] = useRecoilState(mapState);
 
   useEffect(() => {
+    const handleKeyESC = (e: { key: string; }) => {
+      if(e.key === 'Escape') {
+        setFocus(false);
+      };
+    }
+    window.addEventListener('keydown', handleKeyESC)
+  
+    return () => {
+      window.removeEventListener('keydown',handleKeyESC)
+    }
+  }, [])
+  
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
   
@@ -112,11 +126,6 @@ const SearchBar = () => {
 
   }
 
-
-
-  const handleFocus = () => {
-    setFocus(true);
-  }
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);    
     
@@ -152,7 +161,6 @@ const SearchBar = () => {
         <input 
             className="darkMode px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none " 
             name="location" 
-            onFocus={handleFocus} 
             value={query}
             onChange={handleChange}
             ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정

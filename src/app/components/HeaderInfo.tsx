@@ -157,7 +157,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             </div>
             <img
               className="rounded-full h-14 w-14 overflow-hidden cursor-pointer hover:scale-105 transition duration-300"
-              src={session.user.image ? session.user.image : "/logo2.png"}
+              src={session.user.image ? session.user.image : "/logo.png"}
               width={640}
               height={640}
               alt="아이콘"
