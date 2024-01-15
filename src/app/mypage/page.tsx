@@ -51,7 +51,7 @@ export default async function MyPage() {
           {/* <div className='bg-black w-20 h-20 mx-3 mt-4 rounded-full'></div> */}
           <Image
             className="w-20 h-20 mx-3 mt-4 rounded-full bg-white"
-            src={`${session.user.image ? session.user.image : "/logo2.png"}`}
+            src={`${session.user.image ? session.user.image : "/logo.png"}`}
             width={110}
             height={75}
             alt="header"

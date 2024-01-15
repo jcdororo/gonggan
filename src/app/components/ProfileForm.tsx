@@ -1,6 +1,5 @@
 "use client";
 import { useRef, useState } from "react";
-import { FaToggleOn } from "react-icons/fa";
 import Image from "next/image";
 import { useInputImg } from "../hooks/useInputImg";
 import { useRouter } from "next/navigation";
@@ -82,13 +81,12 @@ export default function ProfileForm({ session }: any) {
         `/api/upload/image?_id=${session.user.id}&url=${url}`,
         { method: "POST" }
       ).then((r) => r.json());
+      update({ image: url});
     }
-    if (result.toString().includes("success")) {
-      router.push("/mypage/profile/complete");
-    }
+    // if (result.toString().includes("success")) {
+      // update({ image: url});
+    // }
 
-    console.log("result", result);
-    console.log("submit done !!!");
 
     try {
       await axios
@@ -123,7 +121,7 @@ export default function ProfileForm({ session }: any) {
         {/* <div className="bg-black w-[100px] h-[100px] rounded-full"></div> */}
         <Image
           className="rounded-full w-[100px] h-[100px] overflow-hidden"
-          src={picture ? picture : "/logo2.png"}
+          src={picture ? picture : "/logo.png"}
           width={640}
           height={640}
           alt="아이콘"

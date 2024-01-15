@@ -69,6 +69,9 @@ const MainInfo1 = () => {
             />
             <IoMdPin className='scale-125 text-2xl text-sygnature-brown'/>
           </div> 
+          <div className='absolute -bottom-6 right-7 text-sm opacity-80'>
+            *이해를 돕기 위한 예시 사진입니다
+          </div>          
       </div>            
     </div>
   )

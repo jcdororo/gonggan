@@ -46,8 +46,8 @@ export default async function Home() {
       {/* <HotPlace /> */}
       {/* 내 집 근처에서 편하게 공부할 수 있는 공간. */}      
       <MainInfo1 />
+      {/* 사용자의 공간의 정보와 사용 후기들을 확인해보세요 */}
       <Main />
-
       {/* 스터디 장소를 공유할 수 있어요. */}
       <MainInfo3 />
     </div>

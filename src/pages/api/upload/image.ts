@@ -6,6 +6,7 @@ export default async function (
   request: NextApiRequest,
   response: NextApiResponse
 ) {
+  console.log(request.query)
   if (request.method == "POST") {
     try {
       const temp = {

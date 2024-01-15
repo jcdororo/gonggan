@@ -13,6 +13,8 @@ import { useInputImgs } from "../hooks/useInputImgs";
 import kakaoSearchMap from "@/util/kakaoSearchMap";
 import { uploadImg } from "@/util/uploadImg";
 import { sendAlarm } from "@/util/sendAlarm";
+import LoadingSpin from "../components/LoadingSpin";
+import Spin from "../components/Spin";
 
 interface Result {
   _id?: string;
@@ -48,6 +50,7 @@ const Propose = ({ session }: any) => {
   const [openHour, setOpenHour] = useState("");
   const [closeHour, setCloseHour] = useState("");
   const [businessDay, setBusinessDay] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false)
 
   if (!session) {
     setTimeout(() => {
@@ -253,6 +256,8 @@ const Propose = ({ session }: any) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true)
+    
     const temp = {
       location: query,
       openhour: openHour,
@@ -289,6 +294,8 @@ const Propose = ({ session }: any) => {
         body: JSON.stringify({ place_id: place_id, url: url }),
       }).then((r) => r.json());
     }
+    setIsLoading(false)
+
     router.push("/propose/complete");
   };
 
@@ -606,13 +613,21 @@ const Propose = ({ session }: any) => {
           {checkForm() ? (
             checkForm()
           ) : (
-            <button
-              className="w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300"
-              type="submit"
-              onClick={handleClick}
-            >
-              작성 완료
-            </button>
+            <div>
+              {
+                !isLoading
+                ?
+                <button
+                  className="w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300"
+                  type="submit"
+                  onClick={handleClick}
+                >
+                  작성 완료
+                </button>
+                :
+                <Spin />              
+              }
+            </div>
           )}
         </div>
 

@@ -55,6 +55,7 @@ const ProposeList = ({ session, params }: any) => {
   const [closeHour, setCloseHour] = useState("");
   const [businessDay, setBusinessDay] = useState<string[]>([]);
   const [confirm, setConfirm] = useState("approved");
+  
 
   const [sun, setSun] = useState(false);
   const [mon, setMon] = useState(false);
@@ -432,10 +433,7 @@ const ProposeList = ({ session, params }: any) => {
           </ul>
         </div>
         {/* 지도 */}
-        <div className="sm:-translate-x-7">
-          <Map />
-        </div>
-
+        <Map />
         <div className="font-semibold mt-2">
           영업시간<span className="text-red-500 font-bold">*</span>
         </div>

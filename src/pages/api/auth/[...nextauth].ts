@@ -88,6 +88,7 @@ export const authOptions: any = {
       if (trigger === "update") {
         token.user.nickname = session.nickname;
         token.user.email = session.email;
+        token.user.image = session.image;
       }
       return token;
     },
