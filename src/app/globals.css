@@ -29,14 +29,12 @@ body[data-theme="dark"] {
 }
 
 body[data-theme="dark"] .in {
-  @apply bg-[#292929] z-10
+  @apply bg-[#292929] z-10;
 }
 
 body[data-theme="dark"] .darkMode {
-  @apply bg-[#292929] text-white z-10
+  @apply bg-[#292929] text-white z-10;
 }
-
-
 
 .in {
   @apply h-[48px] text-sm p-4 rounded-md border-solid border-gray-300 w-full max-w-[680px];
@@ -82,4 +80,49 @@ form .form__btn--submit:focus {
 /* 선택된 스크롤바의 모서리 반경 지정 */
 ::-webkit-scrollbar-thumb:hover {
   background-color: #998373;
+}
+
+/* 스와이프 슬라이드 투명도  */
+.mySwiper .swiper-slide {
+  opacity: 0.4;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+/* 스와이프 버튼 */
+.swiper-button-prev,
+.swiper-button-next {
+  color: white !important;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 30px !important;
+  font-weight: 600 !important;
+}
+
+.fade-in-box {
+  padding: 10px;
+  animation: fadein 3s;
+  -moz-animation: fadein 3s; /* Firefox */
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
+  -o-animation: fadein 3s; /* Opera */
+}
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 2;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 2;
+    }
 }

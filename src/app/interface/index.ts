@@ -41,7 +41,6 @@ export interface PlaceType {
   status?: string | null;
   date: string;
   url?: string;
-  like?: number;
 }
 
 export interface ReviewType {

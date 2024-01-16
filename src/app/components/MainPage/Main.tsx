@@ -1,3 +1,4 @@
+import HotPlace from "../HotPlace";
 import ReviewMain from "./ReviewMain";
 
 export default function Main() {
