@@ -32,7 +32,6 @@ export default function HotPlace() {
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log(window.scrollY);
       setScrollVisible(window.scrollY > 300);
     };
 

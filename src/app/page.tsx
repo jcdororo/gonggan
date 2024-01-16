@@ -27,14 +27,14 @@ export default async function Home() {
   return (
     <div className={`${roboto.className}`}>
       {/* Search Bar */}
-      <div className="h-screen space-y-20">
+      <div className="h-screen space-y-24">
         <div className="bg-white -mt-8 pt-8 darkMode">
           <SearchBar />
         </div>
         <div className="bg-white pt-1 z-10 darkMode">
-          <div className="mx-12 h-vh">
-            <div className="flex gap-10 sm:flex-col md:flex-row">
-              <div className="w-3/5 h-vh">
+          <div className="mx-12">
+            <div className="flex gap-16 sm:flex-col md:flex-row">
+              <div className="w-3/5">
                 <Map />
                 <Marker places={places} />
                 <CurrentPlaceBox />
@@ -59,8 +59,8 @@ export default async function Home() {
       {/* <HotPlace /> */}
       {/* 내 집 근처에서 편하게 공부할 수 있는 공간. */}
       <MainInfo1 />
-      {/* 사용자의 공간의 정보와 사용 후기들을 확인해보세요 */}
       <Main />
+
       {/* 스터디 장소를 공유할 수 있어요. */}
       <MainInfo3 />
     </div>
