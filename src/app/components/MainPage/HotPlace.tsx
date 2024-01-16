@@ -59,13 +59,12 @@ export default function HotPlace() {
   return (
     <>
       <div className="h-screen py-28 px-20 bg-gradient-to-t from-sygnature-brown">
-        <div className="swiper-container w-[100%] mx-auto">
-          {/* <div className="mb-12 fade-in-box text-center"> */}
-          <div
-            className={`mb-12 fade-in-box text-center transition-opacity duration-[1s] ${
-              scrollVisible ? "opacity-100" : "opacity-0"
-            }`}
-          >
+        <div
+          className={`swiper-container w-[100%] mx-auto transition-opacity duration-[2s] ${
+            scrollVisible ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="mb-12 fade-in-box text-center">
             <div className="flex justify-center animate-bounce mb-4">
               <FaMapLocationDot size="30" />
             </div>
