@@ -15,6 +15,7 @@ import { uploadImg } from "@/util/uploadImg";
 import { sendAlarm } from "@/util/sendAlarm";
 import LoadingSpin from "../components/LoadingSpin";
 import Spin from "../components/Spin";
+import SpinWhite from "../components/SpinWhite";
 
 interface Result {
   _id?: string;
@@ -625,7 +626,9 @@ const Propose = ({ session }: any) => {
                   작성 완료
                 </button>
                 :
-                <Spin />              
+                <div className="w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
+                  <SpinWhite />
+                </div>         
               }
             </div>
           )}
