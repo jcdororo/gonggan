@@ -50,7 +50,7 @@ export default function HotPlace() {
   };
 
   const { data: places } = useQuery(`hotPlaces`, getPlacePicture);
-  console.log(places);
+  // console.log(places);
 
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   SwiperCore.use([Autoplay]);
