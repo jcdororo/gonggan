@@ -9,6 +9,9 @@ import CurrentPlaceBox from "./components/CurrentPlaceBox";
 import MainInfo1 from "./components/MainInfo1";
 import MainInfo3 from "./components/MainInfo3";
 import Main from "./components/MainPage/Main";
+import HotPlace from "./components/MainPage/HotPlace";
+import { MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
+import Link from "next/link";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -22,29 +25,39 @@ export default async function Home() {
   const places: PlaceType[] = await getData();
 
   return (
-    <div className={`${roboto.className} `}>      
+    <div className={`${roboto.className}`}>
       {/* Search Bar */}
-      <div className="bg-white -mt-8 pt-8 darkMode">
-        <SearchBar />
-      </div>
-      <div className="bg-white pt-1 z-10 darkMode">
-        <div className="m-12 h-screen">
-          <div className="flex gap-10 sm:flex-col md:flex-row">
-            <div className="w-3/5 h-vh">
-              <Map />
-              <Marker places={places} />
-              <CurrentPlaceBox />
-            </div>
-            <div className="w-2/5">
-              <Space category="주변" places={places} />
+      <div className="h-screen space-y-20">
+        <div className="bg-white -mt-8 pt-8 darkMode">
+          <SearchBar />
+        </div>
+        <div className="bg-white pt-1 z-10 darkMode">
+          <div className="mx-12 h-vh">
+            <div className="flex gap-10 sm:flex-col md:flex-row">
+              <div className="w-3/5 h-vh">
+                <Map />
+                <Marker places={places} />
+                <CurrentPlaceBox />
+              </div>
+              <div className="w-2/5">
+                <Space category="주변" places={places} />
+              </div>
             </div>
           </div>
+        </div>
+        <div className="flex justify-center cursor-pointer animate-bounce">
+          <Link href="#hot">
+            <MdOutlineKeyboardDoubleArrowDown size="30" color="gray" />
+          </Link>
         </div>
       </div>
 
       {/* 핫한공간 */}
+      <div id="hot">
+        <HotPlace />
+      </div>
       {/* <HotPlace /> */}
-      {/* 내 집 근처에서 편하게 공부할 수 있는 공간. */}      
+      {/* 내 집 근처에서 편하게 공부할 수 있는 공간. */}
       <MainInfo1 />
       {/* 사용자의 공간의 정보와 사용 후기들을 확인해보세요 */}
       <Main />

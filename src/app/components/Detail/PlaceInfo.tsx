@@ -6,7 +6,7 @@ import { IoMdTime } from "react-icons/io";
 import { useQuery } from "react-query";
 import { PlaceType } from "../../interface";
 import Image from "next/image";
-import PlaceLike from "../PlaceLike";
+import PlaceLike from "./PlaceLike";
 
 interface PlaceProps {
   _id: string;
@@ -38,13 +38,16 @@ export default function PlaceInfo({ _id }: PlaceProps) {
     <>
       <div className="relative top-[-42px] w-full h-[350px] bg-gray-500 overflow-hidden">
         {pictureUrl && (
-          <Image src={pictureUrl} width={620} height={350} alt="장소 이미지" />
+          <Image
+            src={pictureUrl}
+            layout={"fill"}
+            objectFit="cover"
+            alt="장소 이미지"
+          />
         )}
       </div>
       <div className="flex justify-between mb-10">
-        <div className="flex px-8 text-2xl font-bold">
-          {place?.place_name}
-        </div>
+        <div className="flex px-8 text-2xl font-bold">{place?.place_name}</div>
         <div className="flex items-center pr-10">
           <PlaceLike _id={_id} />
         </div>
