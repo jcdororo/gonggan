@@ -21,6 +21,7 @@ interface HeaderInfoProps {
   alarms: AlarmsContents[];
 }
 
+
 const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
   const [isDropboxOpen, setIsDropboxOpen] = useState(false);
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
@@ -69,7 +70,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
 
   useEffect(() => {
     setAlarmsContens([...alarms]);
-  }, []);
+  }, [alarms]);
 
   const handleClick = () => {
     setIsAlarmOpen(false);
@@ -255,6 +256,9 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                     className="hover:font-bold"
                   >
                     문의 목록
+                  </Link>
+                  <Link href={"/admin/role/list"}  className="hover:font-bold">
+                    권한 목록
                   </Link>
                 </>
               ) : (

@@ -433,7 +433,9 @@ const ProposeList = ({ session, params }: any) => {
           </ul>
         </div>
         {/* 지도 */}
-        <Map />
+        <div className="sm:-translate-x-7">
+          <Map />
+        </div>
         <div className="font-semibold mt-2">
           영업시간<span className="text-red-500 font-bold">*</span>
         </div>
