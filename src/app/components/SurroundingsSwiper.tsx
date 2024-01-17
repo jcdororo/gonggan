@@ -1,7 +1,7 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs, Autoplay } from "swiper/modules";
+import { EffectCards } from "swiper/modules";
 import SwiperCore from "swiper";
 import { Swiper as SwiperType } from "swiper";
 
@@ -24,53 +24,55 @@ interface PlaceType {
   url: string;
 }
 
-export default function HotPlace() {
+export default function SurroundingsSwiper() {
   const router = useRouter();
 
-  // 스크롤
-  const [scrollVisible, setScrollVisible] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollVisible(window.scrollY > 300);
-    };
-
-    // 스크롤 이벤트 리스너 등록
-    window.addEventListener("scroll", handleScroll);
-
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 해제
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   const getPlacePicture = async () => {
-    const { data } = await axios.get(`/api/places/getHotPlaces`);
+    const { data } = await axios.get(`/api/places/getSurroundingPlaces`);
     return data as PlaceType[];
   };
 
-  const { data: places } = useQuery(`hotPlaces`, getPlacePicture);
+  const { data: places } = useQuery(`surroundingPlaces`, getPlacePicture);
+  console.log("places", places);
 
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
-  SwiperCore.use([Autoplay]);
+  SwiperCore.use([EffectCards]);
 
   return (
     <>
-      <div className="h-screen py-28 px-20 bg-gradient-to-t from-sygnature-brown">
-        <div
-          className={`swiper-container w-[100%] mx-auto transition-opacity duration-[2s] ${
-            scrollVisible ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <div className="mb-12 fade-in-box text-center">
+      <div className="">
+        <div className="">
+          {/* <div className="mb-12 fade-in-box text-center">
             <div className="flex justify-center animate-bounce mb-4">
               <FaMapLocationDot size="30" />
             </div>
             <p className="font-bold text-3xl">실시간 사용자들에게 인기 있는</p>
             <p className="font-bold text-3xl">공간들을 둘러보세요 !</p>
-          </div>
+          </div> */}
           <div className="h-[50vh]">
             <Swiper
+              effect={"cards"}
+              grabCursor={true}
+              modules={[EffectCards]}
+              className="mb-2 w-[240px] h-[320px]"
+              autoplay={{ delay: 2000 }}
+              navigation={true} // prev, next button
+            >
+              {places?.map((place) => (
+                <SwiperSlide key={place.place_id}>
+                  <div className="w-full">
+                    <Image
+                      src={place.url || ""}
+                      alt="장소 이미지"
+                      layout={"fill"}
+                      objectFit="cover"
+                      className="rounded-md cursor-pointer"
+                      onClick={() => router.push(`/places/${place.place_id}`)}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {/* <Swiper
               modules={[FreeMode, Navigation, Thumbs]}
               thumbs={{
                 swiper:
@@ -98,31 +100,7 @@ export default function HotPlace() {
                   </div>
                 </SwiperSlide>
               ))}
-            </Swiper>
-            <Swiper
-              onSwiper={setThumbsSwiper}
-              loop={true}
-              spaceBetween={10}
-              slidesPerView={4}
-              freeMode={true}
-              watchSlidesProgress={true}
-              modules={[FreeMode, Navigation, Thumbs]}
-              className="mySwiper"
-            >
-              {places?.map((place) => (
-                <SwiperSlide className="rounded-md" key={place.place_id}>
-                  <div className="w-[100px] h-[80px]">
-                    <Image
-                      src={place.url}
-                      alt="장소 이미지"
-                      layout={"fill"}
-                      objectFit="cover"
-                      className="rounded-md"
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            </Swiper> */}
           </div>
         </div>
       </div>

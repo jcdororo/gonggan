@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BiLike } from "react-icons/bi";
-import { FaMapMarkerAlt } from "react-icons/fa";
+import { FiMapPin } from "react-icons/fi";
 import { IoMdTime } from "react-icons/io";
 import { useQuery } from "react-query";
 import { PlaceType } from "../../interface";
 import Image from "next/image";
 import PlaceLike from "./PlaceLike";
+import { PiNotebookBold } from "react-icons/pi";
+import { IoExtensionPuzzleOutline } from "react-icons/io5";
+
 
 interface PlaceProps {
   _id: string;
@@ -34,6 +37,8 @@ export default function PlaceInfo({ _id }: PlaceProps) {
     getPlace();
   }, []);
 
+  console.log(place);
+
   return (
     <>
       <div className="relative top-[-42px] w-full h-[350px] bg-gray-500 overflow-hidden">
@@ -53,7 +58,7 @@ export default function PlaceInfo({ _id }: PlaceProps) {
         </div>
       </div>
       <div className="flex gap-2 px-8 pb-5">
-        <FaMapMarkerAlt size="24" />
+        <FiMapPin size="24" />
         <div className="">{place?.road_address_name}</div>
       </div>
       <div className="flex gap-2 px-8 pb-5">
@@ -64,6 +69,14 @@ export default function PlaceInfo({ _id }: PlaceProps) {
             {place?.openhour} ~ {place?.closehour}
           </div>
         </div>
+      </div>
+      <div className="flex gap-2 px-8 pb-5">
+        <IoExtensionPuzzleOutline size="24" />
+        <div className="">{place?.howtouse}</div>
+      </div>
+      <div className="flex gap-2 px-8 pb-5">
+        <div><PiNotebookBold size="24" /></div>
+        <div className="">{place?.desc}</div>
       </div>
     </>
   );

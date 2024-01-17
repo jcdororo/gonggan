@@ -1,34 +1,53 @@
+"use client";
 import Image from "next/image";
-import {
-  IoArrowForwardCircleOutline,
-  IoArrowBackCircleOutline,
-} from "react-icons/io5";
-import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
+import { useEffect, useState } from "react";
+import { PiNotePencilBold } from "react-icons/pi";
 
 export default function ReviewMain() {
+  // 스크롤
+  const [scrollVisible, setScrollVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollVisible(window.scrollY > 2500);
+      console.log(window.scrollY);
+    };
+
+    // 스크롤 이벤트 리스너 등록
+    window.addEventListener("scroll", handleScroll);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너 해제
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <div className="">
-        <div className="text-center">
-          <p className="pb-4 font-bold text-3xl">
-            사용자의 공간의 정보와 사용 후기들을 확인해보세요
-          </p>
-          <p className="pb-8 text-sm">
-            사용자가 직접 남긴 공간 정보와 리뷰들을 제공합니다.
-          </p>
-        </div>
-        <div className="flex justify-center p-8">
-          <div className="flex items-center p-8">
-            <MdOutlineArrowBackIos size="35" />
+      <div className="mt-12">
+        <div className="mb-12 text-center">
+          <div className="flex justify-center animate-bounce mb-4">
+            <PiNotePencilBold size="30" />
           </div>
-          <Image
-            src="/images/mainpage/review1.png"
-            width={400}
-            height={400}
-            alt="리뷰 이미지"
-          />
-          <div className="flex items-center p-8">
-            <MdOutlineArrowForwardIos size="35" />
+          <p className="font-bold text-3xl">사용자가 제공하는 공간의 정보와</p>
+          <p className="font-bold text-3xl">사용후기들을 확인해보세요 !</p>
+        </div>
+        <div className="flex">
+          <div className={`image-container ${scrollVisible ? "test_obj" : ""} left-10 z-10`}>
+            <Image
+              src="/images/mainpage/review1.png"
+              width={400}
+              height={600}
+              alt="리뷰 이미지"
+            />
+          </div>
+          <div className={`image-container ${scrollVisible ? "test_obj2" : ""} right-10`}>
+            <Image
+              src="/images/mainpage/review2.png"
+              width={400}
+              height={600}
+              alt="리뷰 이미지"
+            />
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ import Main from "./components/MainPage/Main";
 import HotPlace from "./components/MainPage/HotPlace";
 import { MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
 import Link from "next/link";
+import SurroundingsSwiper from "./components/SurroundingsSwiper";
 
 const roboto = Roboto({
   subsets: ["latin"],
