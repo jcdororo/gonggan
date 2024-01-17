@@ -24,13 +24,22 @@ export default async function POST(request: any, response: any) {
       loginId,
       nickname,
       password: hashedPassword,
-      id: new ObjectId().toString(),
       email,
       role: "user",
       method: "credentials",
       image: "",
       emailVerified: "",
     })
+
+    const findUser = await db.collection("users").findOne({ loginId })
+    const updateUser = await db.collection("users").updateOne(
+      {
+        loginId
+      },
+      {
+        $set: { id: findUser?._id + "" }
+      }
+    )
 
   
     response.status(200).json("success");

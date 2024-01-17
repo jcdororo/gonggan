@@ -88,7 +88,9 @@ export const authOptions: any = {
       if (trigger === "update") {
         token.user.nickname = session.nickname;
         token.user.email = session.email;
-      }
+        token.user.image = session.image;
+        console.log("session", session, "token", token);
+      } 
       return token;
     },
     //5. 유저 세션이 조회될 때 마다 실행되는 코드

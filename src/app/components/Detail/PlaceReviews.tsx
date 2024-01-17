@@ -9,6 +9,7 @@ import ModalDelete from "@/app/mypage/ModalDelete";
 import Star from "../Review/Star";
 import Like from "../Review/Like";
 import ModalPolice from "../ModalPolice";
+import Image from "next/image";
 
 interface PlaceProps {
   _id: string;
@@ -122,8 +123,18 @@ export default function PlaceReviews({ _id }: PlaceProps) {
           <div key={index}>
             <div className="m-auto w-[89%] p-5 border border-solid border-black rounded-md mb-5">
               <div className="flex justify-between mb-3">
-                <div className="flex">
-                  <div className="w-11 h-11 mr-5 bg-black rounded-full"></div>
+                <div className="flex gap-2">
+                  <div className="flex items-center">
+                    <Image
+                      className="rounded-full h-11 w-11"
+                      src={
+                        userData.user.image ? userData.user.image : "/logo.png"
+                      }
+                      width={400}
+                      height={400}
+                      alt="아이콘"
+                    />
+                  </div>
                   <div className="flex items-center font-bold">
                     {review.writernickname}
                   </div>
