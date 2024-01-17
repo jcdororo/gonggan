@@ -313,7 +313,7 @@ const Propose = ({ session }: any) => {
         className="mx-auto max-w-screen-sm p-5 mt-5"
       >
         {/* 사진첨부 */}
-        <div className="w-full p-5 bg-sygnature-beige my-2 min-h-[180px]">
+        <div className="darkMode w-full p-5 my-2 min-h-[180px] border-2 border-gray-300">
           <div className="grid grid-cols-3 gap-4">
             {imagePreview.map((x, i) => (
               <div key={i} className="relative">
@@ -338,7 +338,7 @@ const Propose = ({ session }: any) => {
         </div>
 
         <div
-          className="my-4 h-14 flex flex-row justify-center items-center border-2 border-black border-dashed hover:bg-gray-100 cursor-pointer"
+          className="my-4 h-14 flex flex-row justify-center items-center border-2 border-gray-300 border-dashed cursor-pointer"
           onClick={handleAttach}
         >
           <input
@@ -357,7 +357,7 @@ const Propose = ({ session }: any) => {
           위치<span className="text-red-500 font-bold">*</span>
         </div>
         <input
-          className="px-2 my-2 border-gray-300 w-full hover:outline-none hover:ring hover:ring-sygnature-brown focus:outline-none focus:ring focus:ring-sygnature-brown"
+          className="darkMode px-2 my-2 border-gray-300 w-full hover:outline-none hover:ring hover:ring-sygnature-brown focus:outline-none focus:ring focus:ring-sygnature-brown"
           name="location"
           onFocus={handleFocus}
           value={query}
@@ -397,7 +397,7 @@ const Propose = ({ session }: any) => {
         </div>
         <div className="flex flex-row mt-2 mb-4 ">
           <select
-            className="w-24 text-center border border-gray-300 rounded-md cursor-pointer"
+            className="darkMode w-24 text-center border border-gray-300 rounded-md cursor-pointer"
             name="openhour"
             onChange={handleOpenHour}
           >
@@ -453,7 +453,7 @@ const Propose = ({ session }: any) => {
           </select>
           <span className="flex items-center mx-4 font-bold text-lg"> ~ </span>
           <select
-            className="w-24 text-center border border-gray-300 rounded-md cursor-pointer"
+            className="darkMode w-24 text-center border border-gray-300 rounded-md cursor-pointer"
             name="closehour"
             onChange={handleCloseHour}
           >
@@ -578,7 +578,7 @@ const Propose = ({ session }: any) => {
         <input
           maxLength={20}
           name="phone"
-          className={`px-2 border-gray-300 w-full ${inputHoverFocus}`}
+          className={`darkMode px-2 border-gray-300 w-full ${inputHoverFocus}`}
           onChange={handlePhoneChange}
           value={phoneValue}
           autoComplete="off"
@@ -591,7 +591,7 @@ const Propose = ({ session }: any) => {
         <textarea
           maxLength={500}
           name="howtouse"
-          className={`p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`}
+          className={`darkMode p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`}
           onChange={handleHowtouseChange}
           value={howtouseValue}
           autoComplete="off"
@@ -604,7 +604,7 @@ const Propose = ({ session }: any) => {
         <textarea
           maxLength={500}
           name="desc"
-          className={`p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`}
+          className={`darkMode p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`}
           onChange={handleDescChange}
           value={descValue}
           autoComplete="off"

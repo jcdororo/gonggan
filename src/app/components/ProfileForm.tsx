@@ -81,12 +81,11 @@ export default function ProfileForm({ session }: any) {
         `/api/upload/image?_id=${session.user.id}&url=${url}`,
         { method: "POST" }
       ).then((r) => r.json());
-      update({ image: url});
+      update({ image: url });
     }
     // if (result.toString().includes("success")) {
-      // update({ image: url});
+    // update({ image: url});
     // }
-
 
     try {
       await axios
@@ -101,11 +100,11 @@ export default function ProfileForm({ session }: any) {
           }
         });
 
-      console.log(session.user._id, body.nickname)
+      console.log(session.user._id, body.nickname);
       const res = await axios.post("/api/review/updateReview", {
         updateId: session.user._id,
         nickname: body.nickname,
-      })
+      });
       console.log(res);
       router.refresh();
       router.push("/mypage");
@@ -117,37 +116,38 @@ export default function ProfileForm({ session }: any) {
   return (
     <div className="mx-auto max-w-2xl p-5">
       <h1 className="text-3xl font-bold text-center mb-[40px]">프로필 수정</h1>
-      <div className="flex justify-center mb-5">
-        {/* <div className="bg-black w-[100px] h-[100px] rounded-full"></div> */}
-        <Image
-          className="rounded-full w-[100px] h-[100px] overflow-hidden"
-          src={picture ? picture : "/logo.png"}
-          width={640}
-          height={640}
-          alt="아이콘"
-        />
-      </div>
-      <div className="flex justify-center">
-        <input
-          type="file"
-          ref={imageRef}
-          accept="image/*"
-          multiple={false}
-          onChange={handleChange}
-          className="hidden"
-        />
-        <button
-          className="border-2 border-[#998373] rounded-sm bg-inherit text-[#998373] text-xs w-[100px] h-[30px] hover:shadow-lg"
-          onClick={handleClick}
-        >
-          이미지 업로드
-        </button>
-      </div>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         method="POST"
         className="m-auto p-11"
       >
+        <div className="flex justify-center mb-5">
+          {/* <div className="bg-black w-[100px] h-[100px] rounded-full"></div> */}
+          <Image
+            className="rounded-full w-[100px] h-[100px] overflow-hidden"
+            src={picture ? picture : "/logo.png"}
+            width={640}
+            height={640}
+            alt="아이콘"
+          />
+        </div>
+        <div className="flex justify-center">
+          <input
+            type="file"
+            ref={imageRef}
+            accept="image/*"
+            multiple={false}
+            onChange={handleChange}
+            className="hidden"
+          />
+          <button
+            className="border-2 border-[#998373] rounded-sm bg-inherit text-[#998373] text-xs w-[100px] h-[30px] hover:shadow-lg"
+            onClick={handleClick}
+          >
+            이미지 업로드
+          </button>
+        </div>
         {session.user.method != "oauth" ? (
           <div className="form__block">
             <label className="lab" htmlFor="id">
