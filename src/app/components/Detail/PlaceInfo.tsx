@@ -9,7 +9,7 @@ import Image from "next/image";
 import PlaceLike from "./PlaceLike";
 import { PiNotebookBold } from "react-icons/pi";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
-
+import { useRouter } from "next/navigation";
 
 interface PlaceProps {
   _id: string;
@@ -37,7 +37,6 @@ export default function PlaceInfo({ _id }: PlaceProps) {
     getPlace();
   }, []);
 
-  console.log(place);
 
   return (
     <>
@@ -52,7 +51,12 @@ export default function PlaceInfo({ _id }: PlaceProps) {
         )}
       </div>
       <div className="flex justify-between mb-10">
-        <div className="flex px-8 text-2xl font-bold">{place?.place_name}</div>
+        <div
+          className="flex px-8 text-2xl font-bold cursor-pointer"
+          onClick={() => window.open(`${place?.place_url}`, '_blank')}
+        >
+          {place?.place_name}
+        </div>
         <div className="flex items-center pr-10">
           <PlaceLike _id={_id} />
         </div>
@@ -65,7 +69,10 @@ export default function PlaceInfo({ _id }: PlaceProps) {
         <IoMdTime size="24" />
         <div>
           <div className="">
-            {place?.businessday?.map(String).join(", ")} &nbsp;
+            {typeof place?.businessday == "string"
+              ? place?.businessday
+              : place?.businessday?.map(String).join(", ")
+            } &nbsp;
             {place?.openhour} ~ {place?.closehour}
           </div>
         </div>
@@ -75,7 +82,9 @@ export default function PlaceInfo({ _id }: PlaceProps) {
         <div className="">{place?.howtouse}</div>
       </div>
       <div className="flex gap-2 px-8 pb-5">
-        <div><PiNotebookBold size="24" /></div>
+        <div>
+          <PiNotebookBold size="24" />
+        </div>
         <div className="">{place?.desc}</div>
       </div>
     </>

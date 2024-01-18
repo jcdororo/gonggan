@@ -7,6 +7,7 @@ import { uploadImg } from "@/util/uploadImg";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import DeleteUserModal from "./DeleteUserModal";
 
 export default function ProfileForm({ session }: any) {
   const { update } = useSession();
@@ -80,7 +81,7 @@ export default function ProfileForm({ session }: any) {
       result = await fetch(
         `/api/upload/image?_id=${session.user.id}&url=${url}`,
         { method: "POST" }
-      )
+      );
       // .then((r) => {
       //   if(r.ok) {
       //     update({ image: url });
@@ -88,7 +89,6 @@ export default function ProfileForm({ session }: any) {
       //     router.push("/mypage");
       //   }
       // });
-      
     }
     // if (result.toString().includes("success")) {
     // update({ image: url});
@@ -119,6 +119,10 @@ export default function ProfileForm({ session }: any) {
       console.log(error);
     }
   };
+
+  const [showMessage, setShowMessage] = useState<boolean>(false);
+  const clickModal = () => setShowMessage(!showMessage);
+
 
   return (
     <div className="mx-auto max-w-2xl p-5">
@@ -326,9 +330,14 @@ export default function ProfileForm({ session }: any) {
           <input type="submit" value="수정하기" className="form__btn--submit" />
         </div>
       </form>
-      <div className="m-auto p-8">
+      <div className="m-auto p-8 cursor-pointer" onClick={clickModal}>
         <p className="w-full max-w-[680px] text-center">회원 탈퇴</p>
       </div>
+
+      {/* 회원탈퇴 메시지 창 */}
+      {showMessage && (
+        <DeleteUserModal id={session.user.id} clickModal={clickModal} />
+      )}
     </div>
   );
 }

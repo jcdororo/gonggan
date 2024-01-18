@@ -128,7 +128,7 @@ export default function PlaceReviews({ _id }: PlaceProps) {
                     <Image
                       className="rounded-full h-11 w-11"
                       src={
-                        userData.user.image ? userData.user.image : "/logo.png"
+                        review.writerpic ? review.writerpic : "/logo.png"
                       }
                       width={400}
                       height={400}

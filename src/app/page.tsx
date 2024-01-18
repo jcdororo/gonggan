@@ -13,6 +13,7 @@ import HotPlace from "./components/MainPage/HotPlace";
 import { MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
 import Link from "next/link";
 import SurroundingsSwiper from "./components/SurroundingsSwiper";
+import Footer from "./components/Footer";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ export default async function Home() {
 
       {/* 스터디 장소를 공유할 수 있어요. */}
       <MainInfo3 />
+      <Footer />
     </div>
   );
 }
