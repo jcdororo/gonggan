@@ -87,6 +87,28 @@ const ProposeList = ({ session, params }: any) => {
       </div>
     );
   }
+  useEffect(() => {
+    const handleKeyESC = (e: { key: string; }) => {
+      if(e.key === 'Escape') {
+        setFocus(false);
+      };
+    }
+
+    const handleKeyEnter = (e: { key: string; }) => {
+      if(e.key === 'Enter') {
+        setFocus(true);
+      };
+    }
+    window.addEventListener('keydown', handleKeyESC)
+    window.addEventListener('keydown', handleKeyEnter)
+
+  
+    return () => {
+      window.removeEventListener('keydown',handleKeyESC)
+      window.removeEventListener('keydown',handleKeyEnter)
+
+    }
+  }, [])
 
   useLayoutEffect(() => {
     // 사진 가져오기
@@ -359,7 +381,9 @@ const ProposeList = ({ session, params }: any) => {
         className="mx-auto max-w-screen-sm p-5 mt-5"
       >
         {/* 사진첨부 */}
-        <div className="darkMode w-full p-5 bg-sygnature-beige min-h-[180px] my-2">
+        <div className="darkMode w-full p-5 bg-sygnature-beige min-h-[180px] my-2
+        xs:grid-cols-2 
+        md:grid-cols-3">
           <div className="grid grid-cols-3 gap-4">
             {imagePreview.map((x, i) => (
               <div key={i} className="relative">
@@ -569,7 +593,7 @@ const ProposeList = ({ session, params }: any) => {
             value={"월"}
             className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">월</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">월</span>
           <input
             onChange={handleBusinessDay}
             readOnly={true}
@@ -579,7 +603,7 @@ const ProposeList = ({ session, params }: any) => {
             value={"화"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">화</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">화</span>
           <input
             onChange={handleBusinessDay}
             readOnly={true}
@@ -589,7 +613,7 @@ const ProposeList = ({ session, params }: any) => {
             value={"수"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">수</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">수</span>
           <input
             onChange={handleBusinessDay}
             readOnly={true}
@@ -599,7 +623,7 @@ const ProposeList = ({ session, params }: any) => {
             value={"목"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">목</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">목</span>
           <input
             onChange={handleBusinessDay}
             readOnly={true}
@@ -609,7 +633,7 @@ const ProposeList = ({ session, params }: any) => {
             value={"금"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">금</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">금</span>
           <input
             onChange={handleBusinessDay}
             readOnly={true}
@@ -619,7 +643,7 @@ const ProposeList = ({ session, params }: any) => {
             value={"토"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">토</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">토</span>
           <input
             onChange={handleBusinessDay}
             readOnly={true}
@@ -629,7 +653,7 @@ const ProposeList = ({ session, params }: any) => {
             value={"일"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-4 block">일</span>
+          <span className="ml-2 mr-4 block xs:mr-3 md:mr-8">일</span>
         </div>
 
         {/* 전화번호 */}

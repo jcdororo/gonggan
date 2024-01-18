@@ -75,6 +75,28 @@ const Propose = ({ session }: any) => {
       </div>
     );
   }
+  useEffect(() => {
+    const handleKeyESC = (e: { key: string; }) => {
+      if(e.key === 'Escape') {
+        setFocus(false);
+      };
+    }
+
+    const handleKeyEnter = (e: { key: string; }) => {
+      if(e.key === 'Enter') {
+        setFocus(true);
+      };
+    }
+    window.addEventListener('keydown', handleKeyESC)
+    window.addEventListener('keydown', handleKeyEnter)
+
+  
+    return () => {
+      window.removeEventListener('keydown',handleKeyESC)
+      window.removeEventListener('keydown',handleKeyEnter)
+
+    }
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -313,8 +335,10 @@ const Propose = ({ session }: any) => {
         className="mx-auto max-w-screen-sm p-5 mt-5"
       >
         {/* 사진첨부 */}
-        <div className="darkMode w-full p-5 my-2 min-h-[180px] border-2 border-gray-300">
-          <div className="grid grid-cols-3 gap-4">
+        <div className="darkMode w-full p-2 my-2 min-h-[180px] border-2 border-gray-300">
+          <div className="grid grid-cols-3 gap-2
+          xs:grid-cols-2 
+          md:grid-cols-3">
             {imagePreview.map((x, i) => (
               <div key={i} className="relative">
                 <div className="h-[150px]">
@@ -389,7 +413,7 @@ const Propose = ({ session }: any) => {
           </ul>
         </div>
         {/* 지도 */}
-        <div className="sm:-translate-x-7">
+        <div className="md:-translate-x-7 xs:-translate-x-7">
           <Map />
         </div>
         <div className="font-semibold mt-2">
@@ -519,7 +543,7 @@ const Propose = ({ session }: any) => {
             value={"월"}
             className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">월</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">월</span>
           <input
             onChange={handleBusinessDay}
             name="businessday"
@@ -527,7 +551,7 @@ const Propose = ({ session }: any) => {
             value={"화"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">화</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">화</span>
           <input
             onChange={handleBusinessDay}
             name="businessday"
@@ -535,7 +559,7 @@ const Propose = ({ session }: any) => {
             value={"수"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">수</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">수</span>
           <input
             onChange={handleBusinessDay}
             name="businessday"
@@ -543,7 +567,7 @@ const Propose = ({ session }: any) => {
             value={"목"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">목</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">목</span>
           <input
             onChange={handleBusinessDay}
             name="businessday"
@@ -551,7 +575,7 @@ const Propose = ({ session }: any) => {
             value={"금"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">금</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">금</span>
           <input
             onChange={handleBusinessDay}
             name="businessday"
@@ -559,7 +583,7 @@ const Propose = ({ session }: any) => {
             value={"토"}
             className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
           />
-          <span className="ml-2 mr-8 block">토</span>
+          <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">토</span>
           <input
             onChange={handleBusinessDay}
             name="businessday"
