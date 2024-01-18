@@ -82,6 +82,7 @@ export default async function Header() {
             width={110}
             height={75}
             alt="header"
+            priority={true}
           />
         </Link>
 
