@@ -41,10 +41,20 @@ const SearchBar = () => {
         setFocus(false);
       };
     }
+
+    const handleKeyEnter = (e: { key: string; }) => {
+      if(e.key === 'Enter') {
+        setFocus(true);
+      };
+    }
     window.addEventListener('keydown', handleKeyESC)
+    window.addEventListener('keydown', handleKeyEnter)
+
   
     return () => {
       window.removeEventListener('keydown',handleKeyESC)
+      window.removeEventListener('keydown',handleKeyEnter)
+
     }
   }, [])
   
@@ -173,7 +183,9 @@ const SearchBar = () => {
           onClick={handleclick}
         >X</div>
       </div>
-      <div className={`darkMode z-50 border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 translate-y-6 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'} -translate-y-14`}>
+      <div 
+        className={`darkMode border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'} -translate-y-14 z-10`}
+      >
         <ul>
           {
             
