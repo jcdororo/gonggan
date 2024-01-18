@@ -45,7 +45,9 @@ const ModalUpdate = ({handleUpdate, targetContent}:any) => {
         // action="/api/review/updateReview"
         // method='POST'
         onSubmit={handleSubmit}
-        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center 
+        xs:-inset-full 
+        md:inset-0"
       >
           <div className="bg-white py-4 px-5 mx-2 rounded-lg w-96">
             <div className='my-2 text-lg font-semibold text-center'>

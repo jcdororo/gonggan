@@ -44,7 +44,7 @@ export default async function MyPage() {
   }
 
   return (
-    <div>
+    <div className="xs: scale-75 md:scale-100">
       <div className="text-center font-extrabold text-2xl my-4">마이페이지</div>
       <div className="flex justify-center mt-4 mb-14">
         <div className="flex justify-center items-center">
