@@ -169,7 +169,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             {/* 알람 아이콘 클릭시 나오는 드랍박스 */}
             <div
               className={clsx(
-                "darkMode bg-sygnature-beige top-20 w-96 h-80 overflow-scroll font-bold absolute rounded-md text-center transform -translate-x-24 py-3 z-10",
+                "darkMode bg-sygnature-beige top-20 w-96 h-80 overflow-scroll font-bold absolute rounded-md text-center transform -translate-x-24 py-3 z-10 xs:scale-90 xs:top-16 xs:-translate-x-16 md:-translate-x-24 md:scale-100 md:top-20",
                 {
                   visible: isAlarmOpen === true,
                   hidden: isAlarmOpen === false,
@@ -218,7 +218,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             {/* 유저 아이콘 클릭시 나오는 드랍박스 */}
             <div
               className={clsx(
-                "darkMode bg-sygnature-beige top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top",
+                "darkMode bg-sygnature-beige top-20 right-2 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top",
                 {
                   visible: isDropboxOpen === true,
                   invisible: isDropboxOpen === false,
