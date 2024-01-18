@@ -126,13 +126,13 @@ const MyContents = ({ likePlace, placeReview }: MyContentsProps) => {
                   </div>
                   <div className="flex flex-row pt-4 text-xs font-semibold">
                     <div
-                      className="ml-6 mr-1 cursor-pointer"
+                      className="ml-6 mr-1 cursor-pointer xs:w-[2.5rem] md:w-[1.5rem]"
                       onClick={(e) => handleUpdate(e, x)}
                     >
                       수정
                     </div>
                     <div
-                      className="ml-1 mr-6 cursor-pointer"
+                      className="ml-1 mr-6 cursor-pointer xs:w-[2.5rem] md:w-[1.5rem]"
                       onClick={(e) => handleDelete(e, x)}
                     >
                       삭제
