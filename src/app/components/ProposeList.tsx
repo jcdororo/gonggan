@@ -324,22 +324,24 @@ const ProposeList = ({ session, params }: any) => {
 
   // 영업일
   const handleBusinessDay = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const order = ["월", "화", "수", "목", "금", "토", "일"];
-    if (businessDay.indexOf(e.target.value) == -1) {
-      setBusinessDay(
-        [...businessDay, e.target.value].sort((a, b) => {
-          return order.indexOf(a) - order.indexOf(b);
-        })
-      );
-    } else {
-      setBusinessDay(
-        businessDay
-          .filter((x, i) => x != e.target.value)
-          .sort((a, b) => {
-            return order.indexOf(a) - order.indexOf(b);
-          })
-      );
-    }
+    const day = e.currentTarget.value
+    console.log(day)
+    // const order = ["월", "화", "수", "목", "금", "토", "일"];
+    // if (businessDay.indexOf(e.target.value) == -1) {
+    //   setBusinessDay(
+    //     [...businessDay, e.target.value].sort((a, b) => {
+    //       return order.indexOf(a) - order.indexOf(b);
+    //     })
+    //   );
+    // } else {
+    //   setBusinessDay(
+    //     businessDay
+    //       .filter((x, i) => x != e.target.value)
+    //       .sort((a, b) => {
+    //         return order.indexOf(a) - order.indexOf(b);
+    //       })
+    //   );
+    // }
   };
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {

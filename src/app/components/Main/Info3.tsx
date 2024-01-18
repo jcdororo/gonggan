@@ -10,8 +10,7 @@ const Info3 = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
 
-
-      setIsVisible(scrollY > 3300);
+      setIsVisible(scrollY > 2900);
 
     };
 
@@ -25,8 +24,9 @@ const Info3 = () => {
   return (
     <div className='overflow-hidden'>
       {/* 스타벅스 강남R점 검색 결과 없음 */}
-      <div className={`absolute top-[8rem] sm:scale-75 sm:-translate-x-36 sm:top-[115px] 
-                      ${`transform ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-[16rem] opacity-0'} transition-all duration-[2500ms] ease-in-out -mt-14`}}`}>
+      <div className={`absolute top-[8rem] ${`transform ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-[16rem] opacity-0'} transition-all duration-[2500ms] ease-in-out -mt-14`}} 
+      xs:scale-50 xs:-translate-x-28 xs:top-[115px] 
+      md:scale-75 md:-translate-x-36 md:top-[115px] `}>
         <Image
           src={'/main/noresult.png'} 
           width={400}
@@ -35,19 +35,22 @@ const Info3 = () => {
           className='rounded-2xl'
         />  
         {/* 장소 제안하기 화살표 */}
-        <div className='absolute bottom-[0.9rem] right-32 animate-[wiggle_1s_ease-in-out_infinite] text-sygnature-brown '>
+        <div className='absolute bottom-[0.9rem] right-32 animate-[wiggle_1s_ease-in-out_infinite] text-sygnature-brown 
+        xs:right-28 xs:bottom-[0.8rem] 
+        md:right-32 md:bottom-[0.9rem]'
+        >
           <FaHandPointLeft />
         </div>
       </div>
       {/* 장소 제안하기  */}
       <div className={`absolute top-6 translate-x-44 
-                      ${`transform ${isVisible ? 'translate-x-44 opacity-100' : 'translate-x-[70rem] opacity-0'} transition-all duration-[300ms] ease-in-out -mt-14`}}`}>
+      ${`transform ${isVisible ? 'xs:translate-x-20 xs:-translate-y-11 md:translate-x-44 md:translate-y-0 opacity-100' : 'xs:translate-y-0 md:translate-x-[70rem] opacity-0'} transition-all duration-[300ms] ease-in-out -mt-14`}}`}>
         <Image
           src={'/main/propose2.png'} 
           width={479}
           height={838}
           alt='propose' 
-          className='rounded-2xl scale-75'
+          className='rounded-2xl scale-75 xs:scale-50 md:scale-75'
         /> 
       </div>
       <div className={`absolute top-56 -translate-x-40 w-88 h-96 text-right p-0 sm:-translate-x-28

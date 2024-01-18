@@ -10,7 +10,6 @@ export default function ReviewMain() {
   useEffect(() => {
     const handleScroll = () => {
       setScrollVisible(window.scrollY > 2500);
-      console.log(window.scrollY);
     };
 
     // 스크롤 이벤트 리스너 등록
