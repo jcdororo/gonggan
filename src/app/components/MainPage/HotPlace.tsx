@@ -58,18 +58,22 @@ export default function HotPlace() {
     <>
       <div className="h-screen py-28 px-20 bg-gradient-to-t from-sygnature-brown">
         <div
-          className={`swiper-container w-[100%] mx-auto transition-opacity duration-[2s] ${
+          className={`swiper-container w-full sm:w-[90%] mx-auto transition-opacity duration-[2s] ${
             scrollVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className="mb-12 fade-in-box text-center">
+          <div className={`mb-12 text-center ${scrollVisible ? "fade-in-box" : ""}`}>
             <div className="flex justify-center animate-bounce mb-4">
               <FaMapLocationDot size="30" />
             </div>
-            <p className="font-bold text-3xl">실시간 사용자들에게 인기 있는</p>
-            <p className="font-bold text-3xl">공간들을 둘러보세요 !</p>
+            <div className="font-bold text-xl sm:text-3xl">
+              <p>
+                실시간 사용자들에게 <br className="block sm:hidden" />인기 있는
+              </p>
+              <p>공간들을 둘러보세요 !</p>
+            </div>
           </div>
-          <div className="h-[50vh]">
+          <div className="h-[40vh]">
             <Swiper
               modules={[FreeMode, Navigation, Thumbs]}
               thumbs={{
