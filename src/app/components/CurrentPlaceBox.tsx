@@ -1,7 +1,7 @@
 "use client";
 import { useRecoilState } from "recoil";
 import { currentPlaceState } from "../atom";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { AiOutlineClose, AiOutlinePhone } from "react-icons/ai";
 import { HiOutlineMapPin } from "react-icons/hi2";
 import { useRouter } from "next/navigation";

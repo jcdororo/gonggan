@@ -9,7 +9,7 @@ export default async function GET(request: any, response: any) {
   try {
     const picture = await db
       .collection("picture")
-      .findOne({ place_id: _id });
+      .find({ place_id: _id }).toArray();
 
     response.status(200).json(picture);
   } catch (error) {

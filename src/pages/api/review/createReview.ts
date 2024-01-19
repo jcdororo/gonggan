@@ -19,7 +19,8 @@ export default async function POST(request: any, response: any) {
       writernickname,
       writerpic: user?.image,
       star,
-      like: 0
+      like: 0,
+      date: new Date()
     });
     response.status(200).json("success");
   } catch (error) {

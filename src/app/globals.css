@@ -128,7 +128,7 @@ form .form__btn--submit:focus {
     }
 }
 
-/* ScrollImage.css */
+/* 왼쪽에서 나타나게 */
 @keyframes fadeInLeft {
   0% {
       opacity: 0;
@@ -140,11 +140,15 @@ form .form__btn--submit:focus {
   }
 }
 
-.test_obj {
+.img-trans1 {
   position: relative;
   animation: fadeInLeft 1s;
 }
-.test_obj2 {
+.img-trans2 {
   position: relative;
   animation: fadeInLeft 1.5s;
+}
+.img-trans3 {
+  position: relative;
+  animation: fadeInLeft 2s;
 }
