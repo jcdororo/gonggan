@@ -2,18 +2,17 @@ import Title from "@/app/components/Title";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { connectDB } from "@/util/database";
 import { getServerSession } from "next-auth";
-import Error from "next/error";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export default async function PlaceList() {
+  const session: any = await getServerSession(authOptions);
+  if(session.user.role != 'admin') {
+    notFound();
+  }
   const db = (await connectDB).db("gonggan");
   const result = await db.collection("propose").find().toArray();
 
-  const session: any = await getServerSession(authOptions);
-
-  // if(session.user.role != 'admin') {
-  //     return <Error statusCode={404} />;
-  // }
 
   return (
     <div>

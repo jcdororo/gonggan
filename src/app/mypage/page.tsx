@@ -10,6 +10,7 @@ import Link from "next/link";
 
 export default async function MyPage() {
   const session: any = await getServerSession(authOptions);
+  
 
   let likePlace = [];
   const placeReview = [] as ReviewType[];

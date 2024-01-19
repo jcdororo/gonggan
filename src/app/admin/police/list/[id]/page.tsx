@@ -1,9 +1,16 @@
 import Title from "@/app/components/Title";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { connectDB } from "@/util/database";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
 const page = async ({ params }: { params: { id: string } }) => {
+  const session: any = await getServerSession(authOptions);
+  if(session.user.role != 'admin') {
+    notFound();
+  }
   const db = (await connectDB).db("gonggan");
   const result = await db.collection("police").findOne({ placeid: params.id });
 
