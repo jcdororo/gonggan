@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useEffect, useState } from "react";
 import { PiNotePencilBold } from "react-icons/pi";
 
@@ -42,40 +42,31 @@ export default function ReviewMain() {
             </div>
           </div>
           <div className="flex justify-center">
-            <div
-              className={` ${
-                scrollVisible ? "img-trans1" : ""
-              } left-10`}
-            >
+            <div className={`relative w-[150px] h-[200px] sm:w-[300px] sm:h-[400px] ${scrollVisible ? "img-trans1" : ""} left-10`}>
               <Image
-                src="/images/mainpage/review2.png"
-                width={300}
-                height={400}
+                src={"/images/mainpage/review2.png"}
+                layout={"fill"}
+                priority
                 alt="리뷰 이미지"
+                className={`${scrollVisible ? "img-trans1" : ""} left-10`}
               />
             </div>
-            <div
-              className={` ${
-                scrollVisible ? "img-trans2" : ""
-              } `}
-            >
+            <div className={`relative w-[150px] h-[200px] sm:w-[300px] sm:h-[400px] ${scrollVisible ? "img-trans2" : ""} `}>
               <Image
                 src="/images/mainpage/review1.png"
-                width={300}
-                height={400}
+                layout={"fill"}
+                priority
                 alt="리뷰 이미지"
+                className={`${scrollVisible ? "img-trans1" : ""} left-10`}
               />
             </div>
-            <div
-              className={` ${
-                scrollVisible ? "img-trans3" : ""
-              } right-10`}
-            >
+            <div className={`relative w-[150px] h-[200px] sm:w-[300px] sm:h-[400px] ${scrollVisible ? "img-trans3" : ""} right-10`}>
               <Image
                 src="/images/mainpage/review3.png"
-                width={300}
-                height={400}
+                layout={"fill"}
+                priority
                 alt="리뷰 이미지"
+                className={`${scrollVisible ? "img-trans1" : ""} left-10`}
               />
             </div>
           </div>

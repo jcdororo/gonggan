@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 /*global kakao */
 import Script from "next/script";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { locationState, mapState } from "../atom"
+import { locationState, mapState } from "../atom";
 import { memo } from "react";
 
 declare global {
@@ -33,10 +33,15 @@ export default memo(function Map({ lat, lng, zoom }: MapProps) {
         level: zoom ?? location.zoom,
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
+
+      // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+      const zoomControl = new window.kakao.maps.ZoomControl();
+      map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
+
       setMap(map);
-    })
-  }
-  
+    });
+  };
+
   return (
     <>
       <Script
@@ -45,7 +50,10 @@ export default memo(function Map({ lat, lng, zoom }: MapProps) {
         src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_CLIENT}&autoload=false`}
         onReady={loadKakaoMap}
       />
-      <div id="map" className="h-[40vh] sm:h-[50vh] rounded-lg translate-x-5 sm:translate-x-9 md:translate-x-5"></div>
+      <div
+        id="map"
+        className="h-[40vh] sm:h-[50vh] rounded-lg shadow-3xl translate-x-5 sm:translate-x-9 md:translate-x-5"
+      ></div>
     </>
-  )
-})
+  );
+});

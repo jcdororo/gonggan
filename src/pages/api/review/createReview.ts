@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 
 export default async function POST(request: any, response: any) {
   const data = request.body;
-  const { newContent, placeid, writernickname, placename, star } = data;
+  const { newContent, placeid, writerid, writernickname, placename, star } = data;
   try {
     const db = (await connectDB).db("gonggan");
     // 닉네임으로 유저 정보 찾기
@@ -14,7 +14,7 @@ export default async function POST(request: any, response: any) {
     await db.collection("review").insertOne({
       placeid: new ObjectId(placeid),
       content: newContent,
-      writerid: new ObjectId(user?._id),
+      writerid: new ObjectId(writerid),
       placename,
       writernickname,
       writerpic: user?.image,

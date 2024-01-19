@@ -98,9 +98,10 @@ export default function PlaceReviews({ _id }: PlaceProps) {
         <div className="flex gap-3">
           <div className="text-3xl font-bold">리뷰</div>
           <div className="mt-3">
-            {totalStars && reviews && (
-              <Star star={Math.floor(totalStars / reviews.length)} />
-            )}
+            { totalStars === 0
+              ? ""
+              : totalStars && reviews && <Star star={Math.floor(totalStars / reviews.length)} />
+            }
           </div>
           <div className="mt-3">리뷰 {reviews?.length}개</div>
         </div>
@@ -111,7 +112,7 @@ export default function PlaceReviews({ _id }: PlaceProps) {
             onClick={(e) => onClick(e)}
           >
             {/* 리뷰를 작성한 이력이 있으면 작성하기 버튼 안 보임 */}
-            {reviews?.some((review) => review.writerid === userData.user?.id)
+            {reviews?.some((review) => review.writerid === userData.user?._id)
               ?  ""
               : "리뷰 작성하기"}
           </div>

@@ -31,7 +31,7 @@ export default async function Home() {
       <div className="relative h-screen md:space-y-16">
         {/* Search Bar */}
         <div
-          className="relative bg-white -mt-8 pt-8 darkMode z-[1]
+          className="relative bg-white -mt-4 pt-8 darkMode z-[1]
         xs:scale-[55%] 
         md:scale-100"
         >

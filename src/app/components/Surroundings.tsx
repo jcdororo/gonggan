@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PlaceType } from "../interface";
 import { IoIosArrowDown } from "react-icons/io";
+import Link from "next/link";
 
 interface SurroundingsProps {
   places?: PlaceType[];
@@ -52,27 +53,29 @@ export default function Surroundings({ places }: SurroundingsProps) {
     return { ...place, mDistance };
   });
 
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
 
   const handleReadMore = () => {
-    setLimit((prevLimit) => prevLimit + 2);
+    setLimit((prevLimit) => prevLimit + 10);
   };
 
   if (spaces?.length === 0) return null;
 
   const spacesList = spaces?.slice(0, limit).map((space, index) => (
     <div key={index}>
-      <div className="m-4 p-2 flex justify-between">
-        <div className="flex gap-[5px] ">
-          <div className="text-lg ">{space.location}</div>
+      <Link href={`/places/${space._id}`}>
+        <div className="m-4 p-2 flex justify-between">
+          <div className="flex gap-[5px] ">
+            <div className="text-lg ">{space.location}</div>
+            <div className="text-xs mt-[9px] text-sygnature-brown">
+              {space.category_group_name}
+            </div>
+          </div>
           <div className="text-xs mt-[9px] text-sygnature-brown">
-            {space.category_group_name}
+            {space.mDistance}
           </div>
         </div>
-        <div className="text-xs mt-[9px] text-sygnature-brown">
-          {space.mDistance}
-        </div>
-      </div>
+      </Link>
     </div>
   ));
 
