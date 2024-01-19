@@ -10,6 +10,7 @@ import PlaceLike from "./PlaceLike";
 import { PiNotebookBold } from "react-icons/pi";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import SwiperImage from "../SwiperImage";
 
 interface PlaceProps {
   _id: string;
@@ -26,7 +27,6 @@ export default function PlaceInfo({ _id }: PlaceProps) {
     refetchOnWindowFocus: false,
   });
 
-  console.log(place);
   const [pictureUrl, setPictureUrl] = useState();
 
   useEffect(() => {
@@ -37,18 +37,21 @@ export default function PlaceInfo({ _id }: PlaceProps) {
     getPlace();
   }, []);
 
+  console.log(_id);
+
 
   return (
     <>
-      <div className="relative top-[-42px] w-full h-[350px] bg-gray-500 overflow-hidden">
-        {pictureUrl && (
+      <div className="relative block top-[-42px] w-full h-[350px] bg-gray-500 overflow-hidden">
+        {/* {pictureUrl && (
           <Image
             src={pictureUrl}
             layout={"fill"}
             objectFit="cover"
             alt="장소 이미지"
           />
-        )}
+        )} */}
+        {place && <SwiperImage place={place} />}
       </div>
       <div className="flex justify-between mb-10">
         <div

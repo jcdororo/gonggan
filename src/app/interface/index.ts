@@ -43,11 +43,17 @@ export interface PlaceType {
   url?: string;
 }
 
+export interface PlacePictureType {
+  _id: ObjectId;
+  place_id: string;
+  url: string;
+}
+
 export interface ReviewType {
   _id: string | ObjectId;
   placeid: string | ObjectId;
   content: string;
-  date?: Date | string;
+  date: Date | string;
   writerid: string | ObjectId;
   placename: string;
   writernickname: string;

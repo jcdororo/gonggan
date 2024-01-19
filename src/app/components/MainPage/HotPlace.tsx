@@ -13,7 +13,7 @@ import "swiper/css/thumbs";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { ObjectId } from "mongodb";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaMapLocationDot } from "react-icons/fa6";
@@ -75,12 +75,11 @@ export default function HotPlace() {
           </div>
           <div className="h-[40vh]">
             <Swiper
-              modules={[FreeMode, Navigation, Thumbs]}
+              modules={[FreeMode, Navigation, Thumbs, Autoplay]}
               thumbs={{
                 swiper:
                   thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
               }}
-              loop={true}
               spaceBetween={10} // 슬라이스 사이 간격
               slidesPerView={1} // 보여질 슬라이드 수
               navigation={true} // prev, next button
@@ -90,12 +89,12 @@ export default function HotPlace() {
             >
               {places?.map((place) => (
                 <SwiperSlide key={place.place_id}>
-                  <div className="w-full">
+                  <div className="relative w-full h-full">
                     <Image
                       src={place.url || ""}
                       alt="장소 이미지"
                       layout={"fill"}
-                      objectFit="cover"
+                      priority
                       className="rounded-md cursor-pointer"
                       onClick={() => router.push(`/places/${place.place_id}`)}
                     />
@@ -105,9 +104,8 @@ export default function HotPlace() {
             </Swiper>
             <Swiper
               onSwiper={setThumbsSwiper}
-              loop={true}
               spaceBetween={10}
-              slidesPerView={4}
+              slidesPerView={3}
               freeMode={true}
               watchSlidesProgress={true}
               modules={[FreeMode, Navigation, Thumbs]}
@@ -115,13 +113,13 @@ export default function HotPlace() {
             >
               {places?.map((place) => (
                 <SwiperSlide className="rounded-md" key={place.place_id}>
-                  <div className="w-[100px] h-[80px]">
+                  <div className="relative w-full h-[70px]">
                     <Image
                       src={place.url}
                       alt="장소 이미지"
                       layout={"fill"}
-                      objectFit="cover"
-                      className="rounded-md"
+                      priority
+                      className="rounded-md cursor-pointer"
                     />
                   </div>
                 </SwiperSlide>

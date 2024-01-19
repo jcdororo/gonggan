@@ -111,71 +111,84 @@ export default function PlaceReviews({ _id }: PlaceProps) {
             onClick={(e) => onClick(e)}
           >
             {/* 리뷰를 작성한 이력이 있으면 작성하기 버튼 안 보임 */}
-            {reviews?.map((review) =>
-              review.writerid == userData.user?._id ? "" : "리뷰 작성하기"
-            )}
-            {reviews?.length == 0 ? "리뷰 작성하기" : ""}
+            {reviews?.some((review) => review.writerid === userData.user?.id)
+              ?  ""
+              : "리뷰 작성하기"}
           </div>
         )}
       </div>
       {reviews && reviews.length > 0 ? (
-        reviews.map((review, index) => (
-          <div key={index}>
-            <div className="m-auto w-[89%] p-5 border border-solid border-black rounded-md mb-5">
-              <div className="flex justify-between mb-3">
-                <div className="flex gap-2">
-                  <div className="flex items-center">
-                    <Image
-                      className="rounded-full h-11 w-11"
-                      src={
-                        review.writerpic ? review.writerpic : "/logo.png"
-                      }
-                      width={400}
-                      height={400}
-                      alt="아이콘"
-                    />
+        reviews
+          .sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          )
+          .map((review, index) => (
+            <div key={index}>
+              <div className="m-auto w-[89%] p-5 border border-solid border-black rounded-md mb-5">
+                <div className="flex justify-between mb-3">
+                  <div className="flex gap-4">
+                    <div className="flex items-center">
+                      <Image
+                        className="rounded-full h-11 w-11"
+                        src={review.writerpic ? review.writerpic : "/logo.png"}
+                        width={400}
+                        height={400}
+                        alt="아이콘"
+                      />
+                    </div>
+                    <div className="my-auto">
+                      <div className="font-bold">
+                        {review.writernickname}
+                      </div>
+                      <div className="items-center text-xs">
+                        {new Intl.DateTimeFormat("en-US", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                        }).format(new Date(review.date))}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center font-bold">
-                    {review.writernickname}
+                  <div className="mt-3">
+                    <Like review={review} user={userData?.user} />
                   </div>
                 </div>
-                <div className="mt-3">
-                  <Like review={review} user={userData?.user} />
+                <div className="mb-3">
+                  <Star star={review.star} />
                 </div>
-              </div>
-              <div className="mb-3">
-                <Star star={review.star} />
-              </div>
-              <div className="mb-3">{review.content}</div>
-              {userData && userData.user?._id == review.writerid ? (
-                <div className="flex justify-end gap-2 text-xs">
+                <div className="mb-3">{review.content}</div>
+                {userData && userData.user?._id == review.writerid ? (
+                  <div className="flex justify-end gap-2 text-xs">
+                    <div
+                      id="modify"
+                      onClick={(e) => onClick(e, review)}
+                      className="flex justify-end cursor-pointer hover:opacity-80"
+                    >
+                      수정하기
+                    </div>
+                    <div
+                      id="delete"
+                      onClick={(e) => onClick(e, review)}
+                      className="flex justify-end cursor-pointer hover:opacity-80"
+                    >
+                      삭제하기
+                    </div>
+                  </div>
+                ) : (
                   <div
-                    id="modify"
+                    id="police"
                     onClick={(e) => onClick(e, review)}
-                    className="flex justify-end cursor-pointer hover:opacity-80"
+                    className="flex justify-end text-xs cursor-pointer hover:opacity-80"
                   >
-                    수정하기
+                    신고하기
                   </div>
-                  <div
-                    id="delete"
-                    onClick={(e) => onClick(e, review)}
-                    className="flex justify-end cursor-pointer hover:opacity-80"
-                  >
-                    삭제하기
-                  </div>
-                </div>
-              ) : (
-                <div
-                  id="police"
-                  onClick={(e) => onClick(e, review)}
-                  className="flex justify-end text-xs cursor-pointer hover:opacity-80"
-                >
-                  신고하기
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        ))
+          ))
       ) : (
         <div className="text-center p-10 first-letter:text-lg">
           작성된 리뷰가 없습니다.

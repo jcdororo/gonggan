@@ -25,7 +25,7 @@ export default async function GET(request: any, response: any) {
 
     // 상위 다섯 개의 place_id 추출
     const topTenPlaceIds = sortedPlaceIdCounts
-      .slice(0, 10)
+      .slice(0, 12)
       .map(([placeId]) => placeId);
 
     // 상위 다섯 개의 place_id에 해당하는 장소만 추출
