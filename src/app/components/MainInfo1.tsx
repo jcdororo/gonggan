@@ -10,8 +10,8 @@ const inter = Inter({ subsets: ['latin'] })
 const MainInfo1 = () => {
   return (
     <div className={`overflow-hidden h-screen ${inter.className} relative z-0 bg-[url('/main/studycafe1.jpg')] bg-no-repeat bg-fixed bg-center bg-white opacity-90 
-    xs:h-[65vh] 
-    md:h-screen`}
+    xs:h-[73vh] 
+    md:h-[90vh]`}
     >
       {/* 내 집 근처에서 편하게 공부할 수 있는 공간. */}
       <div className='absolute w-full text-center translate-y-12 

@@ -24,7 +24,7 @@ export default function ReviewMain() {
   return (
     <>
       <div className="flex items-center justify-center h-screen p-4 sm:p-10 bg-sygnature-beige">
-        <div className="flex-col">
+        <div className="flex-col xs:max-w-[22rem] md:max-w-none">
           <div
             className={`mb-12 text-center ${
               scrollVisible ? "fade-in-box" : ""
