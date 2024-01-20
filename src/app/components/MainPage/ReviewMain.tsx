@@ -9,7 +9,7 @@ export default function ReviewMain() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollVisible(window.scrollY > 1800);
+      setScrollVisible(window.scrollY > 2500);
     };
 
     // 스크롤 이벤트 리스너 등록

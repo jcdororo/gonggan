@@ -53,6 +53,15 @@ export default function Surroundings({ places }: SurroundingsProps) {
     return { ...place, mDistance };
   });
 
+  const sortedSpaces = spaces?.slice().sort((a, b) => {
+    // 'm'를 제외하고 숫자만 비교
+    const distanceA = parseFloat(a.mDistance);
+    const distanceB = parseFloat(b.mDistance);
+
+    // 숫자를 비교하여 오름차순으로 정렬
+    return distanceA - distanceB;
+  });
+
   const [limit, setLimit] = useState(10);
 
   const handleReadMore = () => {
@@ -61,7 +70,7 @@ export default function Surroundings({ places }: SurroundingsProps) {
 
   if (spaces?.length === 0) return null;
 
-  const spacesList = spaces?.slice(0, limit).map((space, index) => (
+  const spacesList = sortedSpaces?.slice(0, limit).map((space, index) => (
     <div key={index}>
       <Link href={`/places/${space._id}`}>
         <div className="m-4 p-2 flex justify-between">
