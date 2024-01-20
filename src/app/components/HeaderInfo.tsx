@@ -5,6 +5,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { signIn, signOut } from "next-auth/react";
 import DarkMode from "./DarkMode";
+import Image from "next/image";
 
 interface AlarmsContents {
   _id: string;
@@ -135,12 +136,17 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
       {session ? (
         // 로그인 상태일 때
         <div className="absolute right-0 flex items-center px-7 py-3">
-          <div className="right-1 flex justify-center items-center">
+          <div className={`right-1 flex justify-center items-center
+          xs:scale-50 xs:translate-x-[4rem] xs:-translate-y-1
+          md:scale-100 md:translate-x-0 md:translate-y-0`}>
             <div className="px-3">
               <DarkMode />
             </div>
             <div ref={alarmRef} className="relative">
-              <div className="absolute w-5 top-[-10px] left-8 font-bold text-sm text-center rounded-2xl bg-red-600 text-white">
+              {/* 새로운 알람 갯수 */}
+              <div className={`absolute w-5 top-[-10px] left-8 font-bold text-sm text-center rounded-2xl bg-red-600 text-white
+              xs:left-4
+              md:left-8`}>
                 {alarmsContens.filter((x: AlarmsContents) => x.check == false)
                   .length
                   ? alarmsContens.filter(
@@ -149,14 +155,16 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                   : ""}
               </div>
               <FaBell
-                className={`block mx-4 mr-6 text-sygnature-brown cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${
+                className={`block ml-4 mr-6 text-sygnature-brown cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${
                   isAlarmOpen ? "text-red-400" : ""
-                }`}
+                }
+                xs:ml-0 xs:mr-4
+                md:ml-4 md:mr-6`}
                 onClick={handleAlarm}
                 size="30"
               />
             </div>
-            <img
+            <Image
               className="rounded-full h-14 w-14 overflow-hidden cursor-pointer hover:scale-105 transition duration-300"
               src={session.user.image ? session.user.image : "/logo.png"}
               width={640}
@@ -169,7 +177,9 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             {/* 알람 아이콘 클릭시 나오는 드랍박스 */}
             <div
               className={clsx(
-                "darkMode bg-sygnature-beige top-20 w-96 h-80 overflow-scroll font-bold absolute rounded-md text-center transform -translate-x-24 py-3 z-10 xs:scale-90 xs:top-16 xs:-translate-x-16 md:-translate-x-24 md:scale-100 md:top-20",
+                `darkMode bg-sygnature-beige top-20 w-96 h-80 overflow-scroll font-bold absolute rounded-md text-center transform -translate-x-24 py-3 z-10 
+                xs:scale-90 xs:top-16 xs:-translate-x-24
+                md:scale-100 md:-translate-x-24 md:top-[4.5rem]`,
                 {
                   visible: isAlarmOpen === true,
                   hidden: isAlarmOpen === false,
@@ -218,7 +228,9 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             {/* 유저 아이콘 클릭시 나오는 드랍박스 */}
             <div
               className={clsx(
-                "darkMode bg-sygnature-beige top-20 right-2 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top",
+                `darkMode bg-sygnature-beige -right-4 top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top
+                xs:scale-90 xs:top-20
+                md:scale-100 md:top-[4.5rem]`,
                 {
                   visible: isDropboxOpen === true,
                   invisible: isDropboxOpen === false,
@@ -270,23 +282,23 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
         </div>
       ) : (
         // 비 로그인 상태일 때
-        <div className="absolute right-0 top-4 flex items-center px-7 py-3">
+        <div className={`absolute right-0 top-4 flex items-center px-7 py-3
+        xs:py-0 xs:scale-[60%] xs:translate-x-10 xs:translate-y-1
+        md:py-3 md:scale-100 md:translate-x-0 md:translate-y-0`}>
           <div className="right-1 flex justify-center items-center text-sygnature-beige font-bold">
-            <div className="px-3">
+            <div className={`px-3
+            xs:p-0
+            md:px-3`}>
               <DarkMode />
             </div>
             <div
-              className="mx-5 cursor-pointer text-sygnature-brown text-lg hover:opacity-80"
+              className={`mx-5 cursor-pointer text-sygnature-brown text-lg hover:opacity-80
+              xs:mx-3
+              md:mx-5`}
               onClick={() => signIn()}
             >
               로그인
             </div>
-            <Link
-              href={"/signup"}
-              className="mx-5 text-sygnature-brown text-lg hover:opacity-80"
-            >
-              회원가입
-            </Link>
           </div>
         </div>
       )}

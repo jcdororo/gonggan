@@ -93,7 +93,7 @@ export default async function Header() {
           />
         </Link>
 
-        {/* <HeaderInfo session={session} alarms={alarms} /> */}
+        <HeaderInfo session={session} alarms={alarms} />
       </div>
       <div className="h-20"></div>
     </div>
