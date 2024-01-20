@@ -10,10 +10,6 @@ export default async function OauthForm() {
   const router = useRouter();
 
 
-  // if(session) {
-  //   router.push("/");
-  // }
-
 
   useEffect(() => {
     const fetchData = async () => {

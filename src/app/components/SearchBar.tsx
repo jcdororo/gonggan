@@ -39,13 +39,13 @@ const SearchBar = () => {
     const handleKeyESC = (e: { key: string; }) => {
       if(e.key === 'Escape') {
         setFocus(false);
-      };
+      }
     }
 
     const handleKeyEnter = (e: { key: string; }) => {
       if(e.key === 'Enter') {
         setFocus(true);
-      };
+      }
     }
     window.addEventListener('keydown', handleKeyESC)
     window.addEventListener('keydown', handleKeyEnter)

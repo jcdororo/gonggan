@@ -91,13 +91,13 @@ const ProposeList = ({ session, params }: any) => {
     const handleKeyESC = (e: { key: string; }) => {
       if(e.key === 'Escape') {
         setFocus(false);
-      };
+      }
     }
 
     const handleKeyEnter = (e: { key: string; }) => {
       if(e.key === 'Enter') {
         setFocus(true);
-      };
+      }
     }
     window.addEventListener('keydown', handleKeyESC)
     window.addEventListener('keydown', handleKeyEnter)
@@ -359,11 +359,9 @@ const ProposeList = ({ session, params }: any) => {
       setFri(!fri);
     } else if(day == '토') {
       setSat(!sat);
-    } else if(day == '일') {
-      setSun(!sun);
     } else {
-      
-    }
+      setSun(!sun);
+    } 
   };
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
