@@ -58,7 +58,7 @@ export default function HotPlace() {
     <>
       <div className="h-screen py-28 px-20 bg-gradient-to-t from-sygnature-brown">
         <div
-          className={`swiper-container w-full sm:w-[90%] mx-auto transition-opacity duration-[2s] ${
+          className={`swiper-container w-full sm:w-[45%] mx-auto transition-opacity duration-[2s] ${
             scrollVisible ? "opacity-100" : "opacity-0"
           }`}
         >
