@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { ReviewType, UserInfoType } from "../../interface";
 import { sendAlarm } from "@/util/sendAlarm";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface LikeProps {
   review: ReviewType;
-  user: UserInfoType;
 }
 
 interface ReviewLikeProps {
@@ -18,72 +19,56 @@ interface ReviewLikeProps {
   canceled: boolean;
 }
 
-export default function Like({ review, user }: LikeProps) {
-  const [countLike, setCountLike] = useState(review.like);
-  const [like, setLike] = useState<ReviewLikeProps>();
+export default function Like({ review }: LikeProps) {
+  const { data: userData } = useSession();
+
   const [isLike, setIsLike] = useState<boolean>();
+  const [like, setLike] = useState();
 
+  const router = useRouter();
+
+  const getLikedUser = async () => {
+    // 현재 유저가 현재 장소에 좋아요를 눌렀는지
+    const { data } = await axios.get(
+      `/api/review/getLikedUser?review_id=${review._id}&liked_user=${userData?.user.id}`
+    );
+
+    if (data == "exist") {
+      setIsLike(true);
+    } else {
+      setIsLike(false);
+    }
+    router.refresh();
+  };
+
+  // 장소의 좋아요들 가져오기
+  const getLike = async () => {
+    const { data } = await axios.get(
+      `/api/review/getLike?review_id=${review._id}`
+    );
+    setLike(data.length);
+  };
 
   useEffect(() => {
-    const getLike = async () => {
-      const { data } = await axios.get(
-        `/api/review/getLike?nickname=${user.nickname}&reviewId=${review._id}`
-      );
-
-      setLike(data);
-      setIsLike(
-        like?.review_id.toString().includes(review._id.toString()) &&
-          like.canceled == false
-      );
-      // console.log("use", isLike);
-    };
-
     getLike();
-  }, [review._id, isLike]);
-
-  // 좋아요 수 변경 시
-  useEffect(() => {
-    const postLikeCount = async () => {
-      await axios.post(`/api/review/updateReview`, {
-        reviewid: review._id,
-        like: countLike,
-      });
-    };
-    postLikeCount();
-  }, [countLike]);
+    getLikedUser();
+  }, [isLike, userData]);
 
   const onClick = async () => {
     try {
       console.log("isLike", isLike);
       if (isLike) {
         // 좋아요 삭제
-        await axios.delete(
-          `/api/review/deleteLike?reviewId=${review._id}&nickname=${user.nickname}`
+        await axios.post(
+          `/api/review/createLike?review_id=${review._id}&liked_user=${userData?.user._id}`
         );
         setIsLike(!isLike);
-        // 좋아요 수 -1
-        setCountLike(countLike - 1);
       } else {
         // 좋아요 생성
         const response = await axios.post(
-          `/api/review/createLike?reviewId=${review._id}&nickname=${user.nickname}`
+          `/api/review/createLike?review_id=${review._id}&liked_user=${userData?.user._id}`
         );
         setIsLike(!isLike);
-        // 좋아요 수 +1
-        setCountLike(countLike + 1);
-
-        if (response.data == "create") {
-          const temp = {
-            check: false,
-            content: `${user.nickname}님이 내 리뷰에 좋아요를 보냈습니다.`,
-            link: `/places/${review.placeid}`,
-            receiver: review.writerid.toString(),
-            role: "user",
-          };
-
-          await sendAlarm(temp);
-
-        }
       }
     } catch (error) {
       console.log(error);
@@ -94,7 +79,7 @@ export default function Like({ review, user }: LikeProps) {
     <>
       <div className="">
         <div onClick={onClick}>
-          {like?.canceled == false ? (
+          {isLike ? (
             <div className="cursor-pointer">
               <BiSolidLike size="25" />
             </div>
@@ -105,7 +90,7 @@ export default function Like({ review, user }: LikeProps) {
           )}
         </div>
 
-        <div className="text-xs text-center mt-1">{countLike}</div>
+        <div className="text-xs text-center mt-1">{like}</div>
       </div>
     </>
   );

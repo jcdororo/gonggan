@@ -154,7 +154,7 @@ export default function PlaceReviews({ _id }: PlaceProps) {
                     </div>
                   </div>
                   <div className="mt-3">
-                    <Like review={review} user={userData?.user} />
+                    <Like review={review} />
                   </div>
                 </div>
                 <div className="mb-3">

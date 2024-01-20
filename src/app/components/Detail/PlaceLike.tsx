@@ -13,7 +13,6 @@ interface PlaceLikeProps {
 export default function PlaceLike({ _id }: PlaceLikeProps) {
   const { data: userData } = useSession();
 
-  const [user, setUser] = useState(userData?.user);
   const [isLike, setIsLike] = useState<boolean>();
   const [like, setLike] = useState();
 
@@ -41,7 +40,6 @@ export default function PlaceLike({ _id }: PlaceLikeProps) {
   };
 
   useEffect(() => {
-    
     getLike();
     getLikedUser();
   }, [isLike, userData]);
