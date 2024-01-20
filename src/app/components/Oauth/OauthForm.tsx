@@ -3,32 +3,13 @@
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
-export default async function OauthForm() {
-  const [session, setSession] = useState(null);
+export default function OauthForm({session}:any) {
+  const { update } = useSession();
   const router = useRouter();
 
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/session/getSession");
-        const data = await response.json();
-
-        if (response.ok) {
-          setSession(data.session);
-        } else {
-          console.error("Failed to fetch session: ", data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching session: ", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const {
     register,
@@ -43,14 +24,16 @@ export default async function OauthForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = async (body) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (body) => {    
     try {
-      console.log(body);
+      const temp = {...body,role: 'user', method: 'oauth'}
       const { data } = await axios.post("/api/auth/oauth", {
-        ...body,
-        session,
-      });
-      router.push("/");
+          ...body,
+          session,
+        });
+        update(temp)
+        router.push("/");
+
     } catch (error) {
       console.log(error);
     }

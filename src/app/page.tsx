@@ -28,11 +28,13 @@ export default async function Home() {
 
   return (
     <div className={`${roboto.className}`}>
-      <div className="relative h-screen md:space-y-16">
+      <div className={`relative space-y-16 h-screen justify-center items-center
+      xs:flex xs:flex-col xs:space-y-0
+      md:block md:space-y-16`}>
         {/* Search Bar */}
         <div
           className="relative bg-white -mt-8 pt-8 darkMode z-[1]
-        xs:scale-x-[35%] xs:scale-y-[40%] xs:fixed xs:top-0 xs:z-9999 xs:-translate-x-[10.3rem] xs:-translate-y-[1px]
+        xs:scale-x-[40%] xs:scale-y-[40%] xs:fixed xs:top-0 xs:z-9999 xs:translate-x-2 xs:-translate-y-[1px]
         md:scale-100 md:relative md:z-0 md:translate-x-0 md:translate-y-0"
         >
           <SearchBar />

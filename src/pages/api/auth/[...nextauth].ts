@@ -89,7 +89,7 @@ export const authOptions: any = {
         token.user.nickname = session.nickname;
         token.user.email = session.email;
         token.user.image = session.image;
-        console.log("session", session, "token", token);
+        token.user.method = session.method
       } 
       return token;
     },
