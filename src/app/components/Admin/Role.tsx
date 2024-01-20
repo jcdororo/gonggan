@@ -30,7 +30,7 @@ const Role = ({users}:Props) => {
     const result = await fetch(`/api/user/changeRole?_id=${_id}&role=${role}`,{method:'POST'})
     .then(r=>r.json())
     .then(r=>{
-      let temp = usersInfo
+      const temp = usersInfo
       temp[index].role = temp[index].role == 'user' ? 'admin' : 'user'
       setUsersInfo(temp);
     })    

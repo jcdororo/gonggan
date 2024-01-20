@@ -6,7 +6,7 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
   if(request.method == 'DELETE') {
     try {
       const db = (await connectDB).db("gonggan");
-      const result = await db.collection('review').deleteOne({_id : new ObjectId(request.query._id)})
+      const result = await db.collection('review').deleteOne({_id : new ObjectId(request.query._id?.toString())})
 
 
       if (result) {

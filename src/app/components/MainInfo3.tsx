@@ -9,7 +9,9 @@ const inter = Inter({ subsets: ['latin'] })
 
 const MainInfo3 = () => {
   return (
-    <div className={`h-screen ${inter.className} relative z-10 bg-[url('/main/studycafe3.jpg')] bg-no-repeat bg-fixed bg-center bg-cover bg-white flex justify-center opacity-90 overflow-hidden`}>
+    <div className={`h-screen ${inter.className} relative z-10 bg-[url('/main/studycafe3.jpg')] bg-no-repeat bg-fixed bg-center bg-cover bg-white flex justify-center opacity-90 overflow-hidden
+    xs:h-[60vh]
+    md:h-screen`}>
       <div className=''>
         {/* 스터디 장소를 제안할 수 있어요 */}
         <div className='mt-8'>
