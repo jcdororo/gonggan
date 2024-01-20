@@ -73,11 +73,18 @@ export default async function Header() {
 
   return (
     <div className="mb-8">
-      <div className="fixed w-full h-20 top-0 z-9999 darkMode bg-white"></div>
-      <div className="flex w-full h-20 fixed z-9999 shadow-md">
+      <div className={`fixed w-full h-20 top-0 z-[9998] darkMode bg-white
+      xs:h-[4rem]
+      md:h-20
+      `}></div>
+      <div className={`flex w-full h-20 fixed z-[9998] shadow-md
+      xs:h-[4rem]
+      md:h-20`}>
         <Link href={"/"}>
           <Image
-            className="mx-1 ml-3 relative hover:opacity-80 scale-75"
+            className={`"mx-1 ml-3 relative hover:opacity-80 scale-75 z-9999
+            xs:scale-[40%] xs:-ml-6 xs:mx-4
+            md:scale-[75%] md:ml-3`}
             src={header}
             width={110}
             height={75}
@@ -86,7 +93,7 @@ export default async function Header() {
           />
         </Link>
 
-        <HeaderInfo session={session} alarms={alarms} />
+        {/* <HeaderInfo session={session} alarms={alarms} /> */}
       </div>
       <div className="h-20"></div>
     </div>

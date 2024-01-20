@@ -32,8 +32,8 @@ export default async function Home() {
         {/* Search Bar */}
         <div
           className="relative bg-white -mt-8 pt-8 darkMode z-[1]
-        xs:scale-[55%] 
-        md:scale-100"
+        xs:scale-[40%] xs:fixed xs:top-0 xs:z-9999 xs:-translate-x-[9rem] xs:-translate-y-[1px]
+        md:scale-100 md:relative md:z-0 md:translate-x-0 md:translate-y-0"
         >
           <SearchBar />
         </div>
