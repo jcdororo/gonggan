@@ -10,7 +10,7 @@ const Info3 = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
 
-      setIsVisible(scrollY > 2900);
+      setIsVisible(scrollY > 2700);
 
     };
 
@@ -24,9 +24,9 @@ const Info3 = () => {
   return (
     <div className='overflow-hidden'>
       {/* 스타벅스 강남R점 검색 결과 없음 */}
-      <div className={`absolute top-[8rem] ${`transform ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-[16rem] opacity-0'} transition-all duration-[2500ms] ease-in-out -mt-14`}} 
-      xs:scale-50 xs:-translate-x-28 xs:top-[115px] 
-      md:scale-75 md:-translate-x-36 md:top-[115px] `}>
+      <div className={`absolute top-[8rem] ${`transform ${isVisible ? 'translate-y-0 opacity-100 xs:-translate-y-12 md:translate-y-0' : '-translate-y-[16rem] opacity-0'} transition-all duration-[2500ms] ease-in-out -mt-14`}} 
+      xs:scale-[45%] xs:-translate-x-[6rem] xs:top-[115px]
+      md:scale-75 md:-translate-x-36 md:top-[115px]`}>
         <Image
           src={'/main/noresult.png'} 
           width={400}
@@ -44,7 +44,7 @@ const Info3 = () => {
       </div>
       {/* 장소 제안하기  */}
       <div className={`absolute top-6 translate-x-44 
-      ${`transform ${isVisible ? 'xs:translate-x-20 xs:-translate-y-11 md:translate-x-44 md:translate-y-0 opacity-100' : 'xs:translate-y-0 md:translate-x-[70rem] opacity-0'} transition-all duration-[300ms] ease-in-out -mt-14`}}`}>
+      ${`transform ${isVisible ? 'xs:translate-x-[80px] xs:-translate-y-[90px] md:translate-x-44 md:translate-y-0 opacity-100' : 'xs:translate-y-0 md:translate-x-[70rem] opacity-0'} transition-all duration-[300ms] xs:duration-[300ms] md:duration-[1000ms] ease-in-out -mt-14`}}`}>
         <Image
           src={'/main/propose2.png'} 
           width={479}
@@ -54,7 +54,7 @@ const Info3 = () => {
         /> 
       </div>
       <div className={`absolute top-56 -translate-x-40 w-88 h-96 text-right p-0 sm:-translate-x-28
-                      ${`transform ${isVisible ? '-translate-y-0 opacity-100' : 'translate-y-[32rem] opacity-0'} transition-all duration-[2500ms] ease-in-out -mt-14`}}`}>
+                      ${`transform ${isVisible ? 'translate-y-0 opacity-100 xs:-translate-y-[80px] md:translate-y-0' : 'translate-y-[32rem] opacity-0'} transition-all duration-[2500ms] ease-in-out -mt-14`}}`}>
         <span className='text-5xl text-white'>
           SHAR<span className='font-bold text-black'>E</span><br />
           YOU<span className='font-bold text-black'>R</span><br />
