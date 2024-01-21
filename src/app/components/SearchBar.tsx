@@ -191,14 +191,14 @@ const SearchBar = () => {
             
             results.map((result:Result,i) => (
               <li 
-                className={`darkMode cursor-pointer p-1 m-1 hover:bg-gray-100 ${result._id ? 'text-sygnature-brown': ''}`}
+                className={`darkMode cursor-pointer p-1 m-2 hover:bg-gray-100 ${result._id ? 'text-sygnature-brown': ''}`}
                 key={i} 
                 onClick={() => handleResultClick(result)}
               >
-                {result._id?<FaMapMarkerAlt className='inline' />:''}
-                <span className="font-bold xs:text-3xl md:text-base"> {result.place_name} </span>
-                <span> [{result.address_name}], </span>
-                <span> [{result.road_address_name}]</span>
+                
+                <span className="font-bold block xs:text-4xl md:text-base"> {result._id?<FaMapMarkerAlt className='inline' /> :''} {result.place_name} </span>
+                <span className="xs:text-2xl md:text-base"> [{result.address_name}], </span>
+                <span className="xs:text-2xl md:text-base"> [{result.road_address_name}]</span>
               </li>
             ))
           }
@@ -208,10 +208,10 @@ const SearchBar = () => {
             ''
             :
             <li className='darkMode'>
-                <div className='w-128 h-24 flex flex-col justify-center items-center overflow-hidden'>
-                  <div className='p-3 text-2xl font-bold'>&quot;{query}&quot; 검색 결과 없음</div>
+                <div className='max-w-[38rem] h-24 flex flex-col justify-center items-center overflow-hidden'>
+                  <div className='p-3 text-2xl font-bold xs:text-3xl md:text-2xl'>&quot;{query}&quot; 검색 결과 없음</div>
                   <div 
-                    className='p-1 cursor-pointer text-blue-600 mb-1 hover:font-bold hover:underline'
+                    className='p-1 cursor-pointer text-blue-600 mb-1 hover:font-bold hover:underline xs:text-xl md:text-base'
                   ><Link href={'/propose'}>+ 장소 제안하기</Link></div>
                 </div>
               </li>

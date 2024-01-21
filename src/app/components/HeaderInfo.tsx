@@ -229,8 +229,8 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             <div
               className={clsx(
                 `darkMode bg-sygnature-beige -right-4 top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top z-9999
-                xs:scale-90 xs:top-20
-                md:scale-100 md:top-[4.5rem]`,
+                xs:scale-90 xs:top-20 xs:text-2xl 
+                md:scale-100 md:top-[4.5rem] md:text-base`,
                 {
                   visible: isDropboxOpen === true,
                   invisible: isDropboxOpen === false,
