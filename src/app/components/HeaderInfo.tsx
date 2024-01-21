@@ -177,9 +177,9 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             {/* 알람 아이콘 클릭시 나오는 드랍박스 */}
             <div
               className={clsx(
-                `darkMode bg-sygnature-beige top-20 w-96 h-80 overflow-scroll font-bold absolute rounded-md text-center transform -translate-x-24 py-3 z-10 
-                xs:scale-90 xs:top-16 xs:-translate-x-24
-                md:scale-100 md:-translate-x-24 md:top-[4.5rem]`,
+                `darkMode bg-sygnature-beige top-20 w-96 h-80 overflow-scroll font-bold absolute rounded-md text-center transform -translate-x-24 py-3 z-9999
+                xs:scale-90 xs:top-16 xs:-translate-x-24 xs:text-2xl 
+                md:scale-100 md:-translate-x-24 md:top-[4.5rem] md:text-base`,
                 {
                   visible: isAlarmOpen === true,
                   hidden: isAlarmOpen === false,
@@ -228,7 +228,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             {/* 유저 아이콘 클릭시 나오는 드랍박스 */}
             <div
               className={clsx(
-                `darkMode bg-sygnature-beige -right-4 top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top
+                `darkMode bg-sygnature-beige -right-4 top-20 w-40 h-auto pt-2 absolute rounded-md text-center flex flex-col items-center justify-center transform origin-top z-9999
                 xs:scale-90 xs:top-20
                 md:scale-100 md:top-[4.5rem]`,
                 {

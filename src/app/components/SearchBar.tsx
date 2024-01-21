@@ -169,7 +169,7 @@ const SearchBar = () => {
       <div className='relative w-128 flex flex-row justify-center items-center border-2 rounded-3xl overflow-hidden border-sygnature-brown hover:shadow-lg'>
         <span className='darkMode bg-white text-2xl h-8 -mr-1 z-10 font-bold text-sygnature-brown mx-3 cursor-pointer translate-y-1'><FaSearch /></span>
         <input 
-            className="darkMode px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none text-lg" 
+            className="darkMode px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none text-lg xs:text-3xl md:text-base" 
             name="location" 
             value={query}
             onChange={handleChange}
@@ -184,20 +184,20 @@ const SearchBar = () => {
         >X</div>
       </div>
       <div 
-        className={`darkMode border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'} -translate-y-14 z-10`}
+        className={`darkMode border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'} -translate-y-14 z-0`}
       >
         <ul>
           {
             
             results.map((result:Result,i) => (
               <li 
-                className={`darkMode cursor-pointer p-1 m-1 hover:bg-gray-100 ${result._id? 'text-sygnature-brown': ''}`}
+                className={`darkMode cursor-pointer p-1 m-1 hover:bg-gray-100 ${result._id ? 'text-sygnature-brown': ''}`}
                 key={i} 
                 onClick={() => handleResultClick(result)}
               >
                 {result._id?<FaMapMarkerAlt className='inline' />:''}
-                <span className="font-bold"> {result.place_name}</span>
-                <span> [{result.address_name}],</span>
+                <span className="font-bold xs:text-3xl md:text-base"> {result.place_name} </span>
+                <span> [{result.address_name}], </span>
                 <span> [{result.road_address_name}]</span>
               </li>
             ))
