@@ -36,8 +36,6 @@ const SearchBar = () => {
   const [map, setMap] = useRecoilState(mapState);
   const [isFocus, setIsFocus] = useState(false)
 
-  console.log('isFocus',isFocus)
-
   useEffect(() => {
     const handleKeyESC = (e: { key: string; }) => {
       if(e.key === 'Escape') {
@@ -177,9 +175,9 @@ const SearchBar = () => {
   return (
     <div
       className={`relative bg-white -mt-8 pt-8 darkMode z-1
-    xs:scale-x-[35%] xs:scale-y-[40%] xs:fixed xs:top-0 xs:z-9999 xs:-translate-x-3 xs:-translate-y-[1px]
+      xs:fixed xs:top-0 xs:z-9999 xs:-translate-x-3 xs:-translate-y-[1px]
     md:scale-100 md:relative md:z-[9997] md:translate-x-0 md:translate-y-0
-    ${isFocus ? 'xs:scale-x-100 xs:scale-y-100 xs:w-full xs:translate-x-0 md:w-auto' : ''}`}
+    ${isFocus ? 'xs:scale-x-[100%] xs:scale-y-[100%] xs:w-full xs:translate-x-0 md:w-auto' : 'xs:scale-x-[35%] xs:scale-y-[40%]'}`}
     >
     <div className={`p-3 h-30 z-0 flex flex-col items-center ${isFocus ? 'xs:p-0 md:p-3' : ''}`}>
       <div className={`relative w-128 flex flex-row justify-center items-center border-2 overflow-hidden rounded-3xl border-sygnature-brown hover:shadow-lg
@@ -204,7 +202,7 @@ const SearchBar = () => {
       </div>
       <div 
         className={`darkMode border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'} -translate-y-14 z-0
-        ${isFocus ? 'xs:w-full xs:overflow-scroll xs:h-screen md:h-auto md:overflow-auto md:w-128' : ''}`}
+        ${isFocus ? 'xs:w-full xs:overflow-scroll xs:h-[80vh] md:h-auto md:overflow-auto md:w-128' : ''}`}
         onClick={() => setIsFocus(false)}
       >
         <ul>
@@ -230,7 +228,7 @@ const SearchBar = () => {
             :
             <li className='darkMode'>
                 <div className='max-w-[38rem] h-24 flex flex-col justify-center items-center overflow-hidden'>
-                  <div className='p-3 text-2xl font-bold xs:text-3xl md:text-2xl'>&quot;{query}&quot; 검색 결과 없음</div>
+                  <div className='pt-3 pb-1 text-2xl font-bold xs:text-2xl md:text-2xl'>&quot;{query}&quot; 검색 결과 없음</div>
                   <div 
                     className='p-1 cursor-pointer text-blue-600 mb-1 hover:font-bold hover:underline xs:text-xl md:text-base'
                   ><Link href={'/propose'}>+ 장소 제안하기</Link></div>
