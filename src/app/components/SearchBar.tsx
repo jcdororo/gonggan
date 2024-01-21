@@ -34,6 +34,9 @@ const SearchBar = () => {
   const [place, setPlace] = useState([]);
   const [placeInfo, setPlaceInfo] = useState<Result | null>(null);
   const [map, setMap] = useRecoilState(mapState);
+  const [isFocus, setIsFocus] = useState(false)
+
+  console.log('isFocus',isFocus)
 
   useEffect(() => {
     const handleKeyESC = (e: { key: string; }) => {
@@ -72,6 +75,7 @@ const SearchBar = () => {
       // 다른 곳을 클릭한 경우 setFocus(false) 호출
       
       setFocus(false);
+
     };
   
     // document에 클릭 이벤트 리스너 추가
@@ -129,10 +133,16 @@ const SearchBar = () => {
     handleSearch(debouncedQuery);
   }, [debouncedQuery])
 
+  const handleFocus = (e:React.MouseEvent<HTMLInputElement>) => {
+    setIsFocus(true)
+
+  }
+
   const handleclick = (e:React.MouseEvent<HTMLElement>) => {
     setQuery('')
     setFocus(false)
     setResults([])
+    setIsFocus(false)
 
   }
 
@@ -165,15 +175,24 @@ const SearchBar = () => {
     
   };
   return (
-    <div className="p-3 h-30 z-0 flex flex-col items-center">
-      <div className='relative w-128 flex flex-row justify-center items-center border-2 rounded-3xl overflow-hidden border-sygnature-brown hover:shadow-lg'>
+    <div
+      className={`relative bg-white -mt-8 pt-8 darkMode z-1
+    xs:scale-x-[35%] xs:scale-y-[40%] xs:fixed xs:top-0 xs:z-9999 xs:-translate-x-3 xs:-translate-y-[1px]
+    md:scale-100 md:relative md:z-[9997] md:translate-x-0 md:translate-y-0
+    ${isFocus ? 'xs:scale-x-100 xs:scale-y-100 xs:w-full xs:translate-x-0 md:w-auto' : ''}`}
+    >
+    <div className={`p-3 h-30 z-0 flex flex-col items-center ${isFocus ? 'xs:p-0 md:p-3' : ''}`}>
+      <div className={`relative w-128 flex flex-row justify-center items-center border-2 overflow-hidden rounded-3xl border-sygnature-brown hover:shadow-lg
+      ${isFocus ? 'xs:w-full md:w-128 xs:rounded-none md:rounded-3xl' : ''}`}>
         <span className='darkMode bg-white text-2xl h-8 -mr-1 z-10 font-bold text-sygnature-brown mx-3 cursor-pointer translate-y-1'><FaSearch /></span>
         <input 
-            className="darkMode px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none text-lg xs:text-3xl md:text-base" 
+            className={`darkMode px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none text-lg md:text-base
+            ${isFocus ? 'xs:w-full xs:text-lg md:w-128' : 'xs:text-3xl'}`} 
             name="location" 
             value={query}
             onChange={handleChange}
             ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정
+            onClick={handleFocus}
             autoComplete="off"
             placeholder='동네 이름, 매장 이름'
             spellCheck="false"
@@ -184,7 +203,9 @@ const SearchBar = () => {
         >X</div>
       </div>
       <div 
-        className={`darkMode border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'} -translate-y-14 z-0`}
+        className={`darkMode border-2 border-t-0 rounded-b-3xl absolute w-128 top-44 -m-7 pb-3 pt-3 bg-white border-sygnature-brown hover:shadow-lg ${focus ? 'visible' : 'hidden'} -translate-y-14 z-0
+        ${isFocus ? 'xs:w-full xs:overflow-scroll xs:h-screen md:h-auto md:overflow-auto md:w-128' : ''}`}
+        onClick={() => setIsFocus(false)}
       >
         <ul>
           {
@@ -196,9 +217,9 @@ const SearchBar = () => {
                 onClick={() => handleResultClick(result)}
               >
                 
-                <span className="font-bold block xs:text-4xl md:text-base"> {result._id?<FaMapMarkerAlt className='inline' /> :''} {result.place_name} </span>
-                <span className="xs:text-2xl md:text-base"> [{result.address_name}], </span>
-                <span className="xs:text-2xl md:text-base"> [{result.road_address_name}]</span>
+                <span className="font-bold block xs:text-xl md:text-base"> {result._id?<FaMapMarkerAlt className='inline' /> :''} {result.place_name} </span>
+                <span className="xs:text-base md:text-base xs:block md:inline"> [{result.address_name}], </span>
+                <span className="xs:text-base md:text-base"> [{result.road_address_name}]</span>
               </li>
             ))
           }
@@ -221,7 +242,8 @@ const SearchBar = () => {
 
 
 
-      
+      </div>
+
     </div>
   )
 }

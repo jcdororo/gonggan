@@ -31,15 +31,10 @@ export default async function Home() {
       <div className={`relative space-y-16 h-screen justify-center items-center
       xs:flex xs:flex-col xs:space-y-0
       md:block md:space-y-16`}>
-        {/* Search Bar */}
-        <div
-          className="relative bg-white -mt-8 pt-8 darkMode z-1
-        xs:scale-x-[35%] xs:scale-y-[40%] xs:fixed xs:top-0 xs:z-9999 xs:-translate-x-3 xs:-translate-y-[1px]
-        md:scale-100 md:relative md:z-[9997] md:translate-x-0 md:translate-y-0"
-        >
-          <SearchBar />
-        </div>
+        {/* Search Bar */}        
+        <SearchBar />
 
+        {/*  맵과 주변공간 */}
         <div className="bg-white pt-1 darkMode">
           <div className="md:mx-12">
             <div className="flex flex-col md:gap-16 md:flex-row">
