@@ -62,7 +62,7 @@ export default function HotPlace() {
             scrollVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className={`mb-12 text-center ${scrollVisible ? "fade-in-box" : ""}`}>
+          <div className={`mb-12 text-center`}>
             <div className="flex justify-center animate-bounce mb-4">
               <FaMapLocationDot size="30" />
             </div>
@@ -73,7 +73,7 @@ export default function HotPlace() {
               <p>공간들을 둘러보세요 !</p>
             </div>
           </div>
-          <div className="h-[40vh]">
+          <div className="h-[30vh] sm:h-[40vh]">
             <Swiper
               modules={[FreeMode, Navigation, Thumbs, Autoplay]}
               thumbs={{

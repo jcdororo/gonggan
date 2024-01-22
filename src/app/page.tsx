@@ -28,16 +28,20 @@ export default async function Home() {
 
   return (
     <div className={`${roboto.className}`}>
-      <div className={`relative space-y-16 h-screen justify-center items-center
-      xs:flex xs:flex-col xs:space-y-0
-      md:block md:space-y-16`}>
-        {/* Search Bar */}        
-        <SearchBar />
+      <div className="md:space-y-16">
+        <div
+          className={`relative justify-center items-center
+      xs:flex xs:flex-col
+      md:block `}
+        >
+          {/* Search Bar */}
+          <SearchBar />
+        </div>
 
         {/*  맵과 주변공간 */}
-        <div className="bg-white pt-1 darkMode">
+        <div className="relative bg-white pt-1 darkMode">
           <div className="md:mx-12">
-            <div className="flex flex-col md:gap-16 md:flex-row">
+            <div className="w-full flex flex-col md:gap-16 md:flex-row">
               <div className="w-[90%] mb-8 md:w-3/5 z-0">
                 <Map />
                 <Marker places={places} />

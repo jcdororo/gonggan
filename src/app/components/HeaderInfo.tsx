@@ -135,7 +135,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
     <div>
       {session ? (
         // 로그인 상태일 때
-        <div className="absolute right-0 flex items-center px-7 py-3">
+        <div className="absolute right-0 top-2 pr-12">
           <div className={`right-1 flex justify-center items-center
           xs:scale-50 xs:translate-x-[4rem] xs:-translate-y-1
           md:scale-100 md:translate-x-0 md:translate-y-0`}>
@@ -282,7 +282,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
         </div>
       ) : (
         // 비 로그인 상태일 때
-        <div className={`absolute right-0 top-4 flex items-center px-7 py-3
+        <div className={`absolute right-0 top-3 pr-12
         xs:py-0 xs:scale-[60%] xs:translate-x-10 xs:translate-y-1
         md:py-3 md:scale-100 md:translate-x-0 md:translate-y-0`}>
           <div className="right-1 flex justify-center items-center text-sygnature-beige font-bold">
@@ -292,7 +292,7 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
               <DarkMode />
             </div>
             <div
-              className={`mx-5 cursor-pointer text-sygnature-brown text-lg hover:opacity-80
+              className={`mx-5 cursor-pointer text-sygnature-brown text-2xl hover:opacity-80
               xs:mx-3
               md:mx-5`}
               onClick={() => signIn()}

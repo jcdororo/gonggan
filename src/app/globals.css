@@ -142,13 +142,24 @@ form .form__btn--submit:focus {
 
 .img-trans1 {
   position: relative;
-  animation: fadeInLeft 1s;
+  animation: fadeInLeft 2s;
 }
 .img-trans2 {
   position: relative;
-  animation: fadeInLeft 1.5s;
+  animation: fadeInLeft 2.5s;
 }
 .img-trans3 {
   position: relative;
-  animation: fadeInLeft 2s;
+  animation: fadeInLeft 3s;
+}
+
+.header-icon {
+  background-image: url('/public/logo.png');
+}
+
+/* 모바일 화면 크기에 대한 미디어 쿼리 */
+@media screen and (max-width: 767px) {
+  .header-icon {
+      background-image: url('/public/images/공.png');
+  }
 }
