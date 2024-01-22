@@ -60,13 +60,13 @@ export default function Like({ review }: LikeProps) {
       if (isLike) {
         // 좋아요 삭제
         await axios.post(
-          `/api/review/createLike?review_id=${review._id}&liked_user=${userData?.user._id}`
+          `/api/review/createLike?review_id=${review._id}&liked_user=${userData?.user.id}`
         );
         setIsLike(!isLike);
       } else {
         // 좋아요 생성
         const response = await axios.post(
-          `/api/review/createLike?review_id=${review._id}&liked_user=${userData?.user._id}`
+          `/api/review/createLike?review_id=${review._id}&liked_user=${userData?.user.id}`
         );
         setIsLike(!isLike);
       }
