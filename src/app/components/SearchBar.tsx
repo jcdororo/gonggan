@@ -168,7 +168,7 @@ const SearchBar = () => {
         <div className={`p-3 -mb-10 h-[110px] md:h-[80px] z-0 flex flex-col items-center ${isFocus ? "xs:p-0 md:p-3" : ""}`}>
           <div
             className={`relative md:ml-12 xs:ml-0 w-112 md:w-128 h-24 xs:h-full flex flex-row justify-center items-center overflow-hidden rounded-full hover:shadow-lg bg-sygnature-beige
-            ${isFocus? "z-10 ml-0 h-[80px] my-4 xs:w-full md:w-128 xs:rounded-none md:rounded-3xl": ""}`}
+            ${isFocus? "z-10 ml-0 h-[80px] my-4 md:my-0 xs:w-full md:w-128 xs:rounded-none md:rounded-3xl": ""}`}
             >
             <span className="darkMode flex items-center text-2xl z-10 font-bold text-sygnature-brown cursor-pointer pl-8 pr-2"><FaSearch size="34" /></span>
             <input
@@ -192,7 +192,7 @@ const SearchBar = () => {
           </div>
         </div>
       </div>
-      <div className="absolute w-full md:w-128 top-0 left-0 md:top-1/2 md:left-1/2 xs:transform md:-translate-x-[46%] translate-y-[5%] md:translate-y-[37%] z-10">
+      <div className="absolute w-full md:w-128 top-0 left-0 md:top-1/2 md:left-1/2 xs:transform md:-translate-x-[46%] translate-y-[8%] md:translate-y-[35%] z-10">
         <div className={`darkMode bg-sygnature-beige md:rounded-2xl pb-3 border-sygnature-brown hover:shadow-lg ${focus ? "visible" : "hidden"} -translate-y-14 z-0
           ${isFocus? "overflow-y-scroll h-[300px]": ""}`}
           onClick={() => setIsFocus(false)}

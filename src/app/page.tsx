@@ -28,7 +28,7 @@ export default async function Home() {
 
   return (
     <div className={`${roboto.className}`}>
-      <div className="md:space-y-16">
+      <div className="md:space-y-20">
         <div
           className={`relative justify-center items-center
       xs:flex xs:flex-col

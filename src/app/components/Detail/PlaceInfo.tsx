@@ -11,6 +11,9 @@ import { PiNotebookBold } from "react-icons/pi";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import SwiperImage from "../SwiperImage";
+import { FaExternalLinkAlt } from "react-icons/fa";
+
+
 
 interface PlaceProps {
   _id: string;
@@ -55,10 +58,11 @@ export default function PlaceInfo({ _id }: PlaceProps) {
       </div>
       <div className="flex justify-between mb-10">
         <div
-          className="flex px-8 text-2xl font-bold cursor-pointer"
+          className="flex px-8 text-2xl font-bold cursor-pointer gap-[10px]"
           onClick={() => window.open(`${place?.place_url}`, '_blank')}
         >
           {place?.place_name}
+          <FaExternalLinkAlt size="16" className="mt-2" />
         </div>
         <div className="flex items-center pr-10">
           <PlaceLike _id={_id} />
