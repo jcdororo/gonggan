@@ -70,8 +70,8 @@ export default function PlaceLike({ _id }: PlaceLikeProps) {
   };
 
   return (
-    <div className="flex gap-2">
-      <div onClick={onClick}>
+    <div className="flex relative mx-4 mb-6">
+      <div onClick={onClick} className="absolute right-4">
         {isLike ? (
           <div className="cursor-pointer">
             <FaHeart size="25" color="red" />
@@ -82,7 +82,7 @@ export default function PlaceLike({ _id }: PlaceLikeProps) {
           </div>
         )}
       </div>
-      <div className="font-bold text-sm text-center flex items-center">{like}</div>
+      <div className="absolute mt-[2px] font-bold text-sm text-center flex items-center">{like}</div>
     </div>
   );
 }
