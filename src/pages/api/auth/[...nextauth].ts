@@ -43,7 +43,6 @@ export const authOptions: any = {
         if (!isCorrectPassword) {
           throw new Error("Invalid credentials");
         }
-        console.log(credentials.auto);
         return user;
       },
     }),
@@ -63,7 +62,6 @@ export const authOptions: any = {
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }: any) {
-      // async signIn() {
       return true;
     },
     async redirect({ url, baseUrl }: any) {
