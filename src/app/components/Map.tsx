@@ -53,8 +53,6 @@ export default memo(function Map({ lat, lng, zoom }: MapProps) {
     getLocation();
   }, []);
 
-  console.log("Geolocation", locationCurrent)
-
   useEffect(() => {
     if (locationCurrent) {
       // 위치 정보가 있을 때 맵을 불러옴
