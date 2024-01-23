@@ -53,6 +53,8 @@ export default memo(function Map({ lat, lng, zoom }: MapProps) {
     getLocation();
   }, []);
 
+  console.log("Geolocation", locationCurrent)
+
   useEffect(() => {
     if (locationCurrent) {
       // 위치 정보가 있을 때 맵을 불러옴
@@ -65,8 +67,8 @@ export default memo(function Map({ lat, lng, zoom }: MapProps) {
       const mapContainer = document.getElementById("map");
       const mapOption = {
         center: new window.kakao.maps.LatLng(
-          lat ?? locationCurrent?.latitude,
-          lng ?? locationCurrent?.longitude
+          lat ?? locationCurrent == null ? location.lat : locationCurrent?.latitude,
+          lng ?? locationCurrent == null ? location.lng :locationCurrent?.longitude
         ),
         level: zoom ?? location.zoom,
       };
