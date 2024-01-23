@@ -40,7 +40,7 @@ export default function Footer() {
           &copy; <span className=""></span> The Catchppo Company. All
           Rights Reserved.
         </p>
-        <div className="flex justify-center p-2">
+        <div className="flex justify-center p-2 xs:w-[294px] xs:h-[72px] md:w-full md:h-[72px]">
           <Image src={"/logo.png"} alt="" width={80} height={50} />
         </div>
       </div>

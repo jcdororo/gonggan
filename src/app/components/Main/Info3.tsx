@@ -24,7 +24,7 @@ const Info3 = () => {
   return (
     <div className='overflow-hidden'>
       {/* 스타벅스 강남R점 검색 결과 없음 */}
-      <div className={`absolute top-[8rem] ${`transform ${isVisible ? 'translate-y-0 opacity-100 xs:-translate-y-12 md:translate-y-0' : '-translate-y-[16rem] opacity-0'} transition-all duration-[2500ms] ease-in-out -mt-14`}} 
+      <div className={`xs:w-[350px] md:w-[400px] h-auto absolute top-[8rem] ${`transform ${isVisible ? 'translate-y-0 opacity-100 xs:-translate-y-12 md:translate-y-0' : '-translate-y-[16rem] opacity-0'} transition-all duration-[2500ms] ease-in-out -mt-14`}} 
       xs:scale-[45%] xs:-translate-x-[6rem] xs:top-[115px]
       md:scale-75 md:-translate-x-36 md:top-[115px]`}>
         <Image
@@ -32,7 +32,7 @@ const Info3 = () => {
           width={400}
           height={100}
           alt='propose' 
-          className='rounded-2xl'
+          className='rounded-2xl w-full h-auto'
         />  
         {/* 장소 제안하기 화살표 */}
         <div className='absolute bottom-[0.9rem] right-32 animate-[wiggle_1s_ease-in-out_infinite] text-sygnature-brown 

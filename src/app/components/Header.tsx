@@ -83,7 +83,7 @@ export default async function Header() {
       md:h-20`}
       >
         <Link href={"/"}>
-          <div className="ml-4">
+          <div className="ml-4 xs:w-[102px] xs:h-[71px] md:w-[138px] md:h-[77px]">
             <Image
               className={`"mx-1 ml-3 relative hover:opacity-80 scale-75 z-9999
             xs:scale-[50%] xs:-ml-6 xs:mx-4

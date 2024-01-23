@@ -11,7 +11,6 @@ import MainInfo3 from "./components/MainInfo3";
 import HotPlace from "./components/MainPage/HotPlace";
 import { MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
 import Link from "next/link";
-import SurroundingsSwiper from "./components/SurroundingsSwiper";
 import Footer from "./components/Footer";
 import ReviewMain from "./components/MainPage/ReviewMain";
 
@@ -80,10 +79,10 @@ export default async function Home() {
 
 async function getData() {
   try {
-    const res = await axios.get("http://localhost:3000/api/places/route");
+    const res = await axios.get("/api/places/route");
     const data = res.data;
     return data;
   } catch (error) {
-    throw new Error(error?.toString());      
+    // console.log(error)
   }
 }
