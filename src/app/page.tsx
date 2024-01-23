@@ -80,7 +80,7 @@ export default async function Home() {
 
 async function getData() {
   try {
-    const res = await axios.get("http://localhost:3000/api/places/route");
+    const res = await axios.get("/api/places/route");
     const data = res.data;
     return data;
   } catch (e) {
