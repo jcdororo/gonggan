@@ -13,6 +13,8 @@ export default function Marker({ places }: MarkerProps) {
   const setCurrentPlace = useSetRecoilState(currentPlaceState);
   const [location, setLocation] = useRecoilState(locationState);
 
+  console.log("Markers", places)
+
   const loadKakaoMarkers = useCallback(() => {
     if (map) {
       // 식당 마커 띄우기

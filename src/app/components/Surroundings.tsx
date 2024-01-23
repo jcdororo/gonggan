@@ -70,6 +70,8 @@ export default function Surroundings({ places }: SurroundingsProps) {
 
   if (spaces?.length === 0) return null;
 
+  console.log("sortedSpacessortedSpaces", sortedSpaces);
+
   const spacesList = sortedSpaces?.slice(0, limit).map((space, index) => (
     <div key={index}>
       <Link href={`/places/${space._id}`}>
