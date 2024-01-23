@@ -13,6 +13,7 @@ import { MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
 import Link from "next/link";
 import Footer from "./components/Footer";
 import ReviewMain from "./components/MainPage/ReviewMain";
+import { connectDB } from "@/util/database";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -20,10 +21,6 @@ const roboto = Roboto({
 });
 
 export default async function Home() {
-  // const db = (await connectDB).db("gonggan");
-  // let result = await db.collection('like_place').find().toArray();
-
-  const places: PlaceType[] = await getData();
 
   return (
     <div className={`${roboto.className}`}>
@@ -43,11 +40,11 @@ export default async function Home() {
             <div className="w-full flex flex-col md:gap-16 md:flex-row">
               <div className="w-[90%] mb-8 md:w-3/5 z-0">
                 <Map />
-                <Marker places={places} />
+                <Marker />
                 <CurrentPlaceBox />
               </div>
               <div className="w-[90%] mx-auto md:w-2/5">
-                <Space category="주변" places={places} />
+                <Space category="주변" />
               </div>
             </div>
           </div>
@@ -77,12 +74,3 @@ export default async function Home() {
   );
 }
 
-async function getData() {
-  try {
-    const res = await axios.get("/api/places/route");
-    const data = res.data;
-    return data;
-  } catch (error) {
-    // console.log(error)
-  }
-}
