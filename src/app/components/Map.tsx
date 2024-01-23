@@ -60,8 +60,6 @@ export default memo(function Map({ lat, lng, zoom }: MapProps) {
     }
   }, [locationCurrent]);
 
-  console.log("Geolocation", locationCurrent);
-
   const loadKakaoMap = () => {
     window.kakao.maps.load(() => {
       const mapContainer = document.getElementById("map");
