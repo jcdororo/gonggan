@@ -4,7 +4,6 @@ import { getServerSession } from 'next-auth'
 
 export default async function Profile() {
   const session:any = await getServerSession(authOptions)
-  console.log(session)
   return (
     <>
       <ProfileForm session={session}/>

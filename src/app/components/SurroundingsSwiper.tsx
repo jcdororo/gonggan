@@ -33,7 +33,6 @@ export default function SurroundingsSwiper() {
   };
 
   const { data: places } = useQuery(`surroundingPlaces`, getPlacePicture);
-  console.log("places", places);
 
   SwiperCore.use([EffectCards]);
 

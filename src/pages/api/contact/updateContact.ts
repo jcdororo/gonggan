@@ -3,7 +3,6 @@ import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function PUT(request: any, response: any) {
-  console.log(request.body)
   const { _id, reply } = request.body;
 
   try {

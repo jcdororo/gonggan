@@ -42,7 +42,7 @@ export default function ChangePwdForm({ id }: ChangePwdProps) {
       });
       router.push("/signin");
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
   };
 

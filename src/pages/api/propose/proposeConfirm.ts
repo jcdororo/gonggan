@@ -6,7 +6,6 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  console.log("body", request.body);
 
   if (request.method == "POST") {
     if (request.body.confirm == "approved") {

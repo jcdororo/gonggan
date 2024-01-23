@@ -9,8 +9,6 @@ export default async function put(
 ) {
   const { password, id } = request.body;
 
-  console.log("asdfasdfasdf", id);
-  console.log(new ObjectId(id));
   try {
     const db = (await connectDB).db("gonggan");
     const hashedPassword = await bcrypt.hash(password, 12);

@@ -241,7 +241,7 @@ const ProposeList = ({ session, params }: any) => {
         }
       }
     } catch (error) {
-      console.error("데이터를 불러오는 중 오류 발생:", error);
+      throw new Error(error?.toString());      
     }
   };
 

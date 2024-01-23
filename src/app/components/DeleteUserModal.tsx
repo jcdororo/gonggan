@@ -21,7 +21,7 @@ export default function DeleteUserModal({ id, clickModal }: ModalMessageProps) {
         .then(() => signOut())
         .then(() => router.push("/"));
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
   };
 

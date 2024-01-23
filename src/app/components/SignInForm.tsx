@@ -33,10 +33,9 @@ export default function SignInForm({ session }: any) {
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
     try {
       const data = signIn("credentials", body);
-      console.log(data);
       router.push("/");
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
   };
 
@@ -92,7 +91,7 @@ export default function SignInForm({ session }: any) {
                     return "비밀번호가 맞지 않습니다.";
                   }
                 } catch (error) {
-                  console.log(error);
+                  throw new Error(error?.toString());      
                 }
               },
             })}

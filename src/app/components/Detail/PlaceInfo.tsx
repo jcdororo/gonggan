@@ -40,7 +40,6 @@ export default function PlaceInfo({ _id }: PlaceProps) {
     getPlace();
   }, []);
 
-  console.log(_id);
 
 
   return (

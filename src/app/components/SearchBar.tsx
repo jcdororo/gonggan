@@ -112,7 +112,7 @@ const SearchBar = () => {
         }
       }
     } catch (error) {
-      console.error("데이터를 불러오는 중 오류 발생:", error);
+      throw new Error(error?.toString());      
     }
   };
 
@@ -162,8 +162,8 @@ const SearchBar = () => {
   return (
     <>
       <div
-        className={`relative darkModeSearchBar -mt-8 pt-8 z-1 xs:fixed xs:top-0 xs:z-9999 xs:-translate-x-3 xs:-translate-y-[1px] md:scale-100 md:relative md:z-[9997] md:translate-x-0 md:translate-y-0
-        ${isFocus ? "xs:scale-x-[100%] -mt-[48px] xs:scale-y-[100%] xs:w-full xs:translate-x-0 md:w-auto" : "xs:scale-x-[35%] xs:scale-y-[40%]"}`}
+        className={`relative darkModeSearchBar -mt-8 pt-8 z-1 xs:fixed xs:top-0 xs:z-9999 xs:-translate-x-3 xs:-translate-y-[1px] md:scale-x-[100%] md:scale-y-[100%] md:relative md:z-[9997] md:translate-x-0 md:translate-y-0 md:-mt-8
+        ${isFocus ? "xs:scale-x-[100%] xs:-mt-[48px] xs:scale-y-[100%] xs:w-full xs:translate-x-0 md:w-auto" : "xs:scale-x-[35%] xs:scale-y-[40%]"}`}
         >
         <div className={`p-3 -mb-10 h-[110px] md:h-[80px] z-0 flex flex-col items-center ${isFocus ? "xs:p-0 md:p-3" : ""}`}>
           <div
@@ -180,7 +180,7 @@ const SearchBar = () => {
               ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정
               onClick={handleFocus}
               autoComplete="off"
-              placeholder="동네 이름, 매장 이름"
+              placeholder="스터디 장소를 검색해보세요 !"
               spellCheck="false"
             />
             <div

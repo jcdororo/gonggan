@@ -3,8 +3,6 @@ import { ObjectId } from "mongodb";
 
 export default async function post(request: any, response: any) {
   const { place_id, liked_user } = request.query;
-  // const { reviewId, nickname } = request.body;
-  console.log(request.body);
 
   try {
     const db = (await connectDB).db("gonggan");

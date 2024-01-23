@@ -5,7 +5,6 @@ export default async function handler(request:NextApiRequest, response:NextApiRe
 
  
   if(request.method == 'POST') {
-    console.log(JSON.parse(request.body))
     try {
       const body = JSON.parse(request.body);
       const temp = {

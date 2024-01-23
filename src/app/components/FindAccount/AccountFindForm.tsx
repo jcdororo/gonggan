@@ -48,7 +48,7 @@ export default function AccountFindForm() {
       const { data } = await axios.post("/api/accountFind/findEmail", body);
       setUserInfo(data);
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
 
     if (buttonValue === "아이디 찾기") {
@@ -102,7 +102,7 @@ export default function AccountFindForm() {
         // 메일 전송 확인 모달
         setPwdModalOpen(true);
       } catch (error) {
-        console.log(error);
+        throw new Error(error?.toString());      
       }
     }
   };
@@ -142,7 +142,7 @@ export default function AccountFindForm() {
                       return "존재하지 않는 이메일입니다";
                     }
                   } catch (error) {
-                    console.log(error);
+                    throw new Error(error?.toString());      
                   }
                 },
               },

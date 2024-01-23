@@ -10,7 +10,7 @@ const Info3 = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
 
-      setIsVisible(scrollY > 2700);
+      setIsVisible(scrollY > 2580);
 
     };
 

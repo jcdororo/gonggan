@@ -56,7 +56,6 @@ export default function Like({ review }: LikeProps) {
 
   const onClick = async () => {
     try {
-      console.log("isLike", isLike);
       if (isLike) {
         // 좋아요 삭제
         await axios.post(
@@ -71,7 +70,7 @@ export default function Like({ review }: LikeProps) {
         setIsLike(!isLike);
       }
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
   };
 

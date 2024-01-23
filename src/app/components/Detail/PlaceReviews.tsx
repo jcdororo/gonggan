@@ -19,7 +19,6 @@ export default function PlaceReviews({ _id }: PlaceProps) {
   // 사용자 정보
   const { data: userData, status }: any = useSession();
 
-  console.log("userData", userData);
 
   const getReviews = async () => {
     const { data } = await axios.get(`/api/reviews/findReviews?_id=${_id}`);
@@ -35,7 +34,6 @@ export default function PlaceReviews({ _id }: PlaceProps) {
     }
   );
 
-  console.log(reviews);
 
   const [limit, setLimit] = useState(5);
 
@@ -49,15 +47,6 @@ export default function PlaceReviews({ _id }: PlaceProps) {
   const [review, setReview] = useState<ReviewType>();
   const [policeWrite, setPoliceWrite] = useState(false);
 
-  // const [reviews, setReviews] = useState<ReviewType[]>();
-  // useEffect(() => {
-  //   const getReviews = async () => {
-  //     const { data } = await axios.get(`/api/reviews/findReviews?_id=${_id}`);
-  //     setReviews(data);
-  //     console.log(reviews);
-  //   };
-  //   getReviews();
-  // }, []);
 
   // 리뷰 모달
   const onClick = (

@@ -35,7 +35,6 @@ export default async function handler(
             $set: { content: body.newContent, star: body.star },
           }
         );
-        console.log('result@@@',result)
       }
 
       // 닉네임이 변경되었을 경우

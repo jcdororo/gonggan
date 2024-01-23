@@ -41,7 +41,7 @@ export default function ContactDetail({ id }: DetailProps) {
       });
       router.push("/admin/contact/list");
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
   };
 

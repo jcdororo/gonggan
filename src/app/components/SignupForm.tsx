@@ -40,7 +40,7 @@ export default function SignUpForm({ session }: any) {
       const { data } = await axios.post("/api/signup/route", body);
       router.push("/signin");
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
   };
 
@@ -102,7 +102,7 @@ export default function SignUpForm({ session }: any) {
                       return "중복된 닉네임입니다.";
                     }
                   } catch (error) {
-                    console.log(error);
+                    throw new Error(error?.toString());      
                   }
                 },
               })}
@@ -135,7 +135,7 @@ export default function SignUpForm({ session }: any) {
                       return "중복된 이메일입니다.";
                     }
                   } catch (error) {
-                    console.log(error);
+                    throw new Error(error?.toString());      
                   }
                 },
               })}

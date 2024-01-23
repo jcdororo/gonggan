@@ -35,7 +35,7 @@ export default function OauthForm({session}:any) {
         router.push("/");
 
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
   };
 
@@ -72,7 +72,7 @@ export default function OauthForm({session}:any) {
                     return "중복된 이메일입니다.";
                   }
                 } catch (error) {
-                  console.log(error);
+                  throw new Error(error?.toString());      
                 }
               },
             })}
@@ -102,7 +102,7 @@ export default function OauthForm({session}:any) {
                     return "중복된 닉네임입니다.";
                   }
                 } catch (error) {
-                  console.log(error);
+                  throw new Error(error?.toString());      
                 }
               },
             })}

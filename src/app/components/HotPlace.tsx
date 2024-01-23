@@ -22,7 +22,7 @@ export default async function HotPlace() {
     result.sort((a, b) => b.like! - a.like! )
     
   } catch (error) {
-    console.log('error',error)
+    throw new Error(error?.toString());      
   }
   
   

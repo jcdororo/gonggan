@@ -74,7 +74,7 @@ export default function ReviewShape({
       }
       window.location.reload();
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
   };
 

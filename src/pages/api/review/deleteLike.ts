@@ -3,8 +3,6 @@ import { ObjectId } from "mongodb";
 
 export default async function DELETE(request: any, response: any) {
   const { reviewId, nickname } = request.query;
-  // const { reviewId, nickname } = request.body;
-  console.log(request.body);
 
   try {
     const db = (await connectDB).db("gonggan");

@@ -72,7 +72,6 @@ export default function ProfileForm({ session }: any) {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
-    console.log("submit!!!!", image);
     let url = "";
     let result = {};
     // 이미지가 변경되었다면
@@ -82,17 +81,7 @@ export default function ProfileForm({ session }: any) {
         `/api/upload/image?_id=${session.user.id}&url=${url}`,
         { method: "POST" }
       );
-      // .then((r) => {
-      //   if(r.ok) {
-      //     update({ image: url });
-      //     router.refresh();
-      //     router.push("/mypage");
-      //   }
-      // });
     }
-    // if (result.toString().includes("success")) {
-    // update({ image: url});
-    // }
 
     try {
       await axios
@@ -107,16 +96,14 @@ export default function ProfileForm({ session }: any) {
           }
         });
 
-      console.log(session.user._id, body.nickname);
       const res = await axios.post("/api/review/updateReview", {
         updateId: session.user._id,
         nickname: body.nickname,
       });
-      console.log(res);
       await router.refresh();
       router.push("/mypage");
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
   };
 
@@ -196,7 +183,7 @@ export default function ProfileForm({ session }: any) {
                     return "중복된 닉네임입니다.";
                   }
                 } catch (error) {
-                  console.log(error);
+                  throw new Error(error?.toString());      
                 }
               },
             })}
@@ -232,7 +219,7 @@ export default function ProfileForm({ session }: any) {
                         return "비밀번호가 맞지 않습니다.";
                       }
                     } catch (error) {
-                      console.log(error);
+                      throw new Error(error?.toString());      
                     }
                   },
                 })}
@@ -315,7 +302,7 @@ export default function ProfileForm({ session }: any) {
                     return "중복된 이메일입니다.";
                   }
                 } catch (error) {
-                  console.log(error);
+                  throw new Error(error?.toString());      
                 }
               },
             })}

@@ -33,7 +33,7 @@ export default function ContactForm() {
       });
       router.push("/mypage");
     } catch (error) {
-      console.log(error);
+      throw new Error(error?.toString());      
     }
   };
 
