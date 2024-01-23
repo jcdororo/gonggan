@@ -33,7 +33,27 @@ body[data-theme="dark"] .in {
 }
 
 body[data-theme="dark"] .darkMode {
-  @apply bg-[#292929] text-white z-10;
+  @apply bg-[#292929] text-white;
+}
+
+body[data-theme="dark"] .darkModeFooter {
+  @apply bg-[#272727] text-white z-10;
+}
+
+body[data-theme="dark"] .darkModeMain {
+  @apply bg-[#272727] text-white z-10;
+}
+
+body[data-theme="dark"] .darkModeSurrounding {
+  @apply bg-sygnature-beige text-[#000];
+}
+
+body[data-theme="dark"] .darkModeSearchBar {
+  @apply text-[#000];
+}
+
+body[data-theme="dark"] .darkModeSearchBar input::placeholder {
+  @apply text-[#000];
 }
 
 .in {
@@ -112,31 +132,32 @@ form .form__btn--submit:focus {
   -o-animation: fadein 3s; /* Opera */
 }
 @keyframes fadein {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 2;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 2;
+  }
 }
-@-webkit-keyframes fadein { /* Safari and Chrome */
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 2;
-    }
+@-webkit-keyframes fadein {
+  /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 2;
+  }
 }
 
 /* 왼쪽에서 나타나게 */
 @keyframes fadeInLeft {
   0% {
-      opacity: 0;
-      transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
   }
   to {
-      opacity: 1;
-      transform: translateZ(0);
+    opacity: 1;
+    transform: translateZ(0);
   }
 }
 
@@ -154,12 +175,12 @@ form .form__btn--submit:focus {
 }
 
 .header-icon {
-  background-image: url('/public/logo.png');
+  background-image: url("/public/logo.png");
 }
 
 /* 모바일 화면 크기에 대한 미디어 쿼리 */
 @media screen and (max-width: 767px) {
   .header-icon {
-      background-image: url('/public/images/공.png');
+    background-image: url("/public/images/공.png");
   }
 }

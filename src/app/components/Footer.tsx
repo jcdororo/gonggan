@@ -5,7 +5,7 @@ import { LuDot } from "react-icons/lu";
 export default function Footer() {
   return (
     <>
-      <div className="p-12 text-center bg-sygnature-beige">
+      <div className="darkModeFooter p-12 text-center bg-sygnature-beige">
 
         <ul className="lg:flex justify-center m-4 gap-2">
           <li className="mb-4 lg:mb-0">

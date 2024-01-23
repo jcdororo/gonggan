@@ -14,7 +14,7 @@ interface SpaceProps {
 export default function Space({ category, places }: SpaceProps) {
   return (
     <>
-      <div className="flex items-center justify-center mx-2 mt-8 md:mt-0 gap-3 bg-sygnature-beige w-48 h-12 rounded-3xl shadow-lg">
+      <div className="darkModeSurrounding flex items-center justify-center mx-2 mt-8 md:mt-0 gap-3 bg-sygnature-beige w-48 h-12 rounded-3xl shadow-lg">
         <BiCurrentLocation size="24" className="pb-[1px] animate-pulse" />
         <p className="text-2xl font-bold pr-[9px]">{category} 공간</p>
       </div>

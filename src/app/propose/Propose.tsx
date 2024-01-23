@@ -395,7 +395,7 @@ const Propose = ({ session }: any) => {
             focus ? "visible" : "hidden"
           }`}
         >
-          <ul>
+          <ul className="darkModeSearchBar">
             {results.map((result: Result, i) => (
               <li
                 className={`cursor-pointer p-1 m-1 hover:bg-gray-100 ${
