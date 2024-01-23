@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 import { LocationType, PlaceType } from "../interface";
 
-const DEFAULT_LAT = "37.48120720000076";
-const DEFAULT_LNG = "126.94713128189409";
+const DEFAULT_LAT = "37.557527";
+const DEFAULT_LNG = "126.9244669";
 const DEFAULT_ZOOM = 3;
 
 export const mapState = atom<any>({

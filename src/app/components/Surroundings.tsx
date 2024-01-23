@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlaceType } from "../interface";
 import { IoIosArrowDown } from "react-icons/io";
 import Link from "next/link";
@@ -7,9 +7,43 @@ interface SurroundingsProps {
   places?: PlaceType[];
 }
 
+// 위치 정보 표현 타입
+interface Location {
+  latitude: number;
+  longitude: number;
+}
+
 export default function Surroundings({ places }: SurroundingsProps) {
-  const currentX: number = 126.952712; // 경도 Longitude
-  const currentY: number = 37.48121; // 위도 Latitude
+  const [location, setLocation] = useState<Location | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // 위치 정보 가져오기
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            // 위치 정보 가져오기 성공
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (error) => {
+            // 위치 정보 가져오기 실패
+            setError(`Error getting location: ${error.message}`);
+          }
+        );
+      } else {
+        setError("Geolocation is not supported by your browser.");
+      }
+    };
+    
+    getLocation();
+  }, []); 
+  
+  const currentX: number = location?.longitude || 0; // 경도 Longitude
+  const currentY: number = location?.latitude || 0; // 위도 Latitude
 
   const calculateDistance = (
     lat1: number,
@@ -68,25 +102,30 @@ export default function Surroundings({ places }: SurroundingsProps) {
     setLimit((prevLimit) => prevLimit + 10);
   };
 
-  if (spaces?.length === 0) return null;
-
-  const spacesList = sortedSpaces?.slice(0, limit).map((space, index) => (
-    <div key={index}>
-      <Link href={`/places/${space._id}`}>
-        <div className="m-4 p-2 flex justify-between">
-          <div className="flex gap-[5px] ">
-            <div className="text-lg ">{space.location}</div>
+  let spacesList;
+  if (spaces?.length === 0) {
+    spacesList = <div className="p-4 py-8 text-center">주변에 공간이 없습니다.</div>
+  } else {
+    spacesList = sortedSpaces?.slice(0, limit).map((space, index) => (
+      <div key={index}>
+        <Link href={`/places/${space._id}`}>
+          <div className="m-4 p-2 flex justify-between">
+            <div className="flex gap-[5px] ">
+              <div className="text-lg ">{space.location}</div>
+              <div className="text-xs mt-[9px] text-sygnature-brown">
+                {space.category_group_name}
+              </div>
+            </div>
             <div className="text-xs mt-[9px] text-sygnature-brown">
-              {space.category_group_name}
+              {space.mDistance}
             </div>
           </div>
-          <div className="text-xs mt-[9px] text-sygnature-brown">
-            {space.mDistance}
-          </div>
-        </div>
-      </Link>
-    </div>
-  ));
+        </Link>
+      </div>
+    ));
+  }
+
+  
 
   return (
     <>
