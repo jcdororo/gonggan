@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { PlaceType } from "../interface";
 import { IoIosArrowDown } from "react-icons/io";
 import Link from "next/link";
+import { useRecoilValue } from "recoil";
+import { locationState } from "../atom";
 
 interface SurroundingsProps {
   places?: PlaceType[];
@@ -41,9 +43,11 @@ export default function Surroundings({ places }: SurroundingsProps) {
     
     getLocation();
   }, []); 
+
+  const locationDefault = useRecoilValue(locationState);
   
-  const currentX: number = location?.longitude || 0; // 경도 Longitude
-  const currentY: number = location?.latitude || 0; // 위도 Latitude
+  const currentX: any = location == null ? locationDefault.lng : location?.longitude; // 경도 Longitude
+  const currentY: any = location == null ? locationDefault.lat : location?.latitude; // 위도 Latitude
 
   const calculateDistance = (
     lat1: number,
