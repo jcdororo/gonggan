@@ -108,7 +108,7 @@ URL :<a href="https://gonggan.vercel.app/" title="gonggan 이동!"> 工間:study
   
 - 장소 제안하기
 
-<img src='./img/제안하기.gif' />
+<img src='./img/제안하기.gif' width="200" height="" />
 
 
 
