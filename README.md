@@ -96,6 +96,8 @@ URL :<a href="https://gonggan.vercel.app/" title="gonggan 이동!"> 工間:study
 <img src='./img/위치기반.gif' />
 <img src='./img/위치기반-폰.gif'  width="140" height=""/>
 
+<br />
+
 - 장소 찾기
 
 <img src='./img/장소찾기.gif' />
@@ -103,10 +105,11 @@ URL :<a href="https://gonggan.vercel.app/" title="gonggan 이동!"> 工間:study
 
 
 
-  - 
-- 제안하기
+  
+- 장소 제안하기
 
-- 
+<img src='./img/제안하기.gif' />
+
 
 
 # 이슈
