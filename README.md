@@ -3,10 +3,15 @@
 <img src="./img/버전-nextjs.png" width="120" height=""/>
 <img src="./img/버전-db.png" width="120" height=""/>
 
-배포 URL :<a href="https://gonggan.vercel.app/" title="gonggan 이동!"> 工間:study</a>
 
 
-# 개발동기
+# 내 주변 카공 위치 찾기 !, 工間:study
+工間:study 은 사용자에게 카공 위치를 추천해주는 웹 애플리케이션입니다.<br />
+사용자의 지역과 웹사이트 내에서의 활동 내역을 기반으로 하여<br />
+유저들이 추천하고 제안해주신 장소를 추천해줍니다.<br />
+URL :<a href="https://gonggan.vercel.app/" title="gonggan 이동!"> 工間:study</a>
+
+## 개발동기
 
 > 카페에서 공부를 하고싶을 때, 매번 네이버나 카카오 지도에서 공부하기 좋은 카페를 찾기가 쉽지 않은 경험이 있습니다. 이에 위치 검색만으로 공부할 수 있는 장소를 한눈에 찾을 수 있다면 새로운 장소를 탐색할 때 느끼는 피곤함을 덜 수 있지 않을까? 또, 분위기 좋은 장소를 공유하면 서로서로 좋지 않을까? 라는 생각으로 프로젝트를 기획하였습니다.
 
@@ -83,7 +88,26 @@
 ```
 
 # 프로젝트 프로세스
-<img src="./img/공간프로세스.png">
+<img src="./img/공간프로세스.png" />
+
+# 주요기능
+- 위치 기반 주변공간 조회
+
+<img src='./img/위치기반.gif' />
+<img src='./img/위치기반-폰.gif'  width="140" height=""/>
+
+- 장소 찾기
+
+<img src='./img/장소찾기.gif' />
+<img src='./img/장소찾기-폰.gif'  width="140" height=""/>
+
+
+
+  - 
+- 제안하기
+
+- 
+
 
 # 이슈
 
