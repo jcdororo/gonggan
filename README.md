@@ -87,6 +87,9 @@ URL :<a href="https://gonggan.vercel.app/" title="gonggan 이동!"> 工間:study
 
 ```
 
+# ERD
+<img src="./img/erd.png" />
+
 # 프로젝트 프로세스
 <img src="./img/공간프로세스.png" />
 
