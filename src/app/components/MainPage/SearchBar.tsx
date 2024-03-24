@@ -2,10 +2,10 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { FaFlag, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
-import { useDebounce } from "../hooks/useDebounce";
+import { useDebounce } from "../../hooks/useDebounce";
 import Link from "next/link";
 import { useRecoilState } from "recoil";
-import { mapState } from "../atom";
+import { mapState } from "../../atom";
 import kakaoSearchMap from "@/util/kakaoSearchMap";
 import { IoCloseSharp } from "react-icons/io5";
 
@@ -87,10 +87,7 @@ const SearchBar = () => {
         setPlaceInfo(null);
         let datas = [];
 
-        const place = await fetch(
-          `/api/place/placeSearch?query=${searchQuery}`,
-          { method: "GET" }
-        ).then((r) => r.json());
+        const place = await fetch(`/api/place/placeSearch?query=${searchQuery}`, { method: "GET" }).then((r) => r.json());
         // .then(r => datas.push(...r))
         datas.push(...place);
         setPlace(place);
@@ -112,7 +109,7 @@ const SearchBar = () => {
         }
       }
     } catch (error) {
-      throw new Error(error?.toString());      
+      throw new Error(error?.toString());
     }
   };
 
@@ -164,13 +161,15 @@ const SearchBar = () => {
       <div
         className={`relative darkModeSearchBar -mt-8 pt-8 z-1 xs:fixed xs:top-0 xs:z-9999 xs:-translate-x-3 xs:-translate-y-[1px] md:scale-x-[100%] md:scale-y-[100%] md:relative md:z-[9997] md:translate-x-0 md:translate-y-0 md:-mt-8
         ${isFocus ? "xs:scale-x-[100%] xs:-mt-[48px] xs:scale-y-[100%] xs:w-full xs:translate-x-0 md:w-auto" : "xs:scale-x-[35%] xs:scale-y-[40%]"}`}
-        >
+      >
         <div className={`p-3 -mb-10 h-[110px] md:h-[80px] z-0 flex flex-col items-center ${isFocus ? "xs:p-0 md:p-3" : ""}`}>
           <div
             className={`relative md:ml-12 xs:ml-0 w-112 md:w-128 h-24 xs:h-full flex flex-row justify-center items-center overflow-hidden rounded-full hover:shadow-lg bg-sygnature-beige
-            ${isFocus? "z-10 ml-0 h-[80px] my-4 md:my-0 xs:w-full md:w-128 xs:rounded-none md:rounded-3xl": ""}`}
-            >
-            <span className="flex items-center text-2xl z-10 font-bold text-sygnature-brown cursor-pointer pl-8 pr-2"><FaSearch size="34" /></span>
+            ${isFocus ? "z-10 ml-0 h-[80px] my-4 md:my-0 xs:w-full md:w-128 xs:rounded-none md:rounded-3xl" : ""}`}
+          >
+            <span className="flex items-center text-2xl z-10 font-bold text-sygnature-brown cursor-pointer pl-8 pr-2">
+              <FaSearch size="34" />
+            </span>
             <input
               className={`bg-sygnature-beige px-4 my-2 border-gray-300 border-opacity-0 w-128 focus:outline-none text-lg md:text-base
               ${isFocus ? "xs:w-full xs:text-lg md:w-128" : "xs:text-3xl"}`}
@@ -183,42 +182,27 @@ const SearchBar = () => {
               placeholder="스터디 장소를 검색해보세요 !"
               spellCheck="false"
             />
-            <div
-              className={`w-10 text-2xl text-sygnature-brown cursor-pointer hover:font-bold mr-4 ${isFocus ? "" : "hidden"} `}
-              onClick={handleclick}
-            >
+            <div className={`w-10 text-2xl text-sygnature-brown cursor-pointer hover:font-bold mr-4 ${isFocus ? "" : "hidden"} `} onClick={handleclick}>
               <IoCloseSharp size="30" />
             </div>
           </div>
         </div>
       </div>
       <div className="absolute w-full md:w-128 top-0 left-0 md:top-1/2 md:left-1/2 xs:transform md:-translate-x-[46%] translate-y-[8%] md:translate-y-[35%] z-10">
-        <div className={`bg-sygnature-beige md:rounded-2xl pb-3 border-sygnature-brown hover:shadow-lg ${focus ? "visible" : "hidden"} -translate-y-14 z-0
-          ${isFocus? "overflow-y-scroll h-[300px]": ""}`}
+        <div
+          className={`bg-sygnature-beige md:rounded-2xl pb-3 border-sygnature-brown hover:shadow-lg ${focus ? "visible" : "hidden"} -translate-y-14 z-0
+          ${isFocus ? "overflow-y-scroll h-[300px]" : ""}`}
           onClick={() => setIsFocus(false)}
-          >
+        >
           <ul className="darkModeSearchBar">
             {results.map((result: Result, i) => (
-              <li
-                className={`cursor-pointer p-4 mx-4 my-2 hover:bg-gray-100 ${
-                  result._id ? "text-sygnature-brown" : ""
-                }`}
-                key={i}
-                onClick={() => handleResultClick(result)}
-              >
+              <li className={`cursor-pointer p-4 mx-4 my-2 hover:bg-gray-100 ${result._id ? "text-sygnature-brown" : ""}`} key={i} onClick={() => handleResultClick(result)}>
                 <span className="font-bold block xs:text-xl md:text-base">
                   {" "}
-                  {result._id ? <FaMapMarkerAlt className="inline" /> : ""}{" "}
-                  {result.place_name}{" "}
+                  {result._id ? <FaMapMarkerAlt className="inline" /> : ""} {result.place_name}{" "}
                 </span>
-                <span className="xs:text-base md:text-base xs:block md:inline">
-                  {" "}
-                  [{result.address_name}],{" "}
-                </span>
-                <span className="xs:text-base md:text-base">
-                  {" "}
-                  [{result.road_address_name}]
-                </span>
+                <span className="xs:text-base md:text-base xs:block md:inline"> [{result.address_name}], </span>
+                <span className="xs:text-base md:text-base"> [{result.road_address_name}]</span>
               </li>
             ))}
             {place.length ? (
@@ -226,9 +210,7 @@ const SearchBar = () => {
             ) : (
               <li className="">
                 <div className="my-14 max-w-[38rem] h-24 flex flex-col justify-center items-center overflow-hidden">
-                  <div className="pt-12 pb-1 text-2xl font-bold xs:text-2xl md:text-2xl">
-                    &quot;{query}&quot; 검색 결과 없음
-                  </div>
+                  <div className="pt-12 pb-1 text-2xl font-bold xs:text-2xl md:text-2xl">&quot;{query}&quot; 검색 결과 없음</div>
                   <div className="p-1 cursor-pointer text-blue-600 mb-12 hover:font-bold hover:underline xs:text-xl md:text-base">
                     <Link href={"/propose"}>+ 장소 제안하기</Link>
                   </div>

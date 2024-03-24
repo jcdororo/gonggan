@@ -1,4 +1,4 @@
-import Title from "@/app/components/Title";
+import Title from "@/app/admin/Title";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { connectDB } from "@/util/database";
 import { getServerSession } from "next-auth";
@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 
 export default async function PoliceList() {
   const session: any = await getServerSession(authOptions);
-  if(session.user.role != 'admin') {
+  if (session.user.role != "admin") {
     notFound();
   }
   const db = (await connectDB).db("gonggan");
@@ -34,16 +34,11 @@ export default async function PoliceList() {
                 <tr key={x._id.toString()} className="h-10">
                   <td>
                     <div className="flex justify-center items-center">
-                      <div className="flex justify-center items-center bg-sygnature-brown rounded-2xl h-8 w-16 text-sm text-white">
-                        {x.status}
-                      </div>
+                      <div className="flex justify-center items-center bg-sygnature-brown rounded-2xl h-8 w-16 text-sm text-white">{x.status}</div>
                     </div>
                   </td>
                   <td className="py-4 pl-10">
-                    <Link
-                      href={`/admin/police/list/${x.placeid}`}
-                      className="hover:underline cursor-pointer"
-                    >
+                    <Link href={`/admin/police/list/${x.placeid}`} className="hover:underline cursor-pointer">
                       {x.placename}
                     </Link>
                   </td>

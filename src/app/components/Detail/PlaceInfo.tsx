@@ -10,10 +10,8 @@ import PlaceLike from "./PlaceLike";
 import { PiNotebookBold } from "react-icons/pi";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
-import SwiperImage from "../SwiperImage";
+import SwiperImage from "../MainPage/SwiperImage";
 import { FaExternalLinkAlt } from "react-icons/fa";
-
-
 
 interface PlaceProps {
   _id: string;
@@ -40,8 +38,6 @@ export default function PlaceInfo({ _id }: PlaceProps) {
     getPlace();
   }, []);
 
-
-
   return (
     <>
       <div className="relative block top-[-42px] w-full h-[350px] bg-gray-500 overflow-hidden">
@@ -56,10 +52,7 @@ export default function PlaceInfo({ _id }: PlaceProps) {
         {place && <SwiperImage place={place} />}
       </div>
       <div className="flex justify-between mb-10">
-        <div
-          className="flex px-8 text-2xl font-bold cursor-pointer gap-[10px]"
-          onClick={() => window.open(`${place?.place_url}`, '_blank')}
-        >
+        <div className="flex px-8 text-2xl font-bold cursor-pointer gap-[10px]" onClick={() => window.open(`${place?.place_url}`, "_blank")}>
           {place?.place_name}
           <FaExternalLinkAlt size="16" className="mt-2" />
         </div>
@@ -75,10 +68,7 @@ export default function PlaceInfo({ _id }: PlaceProps) {
         <IoMdTime size="24" />
         <div>
           <div className="">
-            {typeof place?.businessday == "string"
-              ? place?.businessday
-              : place?.businessday?.map(String).join(", ")
-            } &nbsp;
+            {typeof place?.businessday == "string" ? place?.businessday : place?.businessday?.map(String).join(", ")} &nbsp;
             {place?.openhour} ~ {place?.closehour}
           </div>
         </div>

@@ -1,13 +1,13 @@
-import { getServerSession } from 'next-auth';
-import SignInForm from '../components/SignInForm';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { getServerSession } from "next-auth";
+import SignInForm from "../components/Sign/SignInForm";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default async function SignupPage() {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
-  return(
+  return (
     <div>
-      <SignInForm session={session}/>
+      <SignInForm session={session} />
     </div>
-  )
+  );
 }

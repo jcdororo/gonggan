@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import Surroundings from "./Surroundings";
-import { PlaceType } from "../interface";
+import Surroundings from "../MainPage/Surroundings";
+import { PlaceType } from "@/app/interface";
 import { BiCurrentLocation } from "react-icons/bi";
 
 import { BsFillPinMapFill } from "react-icons/bs";
@@ -13,7 +13,6 @@ interface SpaceProps {
 }
 
 export default function Space({ category }: SpaceProps) {
-
   const getPlaces = async () => {
     const res = await axios.get("/api/places/route");
     const data = res.data;

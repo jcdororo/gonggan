@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { useInputImg } from "../hooks/useInputImg";
+import { useInputImg } from "../../hooks/useInputImg";
 import { useRouter } from "next/navigation";
 import { uploadImg } from "@/util/uploadImg";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -77,10 +77,7 @@ export default function ProfileForm({ session }: any) {
     // 이미지가 변경되었다면
     if (image != null) {
       url = await uploadImg(image);
-      result = await fetch(
-        `/api/upload/image?_id=${session.user.id}&url=${url}`,
-        { method: "POST" }
-      );
+      result = await fetch(`/api/upload/image?_id=${session.user.id}&url=${url}`, { method: "POST" });
     }
 
     try {
@@ -103,59 +100,33 @@ export default function ProfileForm({ session }: any) {
       await router.refresh();
       router.push("/mypage");
     } catch (error) {
-      throw new Error(error?.toString());      
+      throw new Error(error?.toString());
     }
   };
 
   const [showMessage, setShowMessage] = useState<boolean>(false);
   const clickModal = () => setShowMessage(!showMessage);
 
-
   return (
     <div className="mx-auto max-w-2xl p-5">
       <h1 className="text-3xl font-bold text-center mb-[40px]">프로필 수정</h1>
       <div className="flex justify-center mb-5">
         {/* <div className="bg-black w-[100px] h-[100px] rounded-full"></div> */}
-        <Image
-          className="rounded-full w-[100px] h-[100px] overflow-hidden"
-          src={picture ? picture : "/logo.png"}
-          width={640}
-          height={640}
-          alt="아이콘"
-        />
+        <Image className="rounded-full w-[100px] h-[100px] overflow-hidden" src={picture ? picture : "/logo.png"} width={640} height={640} alt="아이콘" />
       </div>
       <div className="flex justify-center">
-        <input
-          type="file"
-          ref={imageRef}
-          accept="image/*"
-          multiple={false}
-          onChange={handleChange}
-          className="hidden"
-        />
-        <button
-          className="border-2 border-[#998373] rounded-sm bg-inherit text-[#998373] text-xs w-[100px] h-[30px] hover:shadow-lg"
-          onClick={handleClick}
-        >
+        <input type="file" ref={imageRef} accept="image/*" multiple={false} onChange={handleChange} className="hidden" />
+        <button className="border-2 border-[#998373] rounded-sm bg-inherit text-[#998373] text-xs w-[100px] h-[30px] hover:shadow-lg" onClick={handleClick}>
           이미지 업로드
         </button>
       </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        method="POST"
-        className="m-auto p-11"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} method="POST" className="m-auto p-11">
         {session.user.method != "oauth" ? (
           <div className="form__block">
             <label className="lab" htmlFor="id">
               아이디
             </label>
-            <input
-              {...register("loginId")}
-              className="in bg-sygnature-beige"
-              type="text"
-              disabled
-            />
+            <input {...register("loginId")} className="in bg-sygnature-beige" type="text" disabled />
           </div>
         ) : (
           ""
@@ -183,17 +154,13 @@ export default function ProfileForm({ session }: any) {
                     return "중복된 닉네임입니다.";
                   }
                 } catch (error) {
-                  throw new Error(error?.toString());      
+                  throw new Error(error?.toString());
                 }
               },
             })}
             className="in"
           />
-          {errors.nickname && (
-            <p className="text-sm text-red-500 p-2">
-              {errors?.nickname?.message}
-            </p>
-          )}
+          {errors.nickname && <p className="text-sm text-red-500 p-2">{errors?.nickname?.message}</p>}
         </div>
 
         {session.user.method != "oauth" ? (
@@ -219,18 +186,14 @@ export default function ProfileForm({ session }: any) {
                         return "비밀번호가 맞지 않습니다.";
                       }
                     } catch (error) {
-                      throw new Error(error?.toString());      
+                      throw new Error(error?.toString());
                     }
                   },
                 })}
                 className="in"
                 type="password"
               />
-              {errors.current_password && (
-                <p className="text-sm text-red-500 p-2">
-                  {errors?.current_password?.message}
-                </p>
-              )}
+              {errors.current_password && <p className="text-sm text-red-500 p-2">{errors?.current_password?.message}</p>}
             </div>
             <div className="form__block">
               <label className="lab" htmlFor="newpw">
@@ -246,11 +209,7 @@ export default function ProfileForm({ session }: any) {
                 className="in"
                 type="password"
               />
-              {errors.password && (
-                <p className="text-sm text-red-500 p-2">
-                  {errors?.password?.message}
-                </p>
-              )}
+              {errors.password && <p className="text-sm text-red-500 p-2">{errors?.password?.message}</p>}
             </div>
             <div className="form__block">
               <label className="lab" htmlFor="newpw_confirm">
@@ -267,11 +226,7 @@ export default function ProfileForm({ session }: any) {
                 className="in"
                 type="password"
               />
-              {errors.password_confirm && (
-                <p className="text-sm text-red-500 p-2">
-                  {errors?.password_confirm?.message}
-                </p>
-              )}
+              {errors.password_confirm && <p className="text-sm text-red-500 p-2">{errors?.password_confirm?.message}</p>}
             </div>
           </>
         ) : (
@@ -286,8 +241,7 @@ export default function ProfileForm({ session }: any) {
             {...register("email", {
               required: "이메일을 입력해주세요.",
               pattern: {
-                value:
-                  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+                value: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
                 message: "이메일형식으로 기입해주세요.",
               },
               validate: async (val: string) => {
@@ -302,15 +256,13 @@ export default function ProfileForm({ session }: any) {
                     return "중복된 이메일입니다.";
                   }
                 } catch (error) {
-                  throw new Error(error?.toString());      
+                  throw new Error(error?.toString());
                 }
               },
             })}
             className="in"
           />
-          {errors.email && (
-            <p className="text-sm text-red-500 p-2">{errors?.email?.message}</p>
-          )}
+          {errors.email && <p className="text-sm text-red-500 p-2">{errors?.email?.message}</p>}
         </div>
 
         <div className="form__block">
@@ -322,9 +274,7 @@ export default function ProfileForm({ session }: any) {
       </div>
 
       {/* 회원탈퇴 메시지 창 */}
-      {showMessage && (
-        <DeleteUserModal id={session.user.id} clickModal={clickModal} />
-      )}
+      {showMessage && <DeleteUserModal id={session.user.id} clickModal={clickModal} />}
     </div>
   );
 }

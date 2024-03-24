@@ -22,7 +22,6 @@ interface HeaderInfoProps {
   alarms: AlarmsContents[];
 }
 
-
 const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
   const [isDropboxOpen, setIsDropboxOpen] = useState(false);
   const [isAlarmOpen, setIsAlarmOpen] = useState(false);
@@ -83,22 +82,14 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
     setIsAlarmOpen(!isAlarmOpen);
   };
 
-  const handleContent = async (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    id: object | string,
-    index: number
-  ) => {
+  const handleContent = async (e: React.MouseEvent<HTMLAnchorElement>, id: object | string, index: number) => {
     const response = await fetch(`/api/alarm/alarmCheck?_id=${id}`, {
       method: "POST",
     })
       .then((r) => r.json())
       .then((r) => {
         alarmsContens[index].check = true;
-        setAlarmsContens([
-          ...alarmsContens.slice(0, index),
-          alarmsContens[index],
-          ...alarmsContens.slice(index + 1, alarmsContens.length),
-        ]);
+        setAlarmsContens([...alarmsContens.slice(0, index), alarmsContens[index], ...alarmsContens.slice(index + 1, alarmsContens.length)]);
       });
   };
 
@@ -136,43 +127,32 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
       {session ? (
         // 로그인 상태일 때
         <div className="absolute right-0 top-2 pr-12">
-          <div className={`right-1 flex justify-center items-center
+          <div
+            className={`right-1 flex justify-center items-center
           xs:scale-50 xs:translate-x-[4rem] xs:-translate-y-1
-          md:scale-100 md:translate-x-0 md:translate-y-0`}>
+          md:scale-100 md:translate-x-0 md:translate-y-0`}
+          >
             <div className="px-3">
               <DarkMode />
             </div>
             <div ref={alarmRef} className="relative">
               {/* 새로운 알람 갯수 */}
-              <div className={`absolute w-5 top-[-10px] left-8 font-bold text-sm text-center rounded-2xl bg-red-600 text-white
+              <div
+                className={`absolute w-5 top-[-10px] left-8 font-bold text-sm text-center rounded-2xl bg-red-600 text-white
               xs:left-4
-              md:left-8`}>
-                {alarmsContens.filter((x: AlarmsContents) => x.check == false)
-                  .length
-                  ? alarmsContens.filter(
-                      (x: AlarmsContents) => x.check == false
-                    ).length
-                  : ""}
+              md:left-8`}
+              >
+                {alarmsContens.filter((x: AlarmsContents) => x.check == false).length ? alarmsContens.filter((x: AlarmsContents) => x.check == false).length : ""}
               </div>
               <FaBell
-                className={`block ml-4 mr-6 text-sygnature-brown cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${
-                  isAlarmOpen ? "text-red-400" : ""
-                }
+                className={`block ml-4 mr-6 text-sygnature-brown cursor-pointer border-sygnature-brown rounded-xl hover:text-red-400 ${isAlarmOpen ? "text-red-400" : ""}
                 xs:ml-0 xs:mr-4
                 md:ml-4 md:mr-6`}
                 onClick={handleAlarm}
                 size="30"
               />
             </div>
-            <Image
-              className="rounded-full h-14 w-14 overflow-hidden cursor-pointer hover:scale-105 transition duration-300"
-              src={session.user.image ? session.user.image : "/logo.png"}
-              width={640}
-              height={640}
-              alt="아이콘"
-              onClick={handleClick}
-              ref={dropboRef}
-            />
+            <Image className="rounded-full h-14 w-14 overflow-hidden cursor-pointer hover:scale-105 transition duration-300" src={session.user.image ? session.user.image : "/logo.png"} width={640} height={640} alt="아이콘" onClick={handleClick} ref={dropboRef} />
 
             {/* 알람 아이콘 클릭시 나오는 드랍박스 */}
             <div
@@ -191,29 +171,18 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
             >
               {alarmsContens.length ? (
                 alarmsContens
-                  .sort(
-                    (a: AlarmsContents, b: AlarmsContents) =>
-                      Number(new Date(b.date)) - Number(new Date(a.date))
-                  )
+                  .sort((a: AlarmsContents, b: AlarmsContents) => Number(new Date(b.date)) - Number(new Date(a.date)))
                   .map((x, i) => (
-                    <div
-                      key={x._id.toString()}
-                      className="my-2 hover:shadow-lg"
-                    >
+                    <div key={x._id.toString()} className="my-2 hover:shadow-lg">
                       <Link
                         href={x.link.toString()}
-                        className={`h-16 cursor-pointer py-1 ${
-                          x.check ? "opacity-50" : "opacity-100"
-                        }`}
+                        className={`h-16 cursor-pointer py-1 ${x.check ? "opacity-50" : "opacity-100"}`}
                         onClick={(e) => {
                           handleContent(e, x._id, i);
                         }}
                       >
                         <span className="text-left">{x.content}</span>
-                        <div className="text-left text-sm opacity-80 ml-8">
-                          {" "}
-                          {alarmTime(x.date)}
-                        </div>
+                        <div className="text-left text-sm opacity-80 ml-8"> {alarmTime(x.date)}</div>
                         <div className="flex justify-center">
                           <div className="h-[0.5px] w-full bg-black opacity-30"></div>
                         </div>
@@ -254,22 +223,16 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
                   <Link href={"/admin"} className="hover:font-bold">
                     admin 페이지
                   </Link>
-                  <Link
-                    href={"/admin/propose/list"}
-                    className="hover:font-bold"
-                  >
+                  <Link href={"/admin/propose/list"} className="hover:font-bold">
                     장소 제안 목록
                   </Link>
                   <Link href={"/admin/police/list"} className="hover:font-bold">
                     신고 목록
                   </Link>
-                  <Link
-                    href={"/admin/contact/list"}
-                    className="hover:font-bold"
-                  >
+                  <Link href={"/admin/contact/list"} className="hover:font-bold">
                     문의 목록
                   </Link>
-                  <Link href={"/admin/role/list"}  className="hover:font-bold">
+                  <Link href={"/admin/role/list"} className="hover:font-bold">
                     권한 목록
                   </Link>
                 </>
@@ -282,13 +245,17 @@ const HeaderInfo: React.FC<HeaderInfoProps> = ({ session, alarms }) => {
         </div>
       ) : (
         // 비 로그인 상태일 때
-        <div className={`absolute right-0 top-3 pr-12
+        <div
+          className={`absolute right-0 top-3 pr-12
         xs:py-0 xs:scale-[60%] xs:translate-x-10 xs:translate-y-1
-        md:py-3 md:scale-100 md:translate-x-0 md:translate-y-0`}>
+        md:py-3 md:scale-100 md:translate-x-0 md:translate-y-0`}
+        >
           <div className="right-1 flex justify-center items-center text-sygnature-beige font-bold">
-            <div className={`px-3
+            <div
+              className={`px-3
             xs:p-0
-            md:px-3`}>
+            md:px-3`}
+            >
               <DarkMode />
             </div>
             <div

@@ -1,4 +1,4 @@
-import Title from "@/app/components/Title";
+import Title from "@/app/admin/Title";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { connectDB } from "@/util/database";
 import { getServerSession } from "next-auth";
@@ -8,7 +8,7 @@ import React from "react";
 
 const page = async ({ params }: { params: { id: string } }) => {
   const session: any = await getServerSession(authOptions);
-  if(session.user.role != 'admin') {
+  if (session.user.role != "admin") {
     notFound();
   }
   const db = (await connectDB).db("gonggan");
@@ -21,10 +21,7 @@ const page = async ({ params }: { params: { id: string } }) => {
         <div>
           <div className="font-bold text-xl mb-2">장소</div>
           <div className="pl-2">
-            <Link
-              href={`/places/${params.id}`}
-              className="hover:underline text-blue-600"
-            >
+            <Link href={`/places/${params.id}`} className="hover:underline text-blue-600">
               {result?.placename}
             </Link>
           </div>
@@ -44,7 +41,10 @@ const page = async ({ params }: { params: { id: string } }) => {
         <div>
           <div className="font-bold text-xl mb-2">분류</div>
           {result?.check.map((x: string[], i: number) => (
-            <div key={i} className="pl-2"> - {x}</div>
+            <div key={i} className="pl-2">
+              {" "}
+              - {x}
+            </div>
           ))}
         </div>
         <div>

@@ -1,6 +1,6 @@
 "use client";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import Title from "../Title";
+import Title from "../../admin/Title";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
 import CryptoJS from "crypto-js";
@@ -26,23 +26,20 @@ export default function ChangePwdForm({ id }: ChangePwdProps) {
 
   // 암호화 했던 id 복호화
   const secretKey = process.env.NEXT_PUBLIC_CRYPTO_KEY as string;
-  const urlSafeDecrypted = id.replace(/--/g, '/');
-  const decrypted = CryptoJS.AES.decrypt(
-    urlSafeDecrypted,
-    secretKey
-  ).toString(CryptoJS.enc.Utf8);
+  const urlSafeDecrypted = id.replace(/--/g, "/");
+  const decrypted = CryptoJS.AES.decrypt(urlSafeDecrypted, secretKey).toString(CryptoJS.enc.Utf8);
 
-  const decryptedId = decrypted.slice(1,25);
+  const decryptedId = decrypted.slice(1, 25);
 
   const onSubmit: SubmitHandler<FieldValues> = async (body) => {
     try {
       const { data } = await axios.put("/api/accountFind/changePwd", {
         ...body,
-        id: decryptedId
+        id: decryptedId,
       });
       router.push("/signin");
     } catch (error) {
-      throw new Error(error?.toString());      
+      throw new Error(error?.toString());
     }
   };
 
@@ -67,11 +64,7 @@ export default function ChangePwdForm({ id }: ChangePwdProps) {
                 className="in"
                 type="password"
               />
-              {errors.password && (
-                <p className="text-sm text-red-500 p-2">
-                  {errors?.password?.message}
-                </p>
-              )}
+              {errors.password && <p className="text-sm text-red-500 p-2">{errors?.password?.message}</p>}
             </div>
             <div className="form__block">
               <label className="lab" htmlFor="password_confirm">
@@ -89,18 +82,10 @@ export default function ChangePwdForm({ id }: ChangePwdProps) {
                 className="in"
                 type="password"
               />
-              {errors.password_confirm && (
-                <p className="text-sm text-red-500 p-2">
-                  {errors?.password_confirm?.message}
-                </p>
-              )}
+              {errors.password_confirm && <p className="text-sm text-red-500 p-2">{errors?.password_confirm?.message}</p>}
             </div>
             <div className="form__block">
-              <input
-                type="submit"
-                value="변경하기"
-                className="form__btn--submit"
-              />
+              <input type="submit" value="변경하기" className="form__btn--submit" />
             </div>
           </form>
         </div>

@@ -7,15 +7,15 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useRecoilState } from "recoil";
 import { mapState } from "../atom";
-import Map from "../components/Map";
+import Map from "../components/Map/Map";
 import Image from "next/image";
 import { useInputImgs } from "../hooks/useInputImgs";
 import kakaoSearchMap from "@/util/kakaoSearchMap";
 import { uploadImg } from "@/util/uploadImg";
 import { sendAlarm } from "@/util/sendAlarm";
-import LoadingSpin from "../components/LoadingSpin";
-import Spin from "../components/Spin";
-import SpinWhite from "../components/SpinWhite";
+import LoadingSpin from "../components/Spin/LoadingSpin";
+import Spin from "../components/Spin/Spin";
+import SpinWhite from "../components/Spin/SpinWhite";
 
 interface Result {
   _id?: string;
@@ -51,7 +51,7 @@ const Propose = ({ session }: any) => {
   const [openHour, setOpenHour] = useState("");
   const [closeHour, setCloseHour] = useState("");
   const [businessDay, setBusinessDay] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!session) {
     setTimeout(() => {
@@ -76,27 +76,25 @@ const Propose = ({ session }: any) => {
     );
   }
   useEffect(() => {
-    const handleKeyESC = (e: { key: string; }) => {
-      if(e.key === 'Escape') {
+    const handleKeyESC = (e: { key: string }) => {
+      if (e.key === "Escape") {
         setFocus(false);
       }
-    }
+    };
 
-    const handleKeyEnter = (e: { key: string; }) => {
-      if(e.key === 'Enter') {
+    const handleKeyEnter = (e: { key: string }) => {
+      if (e.key === "Enter") {
         setFocus(true);
       }
-    }
-    window.addEventListener('keydown', handleKeyESC)
-    window.addEventListener('keydown', handleKeyEnter)
+    };
+    window.addEventListener("keydown", handleKeyESC);
+    window.addEventListener("keydown", handleKeyEnter);
 
-  
     return () => {
-      window.removeEventListener('keydown',handleKeyESC)
-      window.removeEventListener('keydown',handleKeyEnter)
-
-    }
-  }, [])
+      window.removeEventListener("keydown", handleKeyESC);
+      window.removeEventListener("keydown", handleKeyEnter);
+    };
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -132,10 +130,7 @@ const Propose = ({ session }: any) => {
         const datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
 
-        const place = await fetch(
-          `/api/place/placeSearch?query=${searchQuery}`,
-          { method: "GET" }
-        ).then((r) => r.json());
+        const place = await fetch(`/api/place/placeSearch?query=${searchQuery}`, { method: "GET" }).then((r) => r.json());
         // .then(r => datas.push(...r))
 
         datas.push(...place);
@@ -155,7 +150,7 @@ const Propose = ({ session }: any) => {
         }
       }
     } catch (error) {
-      throw new Error(error?.toString());      
+      throw new Error(error?.toString());
     }
   };
 
@@ -233,10 +228,7 @@ const Propose = ({ session }: any) => {
 
   // 사진첨부기능
   const handleClose = (e: React.MouseEvent<HTMLElement>, i: number) => {
-    setImagePreview([
-      ...imagePreview.slice(0, i),
-      ...imagePreview.slice(i + 1, imagePreview.length),
-    ]);
+    setImagePreview([...imagePreview.slice(0, i), ...imagePreview.slice(i + 1, imagePreview.length)]);
     setImage([...image.slice(0, i), ...image.slice(i + 1, image.length)]);
   };
 
@@ -279,8 +271,8 @@ const Propose = ({ session }: any) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true)
-    
+    setIsLoading(true);
+
     const temp = {
       location: query,
       openhour: openHour,
@@ -317,62 +309,36 @@ const Propose = ({ session }: any) => {
         body: JSON.stringify({ place_id: place_id, url: url }),
       }).then((r) => r.json());
     }
-    setIsLoading(false)
+    setIsLoading(false);
 
     router.push("/propose/complete");
   };
 
   return (
     <div>
-      <div className="text-center font-extrabold text-2xl my-4">
-        장소 제안 하기
-      </div>
+      <div className="text-center font-extrabold text-2xl my-4">장소 제안 하기</div>
       {/* action="/api/propose/propose" */}
-      <form
-        action="/api/propose/propose"
-        onSubmit={handleSubmit}
-        method="POST"
-        className="mx-auto max-w-screen-sm p-5 mt-5"
-      >
+      <form action="/api/propose/propose" onSubmit={handleSubmit} method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
         {/* 사진첨부 */}
         <div className="darkMode w-full p-2 my-2 min-h-[180px] border-2 border-gray-300">
-          <div className="grid grid-cols-3 gap-2
+          <div
+            className="grid grid-cols-3 gap-2
           xs:grid-cols-2 
-          md:grid-cols-3">
+          md:grid-cols-3"
+          >
             {imagePreview.map((x, i) => (
               <div key={i} className="relative">
                 <div className="h-[150px]">
-                  <Image
-                    className="w-full h-full"
-                    src={x}
-                    width={110}
-                    height={75}
-                    alt="header"
-                  />
-                  <FaWindowClose
-                    className="absolute top-0 right-0 cursor-pointer text-sygnature-brown"
-                    onClick={(e: React.MouseEvent<HTMLElement>) =>
-                      handleClose(e, i)
-                    }
-                  />
+                  <Image className="w-full h-full" src={x} width={110} height={75} alt="header" />
+                  <FaWindowClose className="absolute top-0 right-0 cursor-pointer text-sygnature-brown" onClick={(e: React.MouseEvent<HTMLElement>) => handleClose(e, i)} />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div
-          className="my-4 h-14 flex flex-row justify-center items-center border-2 border-gray-300 border-dashed cursor-pointer"
-          onClick={handleAttach}
-        >
-          <input
-            type="file"
-            ref={imageRef}
-            accept="image/*"
-            multiple={false}
-            onChange={handleAttachChange}
-            className="hidden"
-          />
+        <div className="my-4 h-14 flex flex-row justify-center items-center border-2 border-gray-300 border-dashed cursor-pointer" onClick={handleAttach}>
+          <input type="file" ref={imageRef} accept="image/*" multiple={false} onChange={handleAttachChange} className="hidden" />
           <FaCamera className="mx-1" /> 사진 첨부하기
         </div>
 
@@ -388,22 +354,12 @@ const Propose = ({ session }: any) => {
           onChange={handleChange}
           ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정
           autoComplete="off"
-          spellCheck='false'
+          spellCheck="false"
         />
-        <div
-          className={`z-10 border absolute -translate-y-3 bg-white ${
-            focus ? "visible" : "hidden"
-          }`}
-        >
+        <div className={`z-10 border absolute -translate-y-3 bg-white ${focus ? "visible" : "hidden"}`}>
           <ul className="darkModeSearchBar">
             {results.map((result: Result, i) => (
-              <li
-                className={`cursor-pointer p-1 m-1 hover:bg-gray-100 ${
-                  result._id ? "text-sygnature-brown" : ""
-                }`}
-                key={i}
-                onClick={() => handleResultClick(result)}
-              >
+              <li className={`cursor-pointer p-1 m-1 hover:bg-gray-100 ${result._id ? "text-sygnature-brown" : ""}`} key={i} onClick={() => handleResultClick(result)}>
                 {result._id ? <FaFlag className="inline" /> : ""}
                 <span className="font-bold"> {result.place_name}</span>
                 <span> [{result.address_name}],</span>
@@ -420,11 +376,7 @@ const Propose = ({ session }: any) => {
           영업시간<span className="text-red-500 font-bold">*</span>
         </div>
         <div className="flex flex-row mt-2 mb-4 ">
-          <select
-            className="darkMode w-24 text-center border border-gray-300 rounded-md cursor-pointer"
-            name="openhour"
-            onChange={handleOpenHour}
-          >
+          <select className="darkMode w-24 text-center border border-gray-300 rounded-md cursor-pointer" name="openhour" onChange={handleOpenHour}>
             <option value="00:00">00 : 00</option>
             <option value="00:30">00 : 30</option>
             <option value="01:00">01 : 00</option>
@@ -476,11 +428,7 @@ const Propose = ({ session }: any) => {
             <option value="24:00">24 : 00</option>
           </select>
           <span className="flex items-center mx-4 font-bold text-lg"> ~ </span>
-          <select
-            className="darkMode w-24 text-center border border-gray-300 rounded-md cursor-pointer"
-            name="closehour"
-            onChange={handleCloseHour}
-          >
+          <select className="darkMode w-24 text-center border border-gray-300 rounded-md cursor-pointer" name="closehour" onChange={handleCloseHour}>
             <option value="00:00">00 : 00</option>
             <option value="00:30">00 : 30</option>
             <option value="01:00">01 : 00</option>
@@ -536,61 +484,19 @@ const Propose = ({ session }: any) => {
         {/* 영업 시간 */}
         <div className="font-semibold">영업일</div>
         <div className="flex flex-row items-center justify-center my-2">
-          <input
-            onChange={handleBusinessDay}
-            name="businessday"
-            type="checkbox"
-            value={"월"}
-            className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={"월"} className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">월</span>
-          <input
-            onChange={handleBusinessDay}
-            name="businessday"
-            type="checkbox"
-            value={"화"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={"화"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">화</span>
-          <input
-            onChange={handleBusinessDay}
-            name="businessday"
-            type="checkbox"
-            value={"수"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={"수"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">수</span>
-          <input
-            onChange={handleBusinessDay}
-            name="businessday"
-            type="checkbox"
-            value={"목"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={"목"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">목</span>
-          <input
-            onChange={handleBusinessDay}
-            name="businessday"
-            type="checkbox"
-            value={"금"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={"금"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">금</span>
-          <input
-            onChange={handleBusinessDay}
-            name="businessday"
-            type="checkbox"
-            value={"토"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={"토"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">토</span>
-          <input
-            onChange={handleBusinessDay}
-            name="businessday"
-            type="checkbox"
-            value={"일"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} name="businessday" type="checkbox" value={"일"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-4 block">일</span>
         </div>
 
@@ -599,61 +505,34 @@ const Propose = ({ session }: any) => {
           전화번호
           <span className="ml-1 text-sm text-red-500">( - 없이, 생략가능)</span>
         </div>
-        <input
-          maxLength={20}
-          name="phone"
-          className={`darkMode px-2 border-gray-300 w-full ${inputHoverFocus}`}
-          onChange={handlePhoneChange}
-          value={phoneValue}
-          autoComplete="off"
-        />
+        <input maxLength={20} name="phone" className={`darkMode px-2 border-gray-300 w-full ${inputHoverFocus}`} onChange={handlePhoneChange} value={phoneValue} autoComplete="off" />
 
         {/* 이용방법 */}
         <div className="font-semibold my-2">
           이용방법<span className="text-red-500 font-bold">*</span>
         </div>
-        <textarea
-          maxLength={500}
-          name="howtouse"
-          className={`darkMode p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`}
-          onChange={handleHowtouseChange}
-          value={howtouseValue}
-          autoComplete="off"
-        />
+        <textarea maxLength={500} name="howtouse" className={`darkMode p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`} onChange={handleHowtouseChange} value={howtouseValue} autoComplete="off" />
 
         {/* 설명 */}
         <div className="font-semibold my-2">
           설명<span className="text-red-500 font-bold">*</span>
         </div>
-        <textarea
-          maxLength={500}
-          name="desc"
-          className={`darkMode p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`}
-          onChange={handleDescChange}
-          value={descValue}
-          autoComplete="off"
-        />
+        <textarea maxLength={500} name="desc" className={`darkMode p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`} onChange={handleDescChange} value={descValue} autoComplete="off" />
 
         <div className="my-5 flex flex-row justify-center">
           {checkForm() ? (
             checkForm()
           ) : (
             <div>
-              {
-                !isLoading
-                ?
-                <button
-                  className="w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300"
-                  type="submit"
-                  onClick={handleClick}
-                >
+              {!isLoading ? (
+                <button className="w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300" type="submit" onClick={handleClick}>
                   작성 완료
                 </button>
-                :
+              ) : (
                 <div className="w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300">
                   <SpinWhite />
-                </div>         
-              }
+                </div>
+              )}
             </div>
           )}
         </div>

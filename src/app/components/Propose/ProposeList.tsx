@@ -2,14 +2,14 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { mapState } from "../atom";
+import { mapState } from "../../atom";
 import Link from "next/link";
-import { useDebounce } from "../hooks/useDebounce";
-import { useInputImgs } from "../hooks/useInputImgs";
+import { useDebounce } from "../../hooks/useDebounce";
+import { useInputImgs } from "../../hooks/useInputImgs";
 import Image from "next/image";
 import { FaCamera, FaFlag, FaWindowClose } from "react-icons/fa";
-import Map from "./Map";
-import { inputHoverFocus } from "../styles/styles";
+import Map from "../Map/Map";
+import { inputHoverFocus } from "../../styles/styles";
 import { ObjectId } from "mongodb";
 import kakaoSearchMap from "@/util/kakaoSearchMap";
 import { sendAlarm } from "@/util/sendAlarm";
@@ -55,7 +55,6 @@ const ProposeList = ({ session, params }: any) => {
   const [closeHour, setCloseHour] = useState("");
   const [businessDay, setBusinessDay] = useState<string[]>([]);
   const [confirm, setConfirm] = useState("approved");
-  
 
   const [sun, setSun] = useState(false);
   const [mon, setMon] = useState(false);
@@ -88,27 +87,25 @@ const ProposeList = ({ session, params }: any) => {
     );
   }
   useEffect(() => {
-    const handleKeyESC = (e: { key: string; }) => {
-      if(e.key === 'Escape') {
+    const handleKeyESC = (e: { key: string }) => {
+      if (e.key === "Escape") {
         setFocus(false);
       }
-    }
+    };
 
-    const handleKeyEnter = (e: { key: string; }) => {
-      if(e.key === 'Enter') {
+    const handleKeyEnter = (e: { key: string }) => {
+      if (e.key === "Enter") {
         setFocus(true);
       }
-    }
-    window.addEventListener('keydown', handleKeyESC)
-    window.addEventListener('keydown', handleKeyEnter)
+    };
+    window.addEventListener("keydown", handleKeyESC);
+    window.addEventListener("keydown", handleKeyEnter);
 
-  
     return () => {
-      window.removeEventListener('keydown',handleKeyESC)
-      window.removeEventListener('keydown',handleKeyEnter)
-
-    }
-  }, [])
+      window.removeEventListener("keydown", handleKeyESC);
+      window.removeEventListener("keydown", handleKeyEnter);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     // 사진 가져오기
@@ -121,46 +118,26 @@ const ProposeList = ({ session, params }: any) => {
     pitures();
     // 정보 가져오기
     const infos = async () => {
-      const propose = await fetch(
-        `/api/propose/proposeSearch/?id=${params.id}`,
-        { method: "GET" }
-      )
+      const propose = await fetch(`/api/propose/proposeSearch/?id=${params.id}`, { method: "GET" })
         .then((r) => r.json())
         .then((r) => {
-          setQuery(r.location),
-            setOpenHour(r.openhour),
-            setCloseHour(r.closehour);
+          setQuery(r.location), setOpenHour(r.openhour), setCloseHour(r.closehour);
           setBusinessDay(r.businessday),
             setPhoneValue(r.phone),
             setHowtouseValue(r.howtouse),
             setdescValue(r.desc),
             setPlaceInfo(r),
-            r.businessday && r.businessday.indexOf("월") !== -1
-              ? setMon(true)
-              : setMon(false),
-            r.businessday && r.businessday.indexOf("화") !== -1
-              ? setTue(true)
-              : setTue(false),
-            r.businessday && r.businessday.indexOf("수") !== -1
-              ? setWed(true)
-              : setWed(false),
-            r.businessday && r.businessday.indexOf("목") !== -1
-              ? setThu(true)
-              : setThu(false),
-            r.businessday && r.businessday.indexOf("금") !== -1
-              ? setFri(true)
-              : setFri(false),
-            r.businessday && r.businessday.indexOf("토") !== -1
-              ? setSat(true)
-              : setSat(false),
-            r.businessday && r.businessday.indexOf("일") !== -1
-              ? setSun(true)
-              : setSun(false);
+            r.businessday && r.businessday.indexOf("월") !== -1 ? setMon(true) : setMon(false),
+            r.businessday && r.businessday.indexOf("화") !== -1 ? setTue(true) : setTue(false),
+            r.businessday && r.businessday.indexOf("수") !== -1 ? setWed(true) : setWed(false),
+            r.businessday && r.businessday.indexOf("목") !== -1 ? setThu(true) : setThu(false),
+            r.businessday && r.businessday.indexOf("금") !== -1 ? setFri(true) : setFri(false),
+            r.businessday && r.businessday.indexOf("토") !== -1 ? setSat(true) : setSat(false),
+            r.businessday && r.businessday.indexOf("일") !== -1 ? setSun(true) : setSun(false);
         });
     };
     infos();
-  }, [])
-
+  }, []);
 
   useLayoutEffect(() => {
     const openHourEl = document.getElementById("openhour") as HTMLSelectElement;
@@ -172,9 +149,7 @@ const ProposeList = ({ session, params }: any) => {
       }
     }
 
-    const closeHourEl = document.getElementById(
-      "closehour"
-    ) as HTMLSelectElement;
+    const closeHourEl = document.getElementById("closehour") as HTMLSelectElement;
 
     for (let i = 0; i < closeHourEl.options.length; i++) {
       if (closeHourEl.options[i].value === closeHour) {
@@ -218,10 +193,7 @@ const ProposeList = ({ session, params }: any) => {
         const datas = [];
         const apiUrl = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchQuery}`;
 
-        const place = await fetch(
-          `/api/place/placeSearch?query=${searchQuery}`,
-          { method: "GET" }
-        ).then((r) => r.json());
+        const place = await fetch(`/api/place/placeSearch?query=${searchQuery}`, { method: "GET" }).then((r) => r.json());
         // .then(r => datas.push(...r))
 
         datas.push(...place);
@@ -241,7 +213,7 @@ const ProposeList = ({ session, params }: any) => {
         }
       }
     } catch (error) {
-      throw new Error(error?.toString());      
+      throw new Error(error?.toString());
     }
   };
 
@@ -320,10 +292,7 @@ const ProposeList = ({ session, params }: any) => {
 
   // 사진첨부기능
   const handleClose = (e: React.MouseEvent<HTMLElement>, i: number) => {
-    setImagePreview([
-      ...imagePreview.slice(0, i),
-      ...imagePreview.slice(i + 1, imagePreview.length),
-    ]);
+    setImagePreview([...imagePreview.slice(0, i), ...imagePreview.slice(i + 1, imagePreview.length)]);
     setImage([...image.slice(0, i), ...image.slice(i + 1, image.length)]);
   };
 
@@ -346,22 +315,22 @@ const ProposeList = ({ session, params }: any) => {
 
   // 영업일
   const handleBusinessDay = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const day = e.currentTarget.value
-    if(day == '월') {
+    const day = e.currentTarget.value;
+    if (day == "월") {
       setMon(!mon);
-    } else if(day == '화') {
+    } else if (day == "화") {
       setTue(!tue);
-    } else if(day == '수') {
+    } else if (day == "수") {
       setWed(!wed);
-    } else if(day == '목') {
+    } else if (day == "목") {
       setThu(!thu);
-    } else if(day == '금') {
+    } else if (day == "금") {
       setFri(!fri);
-    } else if(day == '토') {
+    } else if (day == "토") {
       setSat(!sat);
     } else {
       setSun(!sun);
-    } 
+    }
   };
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -370,53 +339,28 @@ const ProposeList = ({ session, params }: any) => {
 
   return (
     <div>
-      <div className="text-center font-extrabold text-2xl my-4">
-        장소 제안 하기
-      </div>
-      <form
-        action="/api/propose/proposeConfirm"
-        method="POST"
-        className="mx-auto max-w-screen-sm p-5 mt-5"
-      >
+      <div className="text-center font-extrabold text-2xl my-4">장소 제안 하기</div>
+      <form action="/api/propose/proposeConfirm" method="POST" className="mx-auto max-w-screen-sm p-5 mt-5">
         {/* 사진첨부 */}
-        <div className="darkMode w-full p-5 bg-sygnature-beige min-h-[180px] my-2
+        <div
+          className="darkMode w-full p-5 bg-sygnature-beige min-h-[180px] my-2
         xs:grid-cols-2 
-        md:grid-cols-3">
+        md:grid-cols-3"
+        >
           <div className="grid grid-cols-3 gap-4">
             {imagePreview.map((x, i) => (
               <div key={i} className="relative">
                 <div className="h-[150px]">
-                  <Image
-                    className="w-full h-full"
-                    src={x}
-                    width={110}
-                    height={75}
-                    alt="header"
-                  />
-                  <FaWindowClose
-                    className="absolute top-0 right-0 cursor-pointer text-sygnature-brown"
-                    onClick={(e: React.MouseEvent<HTMLElement>) =>
-                      handleClose(e, i)
-                    }
-                  />
+                  <Image className="w-full h-full" src={x} width={110} height={75} alt="header" />
+                  <FaWindowClose className="absolute top-0 right-0 cursor-pointer text-sygnature-brown" onClick={(e: React.MouseEvent<HTMLElement>) => handleClose(e, i)} />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div
-          className="darkMode my-4 h-14 flex flex-row justify-center items-center border-2 border-black border-dashed hover:bg-gray-100 cursor-pointer"
-          onClick={handleAttach}
-        >
-          <input
-            type="file"
-            ref={imageRef}
-            accept="image/*"
-            multiple={false}
-            onChange={handleAttachChange}
-            className="hidden"
-          />
+        <div className="darkMode my-4 h-14 flex flex-row justify-center items-center border-2 border-black border-dashed hover:bg-gray-100 cursor-pointer" onClick={handleAttach}>
+          <input type="file" ref={imageRef} accept="image/*" multiple={false} onChange={handleAttachChange} className="hidden" />
           <FaCamera className="mx-1" /> 사진 첨부하기
         </div>
 
@@ -432,22 +376,12 @@ const ProposeList = ({ session, params }: any) => {
           onChange={handleChange}
           ref={inputRef} // ref를 추가하여 input 엘리먼트에 대한 참조를 설정
           autoComplete="off"
-          spellCheck='false'
+          spellCheck="false"
         />
-        <div
-          className={`z-10 border absolute -translate-y-3 bg-white ${
-            focus ? "visible" : "hidden"
-          }`}
-        >
+        <div className={`z-10 border absolute -translate-y-3 bg-white ${focus ? "visible" : "hidden"}`}>
           <ul>
             {results.map((result: Result, i) => (
-              <li
-                className={`cursor-pointer p-1 m-1 hover:bg-gray-100 ${
-                  result._id ? "text-sygnature-brown" : ""
-                }`}
-                key={i}
-                onClick={() => handleResultClick(result)}
-              >
+              <li className={`cursor-pointer p-1 m-1 hover:bg-gray-100 ${result._id ? "text-sygnature-brown" : ""}`} key={i} onClick={() => handleResultClick(result)}>
                 {result._id ? <FaFlag className="inline" /> : ""}
                 <span className="font-bold"> {result.place_name}</span>
                 <span> [{result.address_name}],</span>
@@ -464,12 +398,7 @@ const ProposeList = ({ session, params }: any) => {
           영업시간<span className="text-red-500 font-bold">*</span>
         </div>
         <div className="flex flex-row mt-2 mb-4 ">
-          <select
-            className="darkMode w-24 text-center border border-gray-300 rounded-md cursor-pointer"
-            name="openhour"
-            onChange={handleOpenHour}
-            id="openhour"
-          >
+          <select className="darkMode w-24 text-center border border-gray-300 rounded-md cursor-pointer" name="openhour" onChange={handleOpenHour} id="openhour">
             <option value="00:00">00 : 00</option>
             <option value="00:30">00 : 30</option>
             <option value="01:00">01 : 00</option>
@@ -521,12 +450,7 @@ const ProposeList = ({ session, params }: any) => {
             <option value="24:00">24 : 00</option>
           </select>
           <span className="flex items-center mx-4 font-bold text-lg"> ~ </span>
-          <select
-            className="darkMode w-24 text-center border border-gray-300 rounded-md cursor-pointer"
-            name="closehour"
-            onChange={handleCloseHour}
-            id="closehour"
-          >
+          <select className="darkMode w-24 text-center border border-gray-300 rounded-md cursor-pointer" name="closehour" onChange={handleCloseHour} id="closehour">
             <option value="00:00">00 : 00</option>
             <option value="00:30">00 : 30</option>
             <option value="01:00">01 : 00</option>
@@ -582,75 +506,19 @@ const ProposeList = ({ session, params }: any) => {
         {/* 영업 시간 */}
         <div className="font-semibold">영업일</div>
         <div className="flex flex-row items-center justify-center my-2">
-          <input
-            onChange={handleBusinessDay}
-            readOnly={true}
-            checked={mon}
-            name="businessday"
-            type="checkbox"
-            value={"월"}
-            className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} readOnly={true} checked={mon} name="businessday" type="checkbox" value={"월"} className={`w-7 h-7 accent-sygnature-brown ml-4 cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">월</span>
-          <input
-            onChange={handleBusinessDay}
-            readOnly={true}
-            checked={tue}
-            name="businessday"
-            type="checkbox"
-            value={"화"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} readOnly={true} checked={tue} name="businessday" type="checkbox" value={"화"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">화</span>
-          <input
-            onChange={handleBusinessDay}
-            readOnly={true}
-            checked={wed}
-            name="businessday"
-            type="checkbox"
-            value={"수"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} readOnly={true} checked={wed} name="businessday" type="checkbox" value={"수"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">수</span>
-          <input
-            onChange={handleBusinessDay}
-            readOnly={true}
-            checked={thu}
-            name="businessday"
-            type="checkbox"
-            value={"목"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} readOnly={true} checked={thu} name="businessday" type="checkbox" value={"목"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">목</span>
-          <input
-            onChange={handleBusinessDay}
-            readOnly={true}
-            checked={fri}
-            name="businessday"
-            type="checkbox"
-            value={"금"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} readOnly={true} checked={fri} name="businessday" type="checkbox" value={"금"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">금</span>
-          <input
-            onChange={handleBusinessDay}
-            readOnly={true}
-            checked={sat}
-            name="businessday"
-            type="checkbox"
-            value={"토"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} readOnly={true} checked={sat} name="businessday" type="checkbox" value={"토"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-8 block xs:mr-3 md:mr-8">토</span>
-          <input
-            onChange={handleBusinessDay}
-            readOnly={true}
-            checked={sun}
-            name="businessday"
-            type="checkbox"
-            value={"일"}
-            className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`}
-          />
+          <input onChange={handleBusinessDay} readOnly={true} checked={sun} name="businessday" type="checkbox" value={"일"} className={`w-7 h-7 accent-sygnature-brown cursor-pointer${inputHoverFocus}`} />
           <span className="ml-2 mr-4 block xs:mr-3 md:mr-8">일</span>
         </div>
 
@@ -659,152 +527,52 @@ const ProposeList = ({ session, params }: any) => {
           전화번호
           <span className="ml-1 text-sm text-red-500">( - 없이, 생략가능)</span>
         </div>
-        <input
-          maxLength={20}
-          name="phone"
-          className={`darkMode px-2 border-gray-300 w-full ${inputHoverFocus}`}
-          onChange={handlePhoneChange}
-          value={phoneValue}
-          autoComplete="off"
-        />
+        <input maxLength={20} name="phone" className={`darkMode px-2 border-gray-300 w-full ${inputHoverFocus}`} onChange={handlePhoneChange} value={phoneValue} autoComplete="off" />
 
         {/* 이용방법 */}
         <div className="font-semibold my-2">
           이용방법<span className="text-red-500 font-bold">*</span>
         </div>
-        <textarea
-          maxLength={500}
-          name="howtouse"
-          className={`darkMode p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`}
-          onChange={handleHowtouseChange}
-          value={howtouseValue}
-          autoComplete="off"
-        />
+        <textarea maxLength={500} name="howtouse" className={`darkMode p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`} onChange={handleHowtouseChange} value={howtouseValue} autoComplete="off" />
 
         {/* 설명 */}
         <div className="font-semibold my-2">
           설명<span className="text-red-500 font-bold">*</span>
         </div>
-        <textarea
-          maxLength={500}
-          name="desc"
-          className={`darkMode p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`}
-          onChange={handleDescChange}
-          value={descValue}
-          autoComplete="off"
-        />
+        <textarea maxLength={500} name="desc" className={`darkMode p-2 h-40 border rounded-md border-gray-300 w-full resize-none ${inputHoverFocus}`} onChange={handleDescChange} value={descValue} autoComplete="off" />
 
         <div className="my-5 flex flex-row justify-center">
           {checkForm() ? (
             checkForm()
           ) : (
             <div className="flex gap-3">
-              <select
-                className="darkMode border-transparent w-24 text-center border border-gray-300 rounded-md cursor-pointer"
-                name="confirm"
-                onChange={handleSelect}
-              >
+              <select className="darkMode border-transparent w-24 text-center border border-gray-300 rounded-md cursor-pointer" name="confirm" onChange={handleSelect}>
                 <option value="approved">승인</option>
                 <option value="rejected">반려</option>
               </select>
-              <button
-                className="w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300 border-transparent"
-                type="submit"
-                onClick={handleClick}
-              >
+              <button className="w-64 h-16 font-bold mx-1 text-xl text-white bg-sygnature-brown border rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300 border-transparent" type="submit" onClick={handleClick}>
                 완료
               </button>
             </div>
           )}
-          {
-            <input
-              className="hidden"
-              name="_id"
-              value={params.id}
-              onChange={() => {}}
-            />
-          }
+          {<input className="hidden" name="_id" value={params.id} onChange={() => {}} />}
         </div>
 
         <div className="hidden">
-          {placeInfo?.address_name && (
-            <input
-              name="address_name"
-              value={placeInfo?.address_name}
-              onChange={() => {}}
-            />
-          )}
-          {placeInfo?.category_group_code && (
-            <input
-              name="category_group_code"
-              value={placeInfo?.category_group_code}
-              onChange={() => {}}
-            />
-          )}
-          {placeInfo?.category_group_name && (
-            <input
-              name="category_group_name"
-              value={placeInfo?.category_group_name}
-              onChange={() => {}}
-            />
-          )}
-          {placeInfo?.category_name && (
-            <input
-              name="category_name"
-              value={placeInfo?.category_name}
-              onChange={() => {}}
-            />
-          )}
-          {placeInfo?.distance && (
-            <input
-              name="distance"
-              value={placeInfo?.distance}
-              onChange={() => {}}
-            />
-          )}
-          {placeInfo?.id && (
-            <input name="id" value={placeInfo?.id} onChange={() => {}} />
-          )}
-          {placeInfo?.phone && (
-            <input name="phone" value={placeInfo?.phone} onChange={() => {}} />
-          )}
-          {placeInfo?.place_name && (
-            <input
-              name="place_name"
-              value={placeInfo?.place_name}
-              onChange={() => {}}
-            />
-          )}
-          {placeInfo?.place_url && (
-            <input
-              name="place_url"
-              value={placeInfo?.place_url}
-              onChange={() => {}}
-            />
-          )}
-          {placeInfo?.road_address_name && (
-            <input
-              name="road_address_name"
-              value={placeInfo?.road_address_name}
-              onChange={() => {}}
-            />
-          )}
-          {placeInfo?.x && (
-            <input name="x" value={placeInfo?.x} onChange={() => {}} />
-          )}
-          {placeInfo?.y && (
-            <input name="y" value={placeInfo?.y} onChange={() => {}} />
-          )}
-          {placeInfo?.y && (
-            <input
-              name="date"
-              value={new Date().toLocaleDateString("ko-KR").toString()}
-              onChange={() => {}}
-            />
-          )}
-          {placeInfo?.y && (
-            <input name="status" value={"진행중"} onChange={() => {}} />
-          )}
+          {placeInfo?.address_name && <input name="address_name" value={placeInfo?.address_name} onChange={() => {}} />}
+          {placeInfo?.category_group_code && <input name="category_group_code" value={placeInfo?.category_group_code} onChange={() => {}} />}
+          {placeInfo?.category_group_name && <input name="category_group_name" value={placeInfo?.category_group_name} onChange={() => {}} />}
+          {placeInfo?.category_name && <input name="category_name" value={placeInfo?.category_name} onChange={() => {}} />}
+          {placeInfo?.distance && <input name="distance" value={placeInfo?.distance} onChange={() => {}} />}
+          {placeInfo?.id && <input name="id" value={placeInfo?.id} onChange={() => {}} />}
+          {placeInfo?.phone && <input name="phone" value={placeInfo?.phone} onChange={() => {}} />}
+          {placeInfo?.place_name && <input name="place_name" value={placeInfo?.place_name} onChange={() => {}} />}
+          {placeInfo?.place_url && <input name="place_url" value={placeInfo?.place_url} onChange={() => {}} />}
+          {placeInfo?.road_address_name && <input name="road_address_name" value={placeInfo?.road_address_name} onChange={() => {}} />}
+          {placeInfo?.x && <input name="x" value={placeInfo?.x} onChange={() => {}} />}
+          {placeInfo?.y && <input name="y" value={placeInfo?.y} onChange={() => {}} />}
+          {placeInfo?.y && <input name="date" value={new Date().toLocaleDateString("ko-KR").toString()} onChange={() => {}} />}
+          {placeInfo?.y && <input name="status" value={"진행중"} onChange={() => {}} />}
         </div>
       </form>
     </div>

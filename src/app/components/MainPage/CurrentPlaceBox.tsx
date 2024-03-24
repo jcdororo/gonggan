@@ -1,6 +1,6 @@
 "use client";
 import { useRecoilState } from "recoil";
-import { currentPlaceState } from "../atom";
+import { currentPlaceState } from "../../atom";
 import Image from "next/legacy/image";
 import { AiOutlineClose, AiOutlinePhone } from "react-icons/ai";
 import { HiOutlineMapPin } from "react-icons/hi2";
@@ -17,12 +17,7 @@ export default function CurrentPlaceBox() {
           <div className="darkMode p-4 mt-[-230px] relative mx-auto rounded-lg shadow-lg max-w-sm md:max-w-xl z-10 w-[80%] bg-white">
             <div className="flex justify-between items-start">
               <div className="flex gap-4 items-center">
-                <Image
-                  src="/images/markers/default.png"
-                  width={40}
-                  height={40}
-                  alt="아이콘 이미지"
-                />
+                <Image src="/images/markers/default.png" width={40} height={40} alt="아이콘 이미지" />
                 <div>
                   <div className="font-semibold">{place?.place_name}</div>
                   <div className="text-sm">{place?.category_group_name}</div>
@@ -42,10 +37,7 @@ export default function CurrentPlaceBox() {
                 {place?.phone || "번호가 없습니다."}
               </div>
             </div>
-            <div
-              onClick={() => router.push(`/places/${place._id}`)}
-              className="w-full bg-sygnature-brown py-3 text-white font-semibold text-center rounded-md cursor-pointer hover:opacity-80"
-            >
+            <div onClick={() => router.push(`/places/${place._id}`)} className="w-full bg-sygnature-brown py-3 text-white font-semibold text-center rounded-md cursor-pointer hover:opacity-80">
               상세보기
             </div>
           </div>

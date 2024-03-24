@@ -1,9 +1,9 @@
-import LoadingSpin from "../components/LoadingSpin"
+import LoadingSpin from "../components/Spin/LoadingSpin";
 
 export default function Loading() {
-  return(
+  return (
     <div>
       <LoadingSpin />
     </div>
-  )
+  );
 }

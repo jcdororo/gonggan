@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
-import { PlaceType } from "../interface";
-import { mapState } from "../atom";
+import { PlaceType } from "@/app/interface";
+import { mapState } from "@/app/atom";
 import { useCallback, useEffect } from "react";
 
 interface MarkerProps {
@@ -18,11 +18,7 @@ export default function Marker({ place }: MarkerProps) {
         imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커 이미지의 옵션. 마커의 좌표와 일치시킬 이미지 안에서의 좌표 설정
 
       // 마커 이미지 생성
-      const markerImage = new window.kakao.maps.MarkerImage(
-        imageSrc,
-        imageSize,
-        imageOption
-      );
+      const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
       // 마커가 표시될 위치
       const markerPosition = new window.kakao.maps.LatLng(place?.y, place?.x);

@@ -1,11 +1,10 @@
 "use client";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { PlaceType } from "../interface";
-import { currentPlaceState, locationState, mapState } from "../atom";
+import { PlaceType } from "../../interface";
+import { currentPlaceState, locationState, mapState } from "../../atom";
 import { useCallback, useEffect } from "react";
 import axios from "axios";
 import { useQuery } from "react-query";
-
 
 export default function Marker() {
   const map = useRecoilValue(mapState);
@@ -29,11 +28,7 @@ export default function Marker() {
           imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커 이미지의 옵션. 마커의 좌표와 일치시킬 이미지 안에서의 좌표 설정
 
         // 마커 이미지 생성
-        const markerImage = new window.kakao.maps.MarkerImage(
-          imageSrc,
-          imageSize,
-          imageOption
-        );
+        const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
         // 마커가 표시될 위치
         const markerPosition = new window.kakao.maps.LatLng(place?.y, place?.x);

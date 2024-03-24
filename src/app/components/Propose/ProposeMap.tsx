@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
 /*global kakao */
 import Script from "next/script";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { locationState, mapState } from "../atom"
+// import { locationState, mapState } from "../atom";
+import { locationState, mapState } from "../../atom";
 
 declare global {
   interface Window {
@@ -25,26 +26,18 @@ export default function ProposeMap({ lat, lng, zoom }: MapProps) {
     window.kakao.maps.load(() => {
       const mapContainer = document.getElementById("map");
       const mapOption = {
-        center: new window.kakao.maps.LatLng(
-          lat ?? location.lat,
-          lng ?? location.lng
-        ),
+        center: new window.kakao.maps.LatLng(lat ?? location.lat, lng ?? location.lng),
         level: zoom ?? location.zoom,
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
       setMap(map);
-    })
-  }
-  
+    });
+  };
+
   return (
     <>
-      <Script
-        strategy="afterInteractive"
-        type="text/javascript"
-        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_CLIENT}&autoload=false`}
-        onReady={loadKakaoMap}
-      />
+      <Script strategy="afterInteractive" type="text/javascript" src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_CLIENT}&autoload=false`} onReady={loadKakaoMap} />
       <div id="map" className="w-full h-[500px]"></div>
     </>
-  )
+  );
 }

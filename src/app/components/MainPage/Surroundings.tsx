@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { PlaceType } from "../interface";
+import { PlaceType } from "../../interface";
 import { IoIosArrowDown } from "react-icons/io";
 import Link from "next/link";
 import { useRecoilValue } from "recoil";
-import { locationState } from "../atom";
+import { locationState } from "../../atom";
 
 interface SurroundingsProps {
   places?: PlaceType[];
@@ -40,53 +40,33 @@ export default function Surroundings({ places }: SurroundingsProps) {
         setError("Geolocation is not supported by your browser.");
       }
     };
-    
+
     getLocation();
-  }, []); 
+  }, []);
 
   const locationDefault = useRecoilValue(locationState);
-  
+
   const currentX: any = location == null ? locationDefault.lng : location?.longitude; // 경도 Longitude
   const currentY: any = location == null ? locationDefault.lat : location?.latitude; // 위도 Latitude
 
-  const calculateDistance = (
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number => {
+  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
     const R = 6371; // 지구의 반지름 (단위: km)
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
 
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * (Math.PI / 180)) *
-        Math.cos(lat2 * (Math.PI / 180)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
     return distance;
   };
 
   const nearbyLocations = places?.filter((place) => {
-    const distance = calculateDistance(
-      currentY,
-      currentX,
-      Number(place.y),
-      Number(place.x)
-    );
+    const distance = calculateDistance(currentY, currentX, Number(place.y), Number(place.x));
     return distance <= 1;
   });
 
   const spaces = nearbyLocations?.map((place) => {
-    const distance = calculateDistance(
-      currentY,
-      currentX,
-      Number(place.y),
-      Number(place.x)
-    );
+    const distance = calculateDistance(currentY, currentX, Number(place.y), Number(place.x));
     const mDistance = Number(distance.toFixed(2)) * 1000 + "m";
     return { ...place, mDistance };
   });
@@ -108,7 +88,7 @@ export default function Surroundings({ places }: SurroundingsProps) {
 
   let spacesList;
   if (spaces?.length === 0) {
-    spacesList = <div className="p-4 py-8 text-center">주변에 공간이 없습니다.</div>
+    spacesList = <div className="p-4 py-8 text-center">주변에 공간이 없습니다.</div>;
   } else {
     spacesList = sortedSpaces?.slice(0, limit).map((space, index) => (
       <div key={index}>
@@ -116,20 +96,14 @@ export default function Surroundings({ places }: SurroundingsProps) {
           <div className="m-4 p-2 flex justify-between">
             <div className="flex gap-[5px] ">
               <div className="text-lg ">{space.location}</div>
-              <div className="text-xs mt-[9px] text-sygnature-brown">
-                {space.category_group_name}
-              </div>
+              <div className="text-xs mt-[9px] text-sygnature-brown">{space.category_group_name}</div>
             </div>
-            <div className="text-xs mt-[9px] text-sygnature-brown">
-              {space.mDistance}
-            </div>
+            <div className="text-xs mt-[9px] text-sygnature-brown">{space.mDistance}</div>
           </div>
         </Link>
       </div>
     ));
   }
-
-  
 
   return (
     <>

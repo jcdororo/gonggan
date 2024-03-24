@@ -3,7 +3,7 @@
 /*global kakao */
 import Script from "next/script";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { locationState, mapState } from "../atom";
+import { locationState, mapState } from "../../atom";
 import { memo, useEffect, useState } from "react";
 
 declare global {
@@ -64,10 +64,7 @@ export default memo(function Map({ lat, lng, zoom }: MapProps) {
     window.kakao.maps.load(() => {
       const mapContainer = document.getElementById("map");
       const mapOption = {
-        center: new window.kakao.maps.LatLng(
-          lat ?? locationCurrent == null ? location.lat : locationCurrent?.latitude,
-          lng ?? locationCurrent == null ? location.lng :locationCurrent?.longitude
-        ),
+        center: new window.kakao.maps.LatLng(lat ?? locationCurrent == null ? location.lat : locationCurrent?.latitude, lng ?? locationCurrent == null ? location.lng : locationCurrent?.longitude),
         level: zoom ?? location.zoom,
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
@@ -82,16 +79,8 @@ export default memo(function Map({ lat, lng, zoom }: MapProps) {
 
   return (
     <>
-      <Script
-        strategy="afterInteractive"
-        type="text/javascript"
-        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_CLIENT}&autoload=false`}
-        onReady={loadKakaoMap}
-      />
-      <div
-        id="map"
-        className="h-[40vh] sm:h-[50vh] rounded-lg shadow-3xl translate-x-5 sm:translate-x-9 md:translate-x-5"
-      ></div>
+      <Script strategy="afterInteractive" type="text/javascript" src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_CLIENT}&autoload=false`} onReady={loadKakaoMap} />
+      <div id="map" className="h-[40vh] sm:h-[50vh] rounded-lg shadow-3xl translate-x-5 sm:translate-x-9 md:translate-x-5"></div>
     </>
   );
 });

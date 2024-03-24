@@ -1,4 +1,4 @@
-import Title from "@/app/components/Title";
+import Title from "@/app/admin/Title";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { connectDB } from "@/util/database";
 import { getServerSession } from "next-auth";
@@ -7,12 +7,11 @@ import { notFound } from "next/navigation";
 
 export default async function PlaceList() {
   const session: any = await getServerSession(authOptions);
-  if(session.user.role != 'admin') {
+  if (session.user.role != "admin") {
     notFound();
   }
   const db = (await connectDB).db("gonggan");
   const result = await db.collection("propose").find().toArray();
-
 
   return (
     <div>
@@ -34,24 +33,15 @@ export default async function PlaceList() {
                 <tr key={x._id.toString()} className="h-10">
                   <td>
                     <div className="flex justify-center items-center">
-                      <div className="flex justify-center items-center bg-sygnature-brown rounded-2xl h-8 w-16 text-sm text-white">
-                        {x.status}
-                      </div>
+                      <div className="flex justify-center items-center bg-sygnature-brown rounded-2xl h-8 w-16 text-sm text-white">{x.status}</div>
                     </div>
                   </td>
                   <td className="py-4 pl-10">
-                    <Link
-                      href={`/admin/propose/list/${x._id.toString()}?_id=${
-                        x.proposerId
-                      }`}
-                      className="hover:underline cursor-pointer"
-                    >
+                    <Link href={`/admin/propose/list/${x._id.toString()}?_id=${x.proposerId}`} className="hover:underline cursor-pointer">
                       {x.place_name}
                     </Link>
                   </td>
-                  <td className="py-2 hover:underline cursor-pointer text-center">
-                    {x.proposerId}
-                  </td>
+                  <td className="py-2 hover:underline cursor-pointer text-center">{x.proposerId}</td>
                   <td className="py-2 text-center">{x.date}</td>
                 </tr>
               ))}

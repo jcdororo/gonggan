@@ -1,17 +1,17 @@
 import { Roboto } from "next/font/google";
-import SearchBar from "./components/SearchBar";
-import Map from "./components/Map";
-import Space from "./components/Space";
-import Marker from "./components/Markers";
+import SearchBar from "./components/MainPage/SearchBar";
+import Map from "./components/Map/Map";
+import Space from "./components/Admin/Space";
+import Marker from "./components/Map/Markers";
 import { PlaceType } from "./interface";
 import axios from "axios";
-import CurrentPlaceBox from "./components/CurrentPlaceBox";
-import MainInfo1 from "./components/MainInfo1";
-import MainInfo3 from "./components/MainInfo3";
+import CurrentPlaceBox from "./components/MainPage/CurrentPlaceBox";
+import MainInfo1 from "./components/MainPage/MainInfo1";
+import MainInfo3 from "./components/MainPage/MainInfo3";
 import HotPlace from "./components/MainPage/HotPlace";
 import { MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
 import Link from "next/link";
-import Footer from "./components/Footer";
+import Footer from "./components/Footer/Footer";
 import ReviewMain from "./components/MainPage/ReviewMain";
 import { connectDB } from "@/util/database";
 
@@ -21,7 +21,6 @@ const roboto = Roboto({
 });
 
 export default async function Home() {
-
   return (
     <div className={`${roboto.className}`}>
       <div className="md:space-y-20">
@@ -73,4 +72,3 @@ export default async function Home() {
     </div>
   );
 }
-
