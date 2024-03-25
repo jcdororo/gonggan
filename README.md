@@ -1,7 +1,7 @@
 ![대문](./img/대문.png)
 <img src="./img/버전-nextjs.png" width="120" height=""/>
 <img src="./img/버전-db.png" width="120" height=""/>
-<img src="./img/버전-react.png.png" width="120" height=""/>
+<img src="./img/버전-react.png" width="120" height=""/>
 
 # 🏠내 주변 카공 위치 찾기 !, 工間:study
 
