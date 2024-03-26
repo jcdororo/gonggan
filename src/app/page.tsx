@@ -3,8 +3,6 @@ import SearchBar from "./components/MainPage/SearchBar";
 import Map from "./components/Map/Map";
 import Space from "./components/Admin/Space";
 import Marker from "./components/Map/Markers";
-import { PlaceType } from "./interface";
-import axios from "axios";
 import CurrentPlaceBox from "./components/MainPage/CurrentPlaceBox";
 import MainInfo1 from "./components/MainPage/MainInfo1";
 import MainInfo3 from "./components/MainPage/MainInfo3";
@@ -13,7 +11,6 @@ import { MdOutlineKeyboardDoubleArrowDown } from "react-icons/md";
 import Link from "next/link";
 import Footer from "./components/Footer/Footer";
 import ReviewMain from "./components/MainPage/ReviewMain";
-import { connectDB } from "@/util/database";
 
 const roboto = Roboto({
   subsets: ["latin"],

@@ -57,18 +57,15 @@ export default function HotPlace() {
   return (
     <>
       <div className="h-screen py-28 px-20 bg-gradient-to-t from-sygnature-brown">
-        <div
-          className={`swiper-container w-full sm:w-[45%] mx-auto transition-opacity duration-[2s] ${
-            scrollVisible ? "opacity-100" : "opacity-0"
-          }`}
-        >
+        <div className={`swiper-container w-full sm:w-[45%] mx-auto transition-opacity duration-[2s] ${scrollVisible ? "opacity-100" : "opacity-0"}`}>
           <div className={`mb-12 text-center`}>
             <div className="flex justify-center animate-bounce mb-4">
               <FaMapLocationDot size="30" />
             </div>
             <div className="font-bold text-xl sm:text-3xl">
               <p>
-                실시간 사용자들에게 <br className="block sm:hidden" />인기 있는
+                실시간 사용자들에게 <br className="block sm:hidden" />
+                인기 있는
               </p>
               <p>공간들을 둘러보세요 !</p>
             </div>
@@ -77,8 +74,7 @@ export default function HotPlace() {
             <Swiper
               modules={[FreeMode, Navigation, Thumbs, Autoplay]}
               thumbs={{
-                swiper:
-                  thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+                swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
               }}
               spaceBetween={10} // 슬라이스 사이 간격
               slidesPerView={1} // 보여질 슬라이드 수
@@ -90,37 +86,16 @@ export default function HotPlace() {
               {places?.map((place) => (
                 <SwiperSlide key={place.place_id}>
                   <div className="relative w-full h-full">
-                    <Image
-                      src={place.url || ""}
-                      alt="장소 이미지"
-                      layout={"fill"}
-                      priority
-                      className="rounded-md cursor-pointer"
-                      onClick={() => router.push(`/places/${place.place_id}`)}
-                    />
+                    <Image src={place.url || ""} alt="장소 이미지" layout={"fill"} priority className="rounded-md cursor-pointer" onClick={() => router.push(`/places/${place.place_id}`)} />
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
-            <Swiper
-              onSwiper={setThumbsSwiper}
-              spaceBetween={10}
-              slidesPerView={3}
-              freeMode={true}
-              watchSlidesProgress={true}
-              modules={[FreeMode, Navigation, Thumbs]}
-              className="mySwiper"
-            >
+            <Swiper onSwiper={setThumbsSwiper} spaceBetween={10} slidesPerView={3} freeMode={true} watchSlidesProgress={true} modules={[FreeMode, Navigation, Thumbs]} className="mySwiper">
               {places?.map((place) => (
                 <SwiperSlide className="rounded-md" key={place.place_id}>
                   <div className="relative w-full h-[70px]">
-                    <Image
-                      src={place.url}
-                      alt="장소 이미지"
-                      layout={"fill"}
-                      priority
-                      className="rounded-md cursor-pointer"
-                    />
+                    <Image src={place.url} alt="장소 이미지" layout={"fill"} priority className="rounded-md cursor-pointer" />
                   </div>
                 </SwiperSlide>
               ))}

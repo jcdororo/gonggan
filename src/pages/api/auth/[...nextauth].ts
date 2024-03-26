@@ -19,26 +19,18 @@ export const authOptions: any = {
         password: { label: "password", type: "password" },
         auto: { label: "auto", type: "checkbox" },
       },
-      async authorize(
-        credentials: Record<"loginId" | "password" | "auto", string> | undefined,
-        req: Pick<RequestInternal, "body" | "query" | "headers" | "method">
-      ): Promise<any> {
+      async authorize(credentials: Record<"loginId" | "password" | "auto", string> | undefined, req: Pick<RequestInternal, "body" | "query" | "headers" | "method">): Promise<any> {
         if (!credentials?.loginId || !credentials?.password) {
           throw new Error("Invalid credentials");
         }
         const db = (await connectDB).db("gonggan");
-        const user = await db
-          .collection("users")
-          .findOne({ loginId: credentials.loginId });
+        const user = await db.collection("users").findOne({ loginId: credentials.loginId });
 
         if (!user || !user?.password) {
           throw new Error("Invalid credentials");
         }
 
-        const isCorrectPassword = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
+        const isCorrectPassword = await bcrypt.compare(credentials.password, user.password);
 
         if (!isCorrectPassword) {
           throw new Error("Invalid credentials");
@@ -58,7 +50,8 @@ export const authOptions: any = {
   adapter: MongoDBAdapter(connectDB),
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, //30일
+    // maxAge: 30 * 24 * 60 * 60, //30일
+    maxAge: 5 * 60, //30분
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }: any) {
@@ -87,14 +80,14 @@ export const authOptions: any = {
         token.user.nickname = session.nickname;
         token.user.email = session.email;
         token.user.image = session.image;
-        token.user.method = session.method
-      } 
+        token.user.method = session.method;
+      }
       return token;
     },
     //5. 유저 세션이 조회될 때 마다 실행되는 코드
     async session({ session, token }: any) {
       session.user = token.user;
-      session.user.role = token.user.role ? token.user.role : 'user'
+      session.user.role = token.user.role ? token.user.role : "user";
       return session;
     },
   },
