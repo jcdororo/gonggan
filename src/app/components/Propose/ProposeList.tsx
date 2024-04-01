@@ -86,27 +86,6 @@ const ProposeList = ({ session, params }: any) => {
       </div>
     );
   }
-  useEffect(() => {
-    const handleKeyESC = (e: { key: string }) => {
-      if (e.key === "Escape") {
-        setFocus(false);
-      }
-    };
-
-    const handleKeyEnter = (e: { key: string }) => {
-      if (e.key === "Enter") {
-        setFocus(true);
-      }
-    };
-    window.addEventListener("keydown", handleKeyESC);
-    window.addEventListener("keydown", handleKeyEnter);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyESC);
-      window.removeEventListener("keydown", handleKeyEnter);
-    };
-  }, []);
-
   useLayoutEffect(() => {
     // 사진 가져오기
     const pitures = async () => {
@@ -158,6 +137,27 @@ const ProposeList = ({ session, params }: any) => {
       }
     }
   }, [openHour, closeHour]);
+
+  useEffect(() => {
+    const handleKeyESC = (e: { key: string }) => {
+      if (e.key === "Escape") {
+        setFocus(false);
+      }
+    };
+
+    const handleKeyEnter = (e: { key: string }) => {
+      if (e.key === "Enter") {
+        setFocus(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyESC);
+    window.addEventListener("keydown", handleKeyEnter);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyESC);
+      window.removeEventListener("keydown", handleKeyEnter);
+    };
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
